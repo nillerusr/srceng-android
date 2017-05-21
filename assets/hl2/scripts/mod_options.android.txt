@@ -1,0 +1,35 @@
+"options_x360"
+{
+
+//
+// HL2 CONTROL OPTIONS
+//
+
+	"Bind Toggle Zoom"
+	{
+		"control"	"1"
+
+		"name"		"#Valve_Suit_Zoom"
+		"command"	"toggle_zoom"
+		"priority"	"2500"
+		"type"		"bind"
+	}
+	"Bind Gravity Gun"
+	{
+		"control"	"1"
+
+		"name"		"#Valve_Gravity_Gun"
+		"command"	"phys_swap"
+		"priority"	"2600"
+		"type"		"bind"
+	}
+	"Bind Squad Command"
+	{
+		"control"	"1"
+
+		"name"		"#Valve_Commander_Mode"
+		"command"	"impulse 50"
+		"priority"	"2700"
+		"type"		"bind"
+	}
+}

@@ -1,0 +1,79 @@
+"options_x360"
+{
+//
+// BASIC OPTIONS
+//
+
+	"Portal Funnel"
+	{
+		"portals"	"1"
+
+		"name"		"#GameUI_PortalFunnel"
+		"convar"	"sv_player_funnel_into_portals"
+		"priority"	"0750"
+		"type"		"binary"
+	}
+
+	"Portal Render Depth"
+	{
+		"dev"		"1"
+		"portals"	"1"
+
+		"name"		"#GameUI_PortalDepthLabel"
+		"convar"	"r_portal_stencil_depth"
+		"priority"	"0"
+		"type"		"choice"
+		"choices"
+		{
+			"#GameUI_PortalDepth0"	"0"
+			"#GameUI_PortalDepth1"	"1"
+			"#GameUI_PortalDepth2"	"2"
+			"#GameUI_PortalDepth3"	"3"
+			"#GameUI_PortalDepth4"	"4"
+			"#GameUI_PortalDepth5"	"5"
+			"#GameUI_PortalDepth6"	"6"
+			"#GameUI_PortalDepth7"	"7"
+			"#GameUI_PortalDepth8"	"8"
+			"#GameUI_PortalDepth9"	"9"
+		}
+	}
+
+//
+// CONTROL OPTIONS
+//
+	"Sprint Mode"
+	{
+		"disable"	"1"
+	}
+
+	"Bind Flashlight"
+	{
+		"disable"	"1"
+	}
+	"Bind Reload"
+	{
+		"disable"	"1"
+	}
+	
+	"Bind Sprint"
+	{
+		"disable"	"1"
+	}
+
+	"Bind Slot 1"
+	{
+		"disable"	"1"
+	}
+	"Bind Slot 2"
+	{
+		"disable"	"1"
+	}
+	"Bind Slot 3"
+	{
+		"disable"	"1"
+	}
+	"Bind Slot 4"
+	{
+		"disable"	"1"
+	}
+}
