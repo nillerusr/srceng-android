@@ -161,7 +161,9 @@ public class SDLActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSingleton = this;
+        com.valvesoftware.ValveActivity.initNatives();
         initAssetManager(getAssets());
+        startSDL();
     }
 
     public static void startSDL() {
