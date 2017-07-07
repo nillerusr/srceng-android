@@ -31,9 +31,11 @@ extends BaseInputConnection {
     public boolean sendKeyEvent(KeyEvent keyEvent) {
         int n = keyEvent.getKeyCode();
         if (keyEvent.getAction() == 0) {
-            if (keyEvent.isPrintingKey()) {
+            //if (keyEvent.isPrintingKey()) {
+                if( n == 62 )
+                    this.commitText(" ", 1);
                 this.commitText(String.valueOf((char)keyEvent.getUnicodeChar()), 1);
-            }
+            //}
             SDLActivity.onNativeKeyDown(n);
             return true;
         }

@@ -98,15 +98,16 @@ SensorEventListener {
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
-        if (n == 24 || n == 25) {
-            return false;
-        }
+    //    if (n == 24 || n == 25) {
+    //        return false;
+    //    }
         
         if( n == KeyEvent.KEYCODE_BACK )
 			n = KeyEvent.KEYCODE_ESCAPE;
         
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
+            SDLActivity.showTextInput(0,0,0,0);
             return true;
         }
         if (keyEvent.getAction() == 1) {
@@ -157,12 +158,12 @@ SensorEventListener {
                 y = event.getY(i) / mHeight;
                 p = event.getPressure(i);
                 SDLActivity.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
-                if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP ) 
+/*                if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP ) 
                 {
 					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ENTER);
 					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ENTER);
 				}
-				else { }
+				else { }*/
                 break;
             
             default:

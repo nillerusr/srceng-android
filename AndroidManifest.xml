@@ -16,7 +16,8 @@
         <service android:name="com.valvesoftware.ValveDownloaderService"/>
         <receiver android:name="com.valvesoftware.ValveAlarmReceiver"/>
         <service android:name="com.valvesoftware.ValveCustomDownloaderService"/>
-        <activity android:configChanges="keyboardHidden|orientation" android:label="SourceEngine" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize" 
+android:label="SourceEngine" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
