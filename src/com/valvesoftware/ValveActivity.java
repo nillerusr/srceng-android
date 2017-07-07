@@ -20,6 +20,11 @@ public class ValveActivity {
 
     public static native void setPatchPackFilePath(String str);
 
+    public static boolean gpgsDownload(String str)
+    {
+        return false;
+    }
+
     static    class PreloadThread implements Runnable {
         PreloadThread() {
         }
@@ -27,7 +32,7 @@ public class ValveActivity {
         public void run() {
             try {
                 Thread.sleep(2000);
-                for (String libname : new String[]{"androidwrapper", "tier0", "vstdlib", "togl", "SDL2", "steam_api", "datacache", "engine", "filesystem_stdio", "GameUI", "inputsystem", "launcher", "materialsystem", "scenefilecache", "ServerBrowser", "soundemittersystem", "studiorender", "vguimatsurface", "video_services", "vphysics", "vgui2", "shaderapidx9", "stdshader_dx9", "client", "server"}) {
+                for (String libname : new String[]{"androidwrapper", "tier0", "tierhook" , "vstdlib", "togl", "SDL2", "steam_api", "datacache", "engine", "filesystem_stdio", "GameUI", "inputsystem", "launcher", "materialsystem", "scenefilecache", "ServerBrowser", "soundemittersystem", "studiorender", "vguimatsurface", "video_services", "vphysics", "vgui2", "shaderapidx9", "stdshader_dx9", "client", "server"}) {
                     Log.v("ValveActivity", "Loading " + libname + "...");
                     System.loadLibrary(libname);
                 }

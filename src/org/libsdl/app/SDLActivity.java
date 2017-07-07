@@ -154,8 +154,10 @@ public class SDLActivity extends Activity {
         mIsSurfaceReady = false;
         mHasFocus = true;
         mEGLContext = null;
+        System.loadLibrary("first");
         System.loadLibrary("SDL2");
         System.loadLibrary("main");
+        
     }
 
     protected void onCreate(Bundle savedInstanceState) {
