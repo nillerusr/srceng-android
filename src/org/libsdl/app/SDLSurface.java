@@ -1,30 +1,6 @@
-/*
- * Decompiled with CFR 0_118.
- * 
- * Could not load the following classes:
- *  android.content.Context
- *  android.graphics.Canvas
- *  android.hardware.Sensor
- *  android.hardware.SensorEvent
- *  android.hardware.SensorEventListener
- *  android.hardware.SensorManager
- *  android.opengl.EGL14
- *  android.os.Handler
- *  android.util.Log
- *  android.view.KeyEvent
- *  android.view.MotionEvent
- *  android.view.SurfaceHolder
- *  android.view.SurfaceHolder$Callback
- *  android.view.SurfaceView
- *  android.view.View
- *  android.view.View$OnKeyListener
- *  android.view.View$OnSystemUiVisibilityChangeListener
- *  android.view.View$OnTouchListener
- */
 package org.libsdl.app;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,21 +12,29 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 import android.view.View;
 import org.libsdl.app.SDLActivity;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import com.nill.Touch;
+import com.nill.Dpad;
+import com.valvesoftware.ValveActivity2;
 
-class SDLSurface
+public class SDLSurface
 extends SurfaceView
 implements SurfaceHolder.Callback,
 View.OnKeyListener,
 View.OnTouchListener,
 SensorEventListener {
-    private static float mHeight;
+    public static float mHeight;
     private static SensorManager mSensorManager;
-    private static float mWidth;
+    public static float mWidth;
+    public static boolean isTouch = true;
+
     final int desiredVisibility = 5894;
     Runnable visibilityRunnable = null;
-
     public SDLSurface(Context context) {
         super(context);
         this.getHolder().addCallback((SurfaceHolder.Callback)this);
@@ -60,8 +44,8 @@ SensorEventListener {
         this.setOnKeyListener((View.OnKeyListener)this);
         this.setOnTouchListener((View.OnTouchListener)this);
         mSensorManager = (SensorManager)context.getSystemService("sensor");
-        mWidth = 1.0f;
-        mHeight = 1.0f;
+        mWidth = 1.f;
+        mHeight = 1.f;
         this.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
 
             public void onSystemUiVisibilityChange(int n) {
@@ -87,9 +71,6 @@ SensorEventListener {
         super.onAttachedToWindow();
     }
 
-    public void onDraw(Canvas canvas) {
-    }
-
     public boolean onGenericMotionEvent(MotionEvent motionEvent) {
         if ((motionEvent.getSource() & 16) != 0) {
             return true;
@@ -98,13 +79,8 @@ SensorEventListener {
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
-    //    if (n == 24 || n == 25) {
-    //        return false;
-    //    }
-        
         if( n == KeyEvent.KEYCODE_BACK )
 			n = KeyEvent.KEYCODE_ESCAPE;
-        
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
             SDLActivity.showTextInput(0,0,0,0);
@@ -130,45 +106,53 @@ SensorEventListener {
         int pointerFingerId;
         int i = -1;
         float x,y,p;
-        
-        switch(action) {
-            case MotionEvent.ACTION_MOVE:
-                for (i = 0; i < pointerCount; i++) {
-                    pointerFingerId = event.getPointerId(i);
-                    x = event.getX(i) / mWidth;
-                    y = event.getY(i) / mHeight;
-                    p = event.getPressure(i);
-                    SDLActivity.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
-                }
-                break;
 
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_DOWN:
-                // Primary pointer up/down, the index is always zero
-                i = 0;
-            case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_POINTER_DOWN:
-                // Non primary pointer up/down
-                if (i == -1) {
-                    i = event.getActionIndex();
-                }
-                
-                pointerFingerId = event.getPointerId(i);
-                x = event.getX(i) / mWidth;
-                y = event.getY(i) / mHeight;
-                p = event.getPressure(i);
-                SDLActivity.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
-/*                if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP ) 
-                {
-					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ENTER);
-					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ENTER);
-				}
-				else { }*/
-                break;
-            
-            default:
-                break;
-        }
+        switch(action) {
+		case MotionEvent.ACTION_MOVE:
+			for( i = 0; i < pointerCount; i++ )
+			{
+				pointerFingerId = event.getPointerId( i );
+				x = event.getX( i );
+				y = event.getY( i );
+				p = event.getPressure( i );
+				ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 2 );
+			}
+			break;
+
+		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_DOWN:
+			i = 0;
+		case MotionEvent.ACTION_POINTER_UP:
+		case MotionEvent.ACTION_POINTER_DOWN:
+			// Non primary pointer up/down
+			if( i == -1 )
+			{
+				i = event.getActionIndex();
+			}
+
+			pointerFingerId = event.getPointerId( i );
+
+			x = event.getX( i );
+			y = event.getY( i );
+			Log.v((String)"SDL", (String)"x: "+x);
+			Log.v((String)"SDL", (String)"y: "+y);
+				if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP )
+					ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 1 );
+				if( action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN )
+					ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 0 );
+			break;
+		case MotionEvent.ACTION_CANCEL:
+			for( i = 0; i < pointerCount; i++ )
+			{
+				pointerFingerId = event.getPointerId( i );
+				x = event.getX( i );
+				y = event.getY( i );
+				ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 1 );
+			}
+			break;
+
+                        default: break;
+	}
 
         return true;
     }
@@ -212,24 +196,8 @@ SensorEventListener {
      * Enabled aggressive block sorting
      */
     public void surfaceChanged(SurfaceHolder surfaceHolder, int n, int n2, int n3) {
-        int n4 = 0;
-        int n5 = EGL14.eglQueryAPI();
-        if (EGL14.eglBindAPI((int)12450)) {
-            n4 = 1;
-            EGL14.eglBindAPI((int)n5);
-        }
-        n4 = n4 != 0 ? 1080 : 600;
-        int n6 = n2;
-        n5 = n3;
-        if (n4 > 0) {
-            n6 = n2;
-            n5 = n3;
-            if (n4 < n3) {
-                n6 = n2 * n4 / n3;
-                surfaceHolder.setFixedSize(n6, n4);
-                n5 = n4;
-            }
-        }
+        mWidth = n2;
+	mHeight = n3;
         n2 = 353701890;
         switch (n) {
             default: {
@@ -287,14 +255,13 @@ SensorEventListener {
                 n = 370546692;
             }
         }
-        mWidth = n6;
-        mHeight = n5;
-        SDLActivity.onNativeResize(n6, n5, n);
-        Log.v((String)"SDL", (String)("Window size:" + n6 + "x" + n5));
+
+        SDLActivity.onNativeResize((int)mWidth, (int)mHeight, n);
+        Log.v((String)"SDL", (String)("Window size:" + mWidth + "x" + mHeight));
         SDLActivity.mIsSurfaceReady = true;
         SDLActivity.onNativeSurfaceChanged();
-        SDLActivity.startApp();
-    }
+	SDLActivity.startApp();
+}
 
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         surfaceHolder.setType(2);
@@ -309,4 +276,3 @@ SensorEventListener {
     }
 
 }
-

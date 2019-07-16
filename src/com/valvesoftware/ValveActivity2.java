@@ -1,14 +1,22 @@
 package com.valvesoftware;
 
+import android.content.Intent;
+import android.content.Context;
+import android.app.Activity;
+import android.os.Bundle;
+import android.content.pm.ApplicationInfo;
 import android.util.Log;
+import android.view.Display;
+import android.graphics.Point;
 import com.nvidia.PowerServiceClient;
 import org.libsdl.app.SDLActivity;
+import android.content.Context;
 import in.celest.*;
 // not activity, just for native functions
 
-public class ValveActivity {
+public abstract class ValveActivity2 extends SDLActivity {
 	private static  PowerServiceClient mPowerServiceClient;
-	
+	private static  ValveActivity2 mSingleton;
 	public static native void clientCommand(String clientCmd); // a1batross. Requires wrapped libclient. Thread-safe.
 	public static native boolean isGameUIActive(); // a1batross. Requires wrapped libclient. 
 	public static native boolean shouldDrawControls(); // a1batross. Requires wrapped libclient. 
@@ -25,9 +33,30 @@ public class ValveActivity {
 
 	public static native void setPatchPackFilePath(String str);
 
-	public static boolean gpgsDownload(String str)
+	public static native void setNativeLibPath(String str);
+
+	public static native void setDataDirectoryPath(String str);
+
+	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
+
+	public static native void TouchEvent( int touchDevId, int fingerid, int x, int y, int action );
+	public abstract Class getResourceKeys();
+
+	public abstract String getSourceGame();
+	public static int mWidth, mHeight;
+
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                mWidth = size.x;
+                mHeight = size.y;
+	}
+
+	public static byte[] gpgsDownload(String urlString)
 	{
-		return false;
+		return new byte[0];
 	}
 
 	static	class PreloadThread implements Runnable {
@@ -38,7 +67,7 @@ public class ValveActivity {
 			try {
 				Thread.sleep(2000);
 				for (String libname : new String[]{"androidwrapper", "tier0", "tierhook" , "vstdlib", "togl", "SDL2", "steam_api", "datacache", "engine", "filesystem_stdio", "GameUI", "inputsystem", "launcher", "materialsystem", "scenefilecache", "ServerBrowser", "soundemittersystem", "studiorender", "vguimatsurface", "video_services", "vphysics", "vgui2", "shaderapidx9", "stdshader_dx9", "client", "server"}) {
-					Log.v("ValveActivity", "Loading " + libname + "...");
+					Log.v("ValveActivity2", "Loading " + libname + "...");
 					System.loadLibrary(libname);
 				}
 			} catch (Exception e) {
@@ -56,13 +85,22 @@ public class ValveActivity {
 	}
 	public static void initNatives()
 	{
+		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
 		setMainPackFilePath(gamepath + "/main.22.com.nvidia.valvesoftware.halflife2.obb");
 		setPatchPackFilePath(gamepath + "/patch.22.com.nvidia.valvesoftware.halflife2.obb");
-		Thread preload = new Thread(new PreloadThread());
-		preload.start();
+		setDataDirectoryPath(appinf.dataDir);
+		setNativeLibPath(appinf.nativeLibraryDir);
+		//Thread preload = new Thread(new PreloadThread());
+		//preload.start();
 		setCacheDirectoryPath(gamepath + "/cache");
 		setDocumentDirectoryPath(gamepath + "/documents");
+		//System.loadLibrary("tierhook");
 	}
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		nativeOnActivityResult(this, requestCode, resultCode, data);
+	}
 }
+

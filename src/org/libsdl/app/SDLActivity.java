@@ -18,10 +18,16 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.SurfaceHolder;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.FrameLayout;
 import in.celest.LauncherActivity;
+import com.valvesoftware.ValveActivity2;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 public class SDLActivity extends Activity {
 	static final int COMMAND_CHANGE_TITLE = 1;
@@ -40,13 +46,15 @@ public class SDLActivity extends Activity {
 	public static boolean mHasFocus;
 	public static boolean mIsPaused;
 	public static boolean mIsSurfaceReady;
-	private static ViewGroup mLayout;
+	public static ViewGroup mLayout;
 	private static Thread mSDLThread;
 	private static SDLActivity mSingleton;
-	private static SDLSurface mSurface;
+	public static SDLSurface mSurface;
 	private static View mTextEdit;
 	Handler commandHandler;
 	public static View mDecorView;
+	public static RelativeLayout tch;
+	public static RelativeLayout dpd;
 	public static ImmersiveMode mImmersiveMode;
 	public static final int sdk = Integer.valueOf( Build.VERSION.SDK );
 
@@ -161,13 +169,14 @@ public class SDLActivity extends Activity {
 		System.loadLibrary("first");
 		System.loadLibrary("SDL2");
 		System.loadLibrary("main");
-		
+		//System.loadLibrary("client");
+		System.loadLibrary("touch");
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mSingleton = this;
-		com.valvesoftware.ValveActivity.initNatives();
+		com.valvesoftware.ValveActivity2.initNatives();
 		initAssetManager(getAssets());
 		startSDL();
 		 mDecorView = getWindow().getDecorView();
@@ -182,17 +191,12 @@ public class SDLActivity extends Activity {
 	}
 
 	public static void startSDL() {
-		SDLActivity sDLActivity = mSingleton;
 		mLayout = new FrameLayout(mSingleton);
-		sDLActivity = mSingleton;
 		mSurface = new SDLSurface(mSingleton.getApplication());
-		sDLActivity = mSingleton;
-		ViewGroup viewGroup = mLayout;
-		SDLActivity sDLActivity2 = mSingleton;
-		viewGroup.addView(mSurface);
-		sDLActivity = mSingleton;
-		sDLActivity2 = mSingleton;
-		sDLActivity.setContentView(mLayout);
+		SurfaceHolder holder = mSurface.getHolder();
+		holder.setType( SurfaceHolder.SURFACE_TYPE_GPU );
+		mLayout.addView(mSurface);
+		mSingleton.setContentView(mLayout);
 	}
 
 	public static void quit() {
@@ -300,6 +304,7 @@ public class SDLActivity extends Activity {
 	}
 
 	public static boolean initEGL(int majorVersion, int minorVersion, int[] attribs) {
+		System.loadLibrary("tierhook");
 		String str = ((("Debug-infos:" + "\n OS Version: " + System.getProperty("os.version") + "(" + VERSION.INCREMENTAL + ")") + "\n OS API Level: " + VERSION.SDK) + "\n Device: " + Build.DEVICE) + "\n Model (and Product): " + Build.MODEL + " (" + Build.PRODUCT + ")";
 		try {
 			String bigGLVar = System.getenv("USE_BIG_GL");
@@ -404,10 +409,11 @@ public class SDLActivity extends Activity {
 		return true;
 	}
 
+
 	public static void flipEGL() {
 		try {
 			EGL14.eglWaitNative(12379);
-			EGL14.eglWaitGL();
+			EGL14.eglWaitGL();{}
 			EGL14.eglSwapBuffers(mEGLDisplay, mEGLSurface);
 		} catch (Exception e) {
 			Log.v(TAG, "flipEGL(): " + e);
