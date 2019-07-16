@@ -5,7 +5,7 @@
 
 bool bClient_loaded = false;
 void *libclient;
-int (*TouchEvent)(int, int, int, int, int);
+int (*TouchEvent)(int, int, int, int);
 
 extern void clientLoaded( void )
 {
@@ -15,10 +15,10 @@ extern void clientLoaded( void )
 	__android_log_print( ANDROID_LOG_INFO, "HL2TOUCH", "CLIENT LOADED!" );
 }
 
-JNIEXPORT void JNICALL Java_com_valvesoftware_ValveActivity2_TouchEvent(JNIEnv *env, jobject obj, jint touchDevId, jint fingerid, jint x, jint y, jint action)
+JNIEXPORT void JNICALL Java_com_valvesoftware_ValveActivity2_TouchEvent(JNIEnv *env, jobject obj, jint fingerid, jint x, jint y, jint action)
 {
 	if( !bClient_loaded )
 		return;
 
-	TouchEvent( touchDevId, fingerid, x, y, action );
+	TouchEvent( fingerid, x, y, action );
 }

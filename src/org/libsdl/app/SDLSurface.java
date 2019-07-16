@@ -115,7 +115,7 @@ SensorEventListener {
 				x = event.getX( i );
 				y = event.getY( i );
 				p = event.getPressure( i );
-				ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 2 );
+				ValveActivity2.TouchEvent( pointerFingerId, (int)x, (int)y, 2 );
 			}
 			break;
 
@@ -137,9 +137,9 @@ SensorEventListener {
 			Log.v((String)"SDL", (String)"x: "+x);
 			Log.v((String)"SDL", (String)"y: "+y);
 				if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP )
-					ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 1 );
+					ValveActivity2.TouchEvent( pointerFingerId, (int)x, (int)y, 1 );
 				if( action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN )
-					ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 0 );
+					ValveActivity2.TouchEvent( pointerFingerId, (int)x, (int)y, 0 );
 			break;
 		case MotionEvent.ACTION_CANCEL:
 			for( i = 0; i < pointerCount; i++ )
@@ -147,7 +147,7 @@ SensorEventListener {
 				pointerFingerId = event.getPointerId( i );
 				x = event.getX( i );
 				y = event.getY( i );
-				ValveActivity2.TouchEvent( touchDevId, pointerFingerId, (int)x, (int)y, 1 );
+				ValveActivity2.TouchEvent( pointerFingerId, (int)x, (int)y, 1 );
 			}
 			break;
 

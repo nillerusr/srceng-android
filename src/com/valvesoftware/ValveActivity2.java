@@ -39,7 +39,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
-	public static native void TouchEvent( int touchDevId, int fingerid, int x, int y, int action );
+	public static native void TouchEvent( int fingerid, int x, int y, int action );
 	public abstract Class getResourceKeys();
 
 	public abstract String getSourceGame();
