@@ -167,10 +167,10 @@ public class SDLActivity extends Activity {
 		mHasFocus = true;
 		mEGLContext = null;
 		System.loadLibrary("first");
+		System.loadLibrary("touch");
 		System.loadLibrary("SDL2");
 		System.loadLibrary("main");
 		//System.loadLibrary("client");
-		System.loadLibrary("touch");
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -304,7 +304,7 @@ public class SDLActivity extends Activity {
 	}
 
 	public static boolean initEGL(int majorVersion, int minorVersion, int[] attribs) {
-		System.loadLibrary("tierhook");
+		//System.loadLibrary("tierhook");
 		String str = ((("Debug-infos:" + "\n OS Version: " + System.getProperty("os.version") + "(" + VERSION.INCREMENTAL + ")") + "\n OS API Level: " + VERSION.SDK) + "\n Device: " + Build.DEVICE) + "\n Model (and Product): " + Build.MODEL + " (" + Build.PRODUCT + ")";
 		try {
 			String bigGLVar = System.getenv("USE_BIG_GL");

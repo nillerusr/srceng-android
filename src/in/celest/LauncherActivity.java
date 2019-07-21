@@ -101,7 +101,7 @@ public class LauncherActivity extends Activity {
 
 		TextView titleView = new TextView(this);
 		titleView.setLayoutParams(titleviewparams);
-		titleView.setText("Command-line arguments(not worked)");
+		titleView.setText("Command-line arguments");
 		titleView.setTextAppearance(this, android.R.attr.textAppearanceLarge);
 
 		cmdArgs = new EditText(this);
@@ -172,7 +172,7 @@ public class LauncherActivity extends Activity {
 		launcher.addView(panel);
 		setContentView(launcher);
 		mPref = getSharedPreferences("mod", 0);
-		cmdArgs.setText(mPref.getString("argv","-dev 3 -log")); 
+		cmdArgs.setText(mPref.getString("argv","+developer 1")); 
 		GamePath.setText(mPref.getString("gamepath","/sdcard/srceng/")); 
 		if( sdk >= 19 )
 		{

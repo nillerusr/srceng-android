@@ -40,6 +40,11 @@ public abstract class ValveActivity2 extends SDLActivity {
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
 	public static native void TouchEvent( int fingerid, int x, int y, int action );
+	public static native int setenv( String name, String value, int overwrire );
+	public static native int setLibPath( String path );
+	public static native int unsetLibPath( );
+	public static native void setArgs( String args );
+
 	public abstract Class getResourceKeys();
 
 	public abstract String getSourceGame();
@@ -87,6 +92,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 	{
 		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
+		String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
 		setMainPackFilePath(gamepath + "/main.22.com.nvidia.valvesoftware.halflife2.obb");
 		setPatchPackFilePath(gamepath + "/patch.22.com.nvidia.valvesoftware.halflife2.obb");
 		setDataDirectoryPath(appinf.dataDir);
@@ -95,7 +101,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 		//preload.start();
 		setCacheDirectoryPath(gamepath + "/cache");
 		setDocumentDirectoryPath(gamepath + "/documents");
-		//System.loadLibrary("tierhook");
+		setArgs(argv);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
