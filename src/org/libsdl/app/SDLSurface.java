@@ -18,8 +18,6 @@ import org.libsdl.app.SDLActivity;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import com.nill.Touch;
-import com.nill.Dpad;
 import com.valvesoftware.ValveActivity2;
 
 public class SDLSurface
@@ -79,11 +77,12 @@ SensorEventListener {
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
+	Log.v((String)"SDL", (String)"onKey "+n);
         if( n == KeyEvent.KEYCODE_BACK )
 			n = KeyEvent.KEYCODE_ESCAPE;
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
-            SDLActivity.showTextInput(0,0,0,0);
+            SDLActivity.showTextInput(1);
             return true;
         }
         if (keyEvent.getAction() == 1) {

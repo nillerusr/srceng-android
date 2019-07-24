@@ -10,45 +10,68 @@ package org.libsdl.app;
 
 import android.view.KeyEvent;
 import android.view.View;
+import android.util.Log;
 import android.view.inputmethod.BaseInputConnection;
 import org.libsdl.app.SDLActivity;
 
-class SDLInputConnection
-extends BaseInputConnection {
-    public SDLInputConnection(View view, boolean bl) {
-        super(view, bl);
-    }
+class SDLInputConnection extends BaseInputConnection {
 
-    public boolean commitText(CharSequence charSequence, int n) {
-        this.nativeCommitText(charSequence.toString(), n);
-        return super.commitText(charSequence, n);
-    }
+	public SDLInputConnection(View targetView, boolean fullEditor) {
+		super(targetView, fullEditor);
 
-    public native void nativeCommitText(String var1, int var2);
+	}
 
-    public native void nativeSetComposingText(String var1, int var2);
+	@Override
+	public boolean sendKeyEvent(KeyEvent event) {
 
-    public boolean sendKeyEvent(KeyEvent keyEvent) {
-        int n = keyEvent.getKeyCode();
-        if (keyEvent.getAction() == 0) {
-            //if (keyEvent.isPrintingKey()) {
-                if( n == 62 )
-                    this.commitText(" ", 1);
-                this.commitText(String.valueOf((char)keyEvent.getUnicodeChar()), 1);
-            //}
-            SDLActivity.onNativeKeyDown(n);
-            return true;
-        }
-        if (keyEvent.getAction() == 1) {
-            SDLActivity.onNativeKeyUp(n);
-            return true;
-        }
-        return super.sendKeyEvent(keyEvent);
-    }
+		/*
+		 * This handles the keycodes from soft keyboard (and IME-translated
+		 * input from hardkeyboard)
+		 */
+		int keyCode = event.getKeyCode();
+		if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			if (event.isPrintingKey()|| keyCode == 62) {
+				commitText(String.valueOf((char) event.getUnicodeChar()), 1);
+			}
+			SDLActivity.onNativeKeyDown(keyCode);
+			return true;
+		} else if (event.getAction() == KeyEvent.ACTION_UP) {
 
-    public boolean setComposingText(CharSequence charSequence, int n) {
-        this.nativeSetComposingText(charSequence.toString(), n);
-        return super.setComposingText(charSequence, n);
-    }
+			SDLActivity.onNativeKeyUp(keyCode);
+			return true;
+		}
+		return super.sendKeyEvent(event);
+	}
+
+	@Override
+	public boolean commitText(CharSequence text, int newCursorPosition) {
+
+		nativeCommitText(text.toString(), newCursorPosition);
+
+		return super.commitText(text, newCursorPosition);
+	}
+
+	@Override
+	public boolean setComposingText(CharSequence text, int newCursorPosition) {
+
+		nativeSetComposingText(text.toString(), newCursorPosition);
+
+		return super.setComposingText(text, newCursorPosition);
+	}
+
+	public native void nativeCommitText(String text, int newCursorPosition);
+
+	public native void nativeSetComposingText(String text, int newCursorPosition);
+
+	@Override
+	public boolean deleteSurroundingText(int beforeLength, int afterLength) {
+		// Workaround to capture backspace key. Ref: http://stackoverflow.com/questions/14560344/android-backspace-in-webview-baseinputconnection
+		if (beforeLength == 1 && afterLength == 0) {
+			// backspace
+			return super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
+					&& super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+		}
+
+		return super.deleteSurroundingText(beforeLength, afterLength);
+	}
 }
-

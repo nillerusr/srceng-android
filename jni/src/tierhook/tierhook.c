@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#define EXPORT __attribute__((visibility("default")))
 
 void simple_hook( void *target, void *func )
 {
@@ -60,11 +61,9 @@ int _NewSpewMessage( int type, const char *fmt, va_list ap )
 	return 1;
 }
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* x)
+EXPORT void HookInit( )
 {
 	// offset seems to be correct in 23-78
 	simple_hook( DefaultSpewFunc + 0x50, _NewSpewMessage );
 	// force enable text input (no need in SDL patching now)
-
-	return JNI_VERSION_1_4;
 }

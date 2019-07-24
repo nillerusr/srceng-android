@@ -27,6 +27,7 @@ import in.celest.LauncherActivity;
 import com.valvesoftware.ValveActivity2;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import android.widget.AbsoluteLayout;
 import java.nio.FloatBuffer;
 
 public class SDLActivity extends Activity {
@@ -50,7 +51,7 @@ public class SDLActivity extends Activity {
 	private static Thread mSDLThread;
 	private static SDLActivity mSingleton;
 	public static SDLSurface mSurface;
-	private static View mTextEdit;
+	public static View mTextEdit;
 	Handler commandHandler;
 	public static View mDecorView;
 	public static RelativeLayout tch;
@@ -99,32 +100,49 @@ public class SDLActivity extends Activity {
 		}
 	}
 
-	static class ShowTextInputTask implements Runnable {
-		static final int HEIGHT_PADDING = 15;
-		public int f0h;
-		public int f1w;
-		public int f2x;
-		public int f3y;
+	static class ShowTextInputTask implements Runnable
+	{
+		/*
+		 * This is used to regulate the pan&scan method to have some offset from
+		 * the bottom edge of the input region and the top edge of an input
+		 * method (soft keyboard)
+		 */
+		private int show;
 
-		public ShowTextInputTask(int x, int y, int w, int h) {
-			this.f2x = x;
-			this.f3y = y;
-			this.f1w = w;
-			this.f0h = h;
+		public ShowTextInputTask( int show1 ) 
+		{
+			show = show1;
 		}
 
-		public void run() {
-			LayoutParams params = new LayoutParams(this.f1w, this.f0h + HEIGHT_PADDING, this.f2x, this.f3y);
-			if (SDLActivity.mTextEdit == null) {
-				SDLActivity.mTextEdit = new DummyEdit(SDLActivity.getContext());
-				SDLActivity.mLayout.addView(SDLActivity.mTextEdit, params);
-			} else {
-				SDLActivity.mTextEdit.setLayoutParams(params);
+		@Override
+		public void run() 
+		{
+			InputMethodManager imm = ( InputMethodManager )getContext().getSystemService( Context.INPUT_METHOD_SERVICE );
+			
+			if( mTextEdit == null )
+			{
+				mTextEdit = new DummyEdit( getContext() );
+				mLayout.addView( mTextEdit );
 			}
-			SDLActivity.mTextEdit.setVisibility(0);
-			SDLActivity.mTextEdit.requestFocus();
-			((InputMethodManager) SDLActivity.getContext().getSystemService("input_method")).showSoftInput(SDLActivity.mTextEdit, 0);
+
+			if( show == 1 )
+			{
+				mTextEdit.setVisibility( View.VISIBLE );
+				mTextEdit.requestFocus();
+				imm.showSoftInput( mTextEdit, 0 );
+			}
+			else
+			{
+				mTextEdit.setVisibility( View.GONE );
+				imm.hideSoftInputFromWindow( mTextEdit.getWindowToken(), 0 );
+			}
 		}
+	}
+
+	public static void showKeyboard( int show )
+	{
+		// Transfer the task to the main thread as a Runnable
+		mSingleton.runOnUiThread( new ShowTextInputTask( show ) );
 	}
 
 	public static native void initAssetManager(AssetManager assetManager);
@@ -167,10 +185,8 @@ public class SDLActivity extends Activity {
 		mHasFocus = true;
 		mEGLContext = null;
 		System.loadLibrary("first");
-		System.loadLibrary("touch");
 		System.loadLibrary("SDL2");
 		System.loadLibrary("main");
-		//System.loadLibrary("client");
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -299,8 +315,8 @@ public class SDLActivity extends Activity {
 		}
 	}
 
-	public static boolean showTextInput(int x, int y, int w, int h) {
-		return mSingleton.commandHandler.post(new ShowTextInputTask(x, y, w, h));
+	public static boolean showTextInput(int show) {
+		return mSingleton.commandHandler.post(new ShowTextInputTask(show));
 	}
 
 	public static boolean initEGL(int majorVersion, int minorVersion, int[] attribs) {
