@@ -172,7 +172,9 @@ SensorEventListener {
 
                 @Override
                 public void run() {
-                    SDLSurface.this.setSystemUiVisibility(5894);
+			if( SDLActivity.mImmersiveMode != null )
+                       		SDLActivity.mImmersiveMode.apply();
+                    /*SDLSurface.this.setSystemUiVisibility(5894);
                     if (SDLSurface.this.getSystemUiVisibility() != 5894) {
                         this.waitTime += 500;
                         if (this.waitTime < waitTimeMax) {
@@ -184,7 +186,7 @@ SensorEventListener {
                         return;
                     }
                     Log.v((String)"SDL", (String)"removing visibility runnable, successfully set visibility");
-                    SDLSurface.this.visibilityRunnable = null;
+                    SDLSurface.this.visibilityRunnable = null;*/
                 }
             };
             this.getHandler().postDelayed(this.visibilityRunnable, 1500);

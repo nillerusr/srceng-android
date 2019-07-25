@@ -47,6 +47,7 @@ public class SDLActivity extends Activity {
 	public static boolean mHasFocus;
 	public static boolean mIsPaused;
 	public static boolean mIsSurfaceReady;
+	public static boolean keyboardVisible;
 	public static ViewGroup mLayout;
 	private static Thread mSDLThread;
 	private static SDLActivity mSingleton;
@@ -130,11 +131,17 @@ public class SDLActivity extends Activity {
 				mTextEdit.setVisibility( View.VISIBLE );
 				mTextEdit.requestFocus();
 				imm.showSoftInput( mTextEdit, 0 );
+				keyboardVisible = true;
+                                if( SDLActivity.mImmersiveMode != null )
+                                        SDLActivity.mImmersiveMode.apply();
 			}
 			else
 			{
 				mTextEdit.setVisibility( View.GONE );
 				imm.hideSoftInputFromWindow( mTextEdit.getWindowToken(), 0 );
+				keyboardVisible = false;
+                                if( SDLActivity.mImmersiveMode != null )
+                                        SDLActivity.mImmersiveMode.apply();
 			}
 		}
 	}
@@ -243,6 +250,10 @@ public class SDLActivity extends Activity {
 		if (hasFocus) {
 			handleResume();
 		}
+		if( mImmersiveMode != null )
+                {
+                        mImmersiveMode.apply();
+                }
 	}
 
 	protected void onDestroy() {
@@ -575,7 +586,8 @@ class ImmersiveMode_v19 extends ImmersiveMode
 	@Override
 	void apply()
 	{
-		SDLActivity.mDecorView.setSystemUiVisibility(
+		if( !SDLActivity.keyboardVisible )
+			SDLActivity.mDecorView.setSystemUiVisibility(
 				0x00000100   // View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 				| 0x00000200 // View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 				| 0x00000400 // View.SYSTEM_UI_FLAG_LAYOUT_FULSCREEN
@@ -583,5 +595,7 @@ class ImmersiveMode_v19 extends ImmersiveMode
 				| 0x00000004 // View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
 				| 0x00001000 // View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 				);
+		else
+                        SDLActivity.mDecorView.setSystemUiVisibility( 0 );
 	}
 }

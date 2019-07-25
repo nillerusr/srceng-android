@@ -81,6 +81,14 @@ public class LauncherActivity extends Activity {
 		launcherBody.setOrientation(LinearLayout.VERTICAL);
 		launcherBody.setLayoutParams(layparams);
 		launcherBody.setBackgroundColor(0xFF454545);
+
+		ScrollView m_Scroll = new ScrollView(this);
+		m_Scroll.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+			LayoutParams.FILL_PARENT));
+		m_Scroll.addView( launcherBody, new
+			LayoutParams(LayoutParams.FILL_PARENT,
+			LayoutParams.FILL_PARENT) );
+
 		LinearLayout launcherBorder = new LinearLayout(this);
 		launcherBorder.setLayoutParams(layparams);
 		launcherBorder.setBackgroundColor(0xFF555555);
@@ -90,7 +98,7 @@ public class LauncherActivity extends Activity {
 		launcherBorder2.setLayoutParams(layparams);
 		launcherBorder2.setOrientation(LinearLayout.VERTICAL);
 		launcherBorder2.setBackgroundColor(0xFF353535);
-		launcherBorder2.addView(launcherBody);
+		launcherBorder2.addView(m_Scroll);
 		launcherBorder2.setPadding(10,0,10,10);
 		launcherBorder.addView(launcherBorder2);
 		launcherBorder.setPadding(10,0,10,20);
@@ -134,7 +142,10 @@ public class LauncherActivity extends Activity {
 		immersiveMode.setText( "Immersive Mode" );
 
 		RelativeLayout panel = new RelativeLayout(this);
-		panel.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+		LayoutParams panelparams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		panel.setLayoutParams(panelparams);
+		panel.setGravity(Gravity.BOTTOM);
 
 		Button startButton = new Button(this);
 

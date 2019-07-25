@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-          <activity android:configChanges="keyboardHidden|orientation" android:background="@android:color/transparent" android:label="Source Engine" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+          <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize" android:label="Source Engine" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="org.libsdl.app.SDLACTIVITY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
