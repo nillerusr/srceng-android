@@ -12,6 +12,7 @@ import com.nvidia.PowerServiceClient;
 import org.libsdl.app.SDLActivity;
 import android.content.Context;
 import in.celest.*;
+import android.os.Debug;
 // not activity, just for native functions
 
 public abstract class ValveActivity2 extends SDLActivity {
@@ -96,11 +97,11 @@ public abstract class ValveActivity2 extends SDLActivity {
 		setMainPackFilePath(gamepath + "/main.22.com.nvidia.valvesoftware.halflife2.obb");
 		setPatchPackFilePath(gamepath + "/patch.22.com.nvidia.valvesoftware.halflife2.obb");
 		setDataDirectoryPath(appinf.dataDir);
-		setNativeLibPath(appinf.nativeLibraryDir);
+		//setNativeLibPath(appinf.nativeLibraryDir);
 		//Thread preload = new Thread(new PreloadThread());
 		//preload.start();
-		setCacheDirectoryPath(gamepath + "/cache");
-		setDocumentDirectoryPath(gamepath + "/documents");
+		//setCacheDirectoryPath(gamepath + "/cache");
+		setDocumentDirectoryPath(gamepath);
 		setArgs(argv);
 	}
 
