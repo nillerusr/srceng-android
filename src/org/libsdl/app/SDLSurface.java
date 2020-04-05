@@ -77,8 +77,10 @@ SensorEventListener {
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
-	Log.v((String)"SDL", (String)"onKey "+n);
-        if( n == KeyEvent.KEYCODE_BACK )
+       if( n == KeyEvent.KEYCODE_VOLUME_DOWN || n == KeyEvent.KEYCODE_VOLUME_UP )
+            return false;
+
+       if( n == KeyEvent.KEYCODE_BACK )
 			n = KeyEvent.KEYCODE_ESCAPE;
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
