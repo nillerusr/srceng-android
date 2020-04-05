@@ -10,6 +10,15 @@ import android.view.*;
 import android.widget.*;
 import android.widget.LinearLayout.*;
 import org.libsdl.app.*;
+import java.io.File;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.res.AssetManager;
+import android.widget.Toast;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 
 public class LauncherActivity extends Activity {
 	static EditText cmdArgs;
@@ -191,10 +200,63 @@ public class LauncherActivity extends Activity {
 		}
 	}
 
+	void extractTouchIcons(String path)
+	{
+		InputStream is = null;
+		FileOutputStream os = null;
+		try
+		{
+			AssetManager myAssetManager = getApplicationContext().getAssets();
+
+			String[] Files;
+			Files = myAssetManager.list("hl2/materials/vgui/touch"); // массив имен файлов
+			File directory = new File(path+"/hl2/materials/vgui/touch");
+			if (!directory.exists())
+				directory.mkdirs();
+
+			for( String file: Files )
+			{
+				File f = new File(path+"/hl2/materials/vgui/touch/"+file);
+				if( f.exists() )
+					continue;
+
+                                is = this.getAssets().open("hl2/materials/vgui/touch/"+file);
+                                os = new FileOutputStream(path+"/hl2/materials/vgui/touch/"+file);
+                                byte[] buffer = new byte[1024];
+                                int length;
+                                while ((length = is.read(buffer)) > 0)
+                                        os.write(buffer, 0, length);
+
+                                os.close();
+                                is.close();
+                        }
+                }
+		catch( Exception e )
+                {
+			//Log.e( "SRCAPK", "Failed to extract touch icons:" + e.toString() );
+                }
+	}
+
 	public void startSource(View view)
 	{
 		String argv = cmdArgs.getText().toString();
 		String gamepath = GamePath.getText().toString();
+
+		File f = new File(gamepath+"/"+"main.22.com.nvidia.valvesoftware.halflife2.obb");
+		File f2 = new File(gamepath+"/"+"patch.22.com.nvidia.valvesoftware.halflife2.obb");
+		if(!f.exists() || f.isDirectory() || !f2.exists() || f2.isDirectory())
+		{
+			new AlertDialog.Builder(this)
+				.setTitle("Error")
+				.setMessage("There are no obb files on the path "+gamepath)
+				.setPositiveButton("OK", null)
+				//.setIcon(android.R.drawable.ic_dialog_alert)
+				.show();
+			return;
+		}
+
+		extractTouchIcons(gamepath);
+
 		SharedPreferences.Editor editor = mPref.edit();
 		editor.putString("argv", argv);
 		editor.putString("gamepath", gamepath);

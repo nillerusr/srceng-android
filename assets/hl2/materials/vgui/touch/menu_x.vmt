@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\touch\menu_x"
+	"$translucent" 1
+	"$ignorez" 1
+}

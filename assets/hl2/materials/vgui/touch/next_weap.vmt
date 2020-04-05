@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\touch\next_weap"
+	"$translucent" 1
+	"$ignorez" 1
+}

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\touch\shoot"
+	"$translucent" 1
+	"$ignorez" 1
+}

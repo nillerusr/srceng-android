@@ -82,7 +82,6 @@ SensorEventListener {
 			n = KeyEvent.KEYCODE_ESCAPE;
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
-            SDLActivity.showTextInput(1);
             return true;
         }
         if (keyEvent.getAction() == 1) {

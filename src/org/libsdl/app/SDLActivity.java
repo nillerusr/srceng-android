@@ -549,6 +549,8 @@ public class SDLActivity extends Activity {
 			return false;
 		}
 		if ((event.getSource() & 16) != 0) {
+//			Log.v("HL2EVENT", "AXIS_X: " + String.valueOf(event.getAxisValue(MotionEvent.AXIS_X)));
+//			Log.v("HL2EVENT", "AXIS_Y: " + String.valueOf(event.getAxisValue(MotionEvent.AXIS_Y)));
 			onNativeJoystickAxis(0, event.getAxisValue(MotionEvent.AXIS_X));
 			onNativeJoystickAxis(1, event.getAxisValue(MotionEvent.AXIS_Y));
 			onNativeJoystickAxis(3, event.getAxisValue(MotionEvent.AXIS_RZ));
