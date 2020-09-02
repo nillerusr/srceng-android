@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 public class LauncherActivity extends Activity {
 	static EditText cmdArgs;
+	static EditText envArgs;
 	static EditText GamePath;
 	static CheckBox immersiveMode;
 
@@ -131,6 +132,21 @@ public class LauncherActivity extends Activity {
 			cmdArgs.setPadding(5,0,5,5);
 		}
 
+		TextView titleView3 = new TextView(this);
+		titleView3.setLayoutParams(titleviewparams);
+		titleView3.setText("env");
+		titleView3.setTextAppearance(this, android.R.attr.textAppearanceLarge);
+
+		envArgs = new EditText(this);
+		envArgs.setLayoutParams(buttonparams);
+		envArgs.setSingleLine(true);
+		if(sdk < 21)
+		{
+			envArgs.setBackgroundColor(0xFF353535);
+			envArgs.setTextColor(0xFF333333);
+			envArgs.setPadding(5,0,5,5);
+		}
+
 		TextView titleView2 = new TextView(this);
 		titleView2.setLayoutParams(titleviewparams);
 		titleView2.setText("Path to game resources:");
@@ -181,6 +197,8 @@ public class LauncherActivity extends Activity {
 
 		launcherBody.addView(titleView);
 		launcherBody.addView(cmdArgs);
+		launcherBody.addView(titleView3);
+		launcherBody.addView(envArgs);
 		launcherBody.addView(titleView2);
 		launcherBody.addView(GamePath);
 		if( sdk >= 19 )
@@ -193,6 +211,7 @@ public class LauncherActivity extends Activity {
 		setContentView(launcher);
 		mPref = getSharedPreferences("mod", 0);
 		cmdArgs.setText(mPref.getString("argv","+developer 1")); 
+		envArgs.setText(mPref.getString("envs","LIBGL_USEVBO=0")); 
 		GamePath.setText(mPref.getString("gamepath","/sdcard/srceng/")); 
 		if( sdk >= 19 )
 		{
@@ -240,6 +259,7 @@ public class LauncherActivity extends Activity {
 	public void startSource(View view)
 	{
 		String argv = cmdArgs.getText().toString();
+		String envs = envArgs.getText().toString();
 		String gamepath = GamePath.getText().toString();
 
 		File f = new File(gamepath+"/"+"main.22.com.nvidia.valvesoftware.halflife2.obb");
@@ -259,6 +279,7 @@ public class LauncherActivity extends Activity {
 
 		SharedPreferences.Editor editor = mPref.edit();
 		editor.putString("argv", argv);
+		editor.putString("envs", envs);
 		editor.putString("gamepath", gamepath);
 		if( sdk >= 19 )
 			editor.putBoolean("immersive_mode", immersiveMode.isChecked());

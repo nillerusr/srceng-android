@@ -45,6 +45,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 	public static native int setLibPath( String path );
 	public static native int unsetLibPath( );
 	public static native void setArgs( String args );
+	public static native void setEnv( String env, String value );
 
 	public abstract Class getResourceKeys();
 
@@ -63,6 +64,20 @@ public abstract class ValveActivity2 extends SDLActivity {
 	public static byte[] gpgsDownload(String urlString)
 	{
 		return new byte[0];
+	}
+
+	public static void parseEnvs(String str)
+	{
+		String[] splited = str.split("\\s+");
+		for( String i : splited )
+		{
+			String ass[] = i.split("=");
+			if( ass.length > 1)
+			{
+				Log.v("ValveActivity2", "setEnv("+ass[0]+","+ass[1]+")");
+				setEnv(ass[0], ass[1]);
+			}
+		}
 	}
 
 	static	class PreloadThread implements Runnable {
@@ -94,6 +109,8 @@ public abstract class ValveActivity2 extends SDLActivity {
 		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
 		String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
+		String envs = LauncherActivity.mPref.getString("envs", "LIBGL_USEVBO=0");
+		parseEnvs(envs);
 		setMainPackFilePath(gamepath + "/main.22.com.nvidia.valvesoftware.halflife2.obb");
 		setPatchPackFilePath(gamepath + "/patch.22.com.nvidia.valvesoftware.halflife2.obb");
 		setDataDirectoryPath(appinf.dataDir);
