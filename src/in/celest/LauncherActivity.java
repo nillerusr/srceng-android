@@ -10,20 +10,11 @@ import android.view.*;
 import android.widget.*;
 import android.widget.LinearLayout.*;
 import org.libsdl.app.*;
-import java.io.File;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.res.AssetManager;
-import android.widget.Toast;
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
 
 public class LauncherActivity extends Activity {
 	static EditText cmdArgs;
-	static EditText envArgs;
 	static EditText GamePath;
+	static EditText EnvEdit;
 	static CheckBox immersiveMode;
 
 	public static SharedPreferences mPref;
@@ -132,19 +123,19 @@ public class LauncherActivity extends Activity {
 			cmdArgs.setPadding(5,0,5,5);
 		}
 
-		TextView titleView3 = new TextView(this);
-		titleView3.setLayoutParams(titleviewparams);
-		titleView3.setText("env");
-		titleView3.setTextAppearance(this, android.R.attr.textAppearanceLarge);
+		TextView titleView_env = new TextView(this);
+		titleView_env.setLayoutParams(titleviewparams);
+		titleView_env.setText("env's");
+		titleView_env.setTextAppearance(this, android.R.attr.textAppearanceLarge);
 
-		envArgs = new EditText(this);
-		envArgs.setLayoutParams(buttonparams);
-		envArgs.setSingleLine(true);
+		EnvEdit = new EditText(this);
+		EnvEdit.setLayoutParams(buttonparams);
+		EnvEdit.setSingleLine(true);
 		if(sdk < 21)
 		{
-			envArgs.setBackgroundColor(0xFF353535);
-			envArgs.setTextColor(0xFF333333);
-			envArgs.setPadding(5,0,5,5);
+			EnvEdit.setBackgroundColor(0xFF353535);
+			EnvEdit.setTextColor(0xFF333333);
+			EnvEdit.setPadding(5,0,5,5);
 		}
 
 		TextView titleView2 = new TextView(this);
@@ -197,8 +188,8 @@ public class LauncherActivity extends Activity {
 
 		launcherBody.addView(titleView);
 		launcherBody.addView(cmdArgs);
-		launcherBody.addView(titleView3);
-		launcherBody.addView(envArgs);
+		launcherBody.addView(titleView_env);
+		launcherBody.addView(EnvEdit);
 		launcherBody.addView(titleView2);
 		launcherBody.addView(GamePath);
 		if( sdk >= 19 )
@@ -210,77 +201,25 @@ public class LauncherActivity extends Activity {
 		launcher.addView(panel);
 		setContentView(launcher);
 		mPref = getSharedPreferences("mod", 0);
-		cmdArgs.setText(mPref.getString("argv","+developer 1")); 
-		envArgs.setText(mPref.getString("envs","LIBGL_USEVBO=0")); 
-		GamePath.setText(mPref.getString("gamepath","/sdcard/srceng/")); 
+		cmdArgs.setText(mPref.getString("argv","+developer 1"));
+		GamePath.setText(mPref.getString("gamepath","/sdcard/srceng/"));
+		EnvEdit.setText(mPref.getString("env", "LIBGL_NOVBO=1"));
 		if( sdk >= 19 )
 		{
 			immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
 		}
 	}
 
-	void extractTouchIcons(String path)
-	{
-		InputStream is = null;
-		FileOutputStream os = null;
-		try
-		{
-			AssetManager myAssetManager = getApplicationContext().getAssets();
-
-			String[] Files;
-			Files = myAssetManager.list("hl2/materials/vgui/touch"); // массив имен файлов
-			File directory = new File(path+"/hl2/materials/vgui/touch");
-			if (!directory.exists())
-				directory.mkdirs();
-
-			for( String file: Files )
-			{
-				File f = new File(path+"/hl2/materials/vgui/touch/"+file);
-				if( f.exists() )
-					continue;
-
-                                is = this.getAssets().open("hl2/materials/vgui/touch/"+file);
-                                os = new FileOutputStream(path+"/hl2/materials/vgui/touch/"+file);
-                                byte[] buffer = new byte[1024];
-                                int length;
-                                while ((length = is.read(buffer)) > 0)
-                                        os.write(buffer, 0, length);
-
-                                os.close();
-                                is.close();
-                        }
-                }
-		catch( Exception e )
-                {
-			//Log.e( "SRCAPK", "Failed to extract touch icons:" + e.toString() );
-                }
-	}
-
 	public void startSource(View view)
 	{
 		String argv = cmdArgs.getText().toString();
-		String envs = envArgs.getText().toString();
 		String gamepath = GamePath.getText().toString();
-
-		File f = new File(gamepath+"/"+"main.22.com.nvidia.valvesoftware.halflife2.obb");
-		File f2 = new File(gamepath+"/"+"patch.22.com.nvidia.valvesoftware.halflife2.obb");
-		if(!f.exists() || f.isDirectory() || !f2.exists() || f2.isDirectory())
-		{
-			new AlertDialog.Builder(this)
-				.setTitle("Error")
-				.setMessage("There are no obb files on the path "+gamepath)
-				.setPositiveButton("OK", null)
-				//.setIcon(android.R.drawable.ic_dialog_alert)
-				.show();
-			return;
-		}
-
-		extractTouchIcons(gamepath);
-
+		String env = EnvEdit.getText().toString();
 		SharedPreferences.Editor editor = mPref.edit();
 		editor.putString("argv", argv);
-		editor.putString("envs", envs);
 		editor.putString("gamepath", gamepath);
+		editor.putString("env", env);
+
 		if( sdk >= 19 )
 			editor.putBoolean("immersive_mode", immersiveMode.isChecked());
 		else

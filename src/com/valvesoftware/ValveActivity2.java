@@ -13,6 +13,7 @@ import org.libsdl.app.SDLActivity;
 import android.content.Context;
 import in.celest.*;
 import android.os.Debug;
+import com.valvesoftware.GameInfo;
 // not activity, just for native functions
 
 public abstract class ValveActivity2 extends SDLActivity {
@@ -45,7 +46,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 	public static native int setLibPath( String path );
 	public static native int unsetLibPath( );
 	public static native void setArgs( String args );
-	public static native void setEnv( String env, String value );
+	public static native void setGame( String game );
 
 	public abstract Class getResourceKeys();
 
@@ -66,60 +67,30 @@ public abstract class ValveActivity2 extends SDLActivity {
 		return new byte[0];
 	}
 
-	public static void parseEnvs(String str)
+	public static void setEnvs(String str)
 	{
 		String[] splited = str.split("\\s+");
 		for( String i : splited )
 		{
 			String ass[] = i.split("=");
 			if( ass.length > 1)
-			{
-				Log.v("ValveActivity2", "setEnv("+ass[0]+","+ass[1]+")");
-				setEnv(ass[0], ass[1]);
-			}
+				setenv(ass[0], ass[1], 1);
 		}
 	}
 
-	static	class PreloadThread implements Runnable {
-		PreloadThread() {
-		}
-
-		public void run() {
-			try {
-				Thread.sleep(2000);
-				for (String libname : new String[]{"androidwrapper", "tier0", "tierhook" , "vstdlib", "togl", "SDL2", "steam_api", "datacache", "engine", "filesystem_stdio", "GameUI", "inputsystem", "launcher", "materialsystem", "scenefilecache", "ServerBrowser", "soundemittersystem", "studiorender", "vguimatsurface", "video_services", "vphysics", "vgui2", "shaderapidx9", "stdshader_dx9", "client", "server"}) {
-					Log.v("ValveActivity2", "Loading " + libname + "...");
-					System.loadLibrary(libname);
-				}
-			} catch (Exception e) {
-				Log.e("ValveActivity", "Error loading library: " + e);
-			}
-			// is it really used? Native part unimplemented on tn8
-/*				mPowerServiceClient = new PowerServiceClient();
-	int[] powerData = new int[0];
-
-	mPowerServiceClient.sendPowerHint(6, powerData);
-	mPowerServiceClient.sendPowerHint(2, powerData);
-	mPowerServiceClient.sendPowerHint(12, powerData);*/
-
-		}
-	}
 	public static void initNatives()
 	{
 		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
 		String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
-		String envs = LauncherActivity.mPref.getString("envs", "LIBGL_USEVBO=0");
-		parseEnvs(envs);
-		setMainPackFilePath(gamepath + "/main.22.com.nvidia.valvesoftware.halflife2.obb");
-		setPatchPackFilePath(gamepath + "/patch.22.com.nvidia.valvesoftware.halflife2.obb");
+		String env = LauncherActivity.mPref.getString("env", "LIBGL_NOVBO=1");
+		setMainPackFilePath(gamepath + "/" + GameInfo.main_obb);
+		setPatchPackFilePath(gamepath + "/" + GameInfo.patch_obb);
+		setGame(GameInfo.mod);
 		setDataDirectoryPath(appinf.dataDir);
-		//setNativeLibPath(appinf.nativeLibraryDir);
-		//Thread preload = new Thread(new PreloadThread());
-		//preload.start();
-		//setCacheDirectoryPath(gamepath + "/cache");
 		setDocumentDirectoryPath(gamepath);
 		setArgs(argv);
+		setEnvs(env);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
