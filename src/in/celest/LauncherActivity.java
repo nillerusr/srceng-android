@@ -203,7 +203,7 @@ public class LauncherActivity extends Activity {
 		mPref = getSharedPreferences("mod", 0);
 		cmdArgs.setText(mPref.getString("argv","+developer 1"));
 		GamePath.setText(mPref.getString("gamepath","/sdcard/srceng/"));
-		EnvEdit.setText(mPref.getString("env", "LIBGL_NOVBO=1"));
+		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
 		if( sdk >= 19 )
 		{
 			immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));

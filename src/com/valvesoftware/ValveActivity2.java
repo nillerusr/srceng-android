@@ -83,7 +83,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
 		String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
-		String env = LauncherActivity.mPref.getString("env", "LIBGL_NOVBO=1");
+		String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
 		setMainPackFilePath(gamepath + "/" + GameInfo.main_obb);
 		setPatchPackFilePath(gamepath + "/" + GameInfo.patch_obb);
 		setGame(GameInfo.mod);
