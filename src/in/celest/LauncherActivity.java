@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import com.valvesoftware.GameInfo;
+import android.util.Log;
 
 public class LauncherActivity extends Activity {
 	static EditText cmdArgs;
