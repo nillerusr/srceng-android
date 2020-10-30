@@ -1,101 +1,155 @@
 package com.valvesoftware;
 
-import android.content.Intent;
-import android.content.Context;
 import android.app.Activity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.util.Log;
-import android.view.Display;
 import android.graphics.Point;
+import android.os.Bundle;
+import android.view.Display;
 import com.nvidia.PowerServiceClient;
+import java.util.HashMap;
+import java.util.Locale;
 import org.libsdl.app.SDLActivity;
-import android.content.Context;
-import in.celest.*;
-import android.os.Debug;
-import com.valvesoftware.GameInfo;
-// not activity, just for native functions
+import in.celest.LauncherActivity;
 
 public abstract class ValveActivity2 extends SDLActivity {
-	private static  PowerServiceClient mPowerServiceClient;
-	private static  ValveActivity2 mSingleton;
-	public static native void clientCommand(String clientCmd); // a1batross. Requires wrapped libclient. Thread-safe.
-	public static native boolean isGameUIActive(); // a1batross. Requires wrapped libclient. 
-	public static native boolean shouldDrawControls(); // a1batross. Requires wrapped libclient. 
+    public static int mHeight;
+    private static PowerServiceClient mPowerServiceClient;
+    private static ValveActivity2 mSingleton;
+    public static int mWidth;
 
-	public static native void saveGame();
+    public static native void TouchEvent(int i, float f, float f2, int i2);
 
-	public static native void setCacheDirectoryPath(String str);
+    public static native void clientCommand(String str);
 
-	public static native void setDocumentDirectoryPath(String str);
+    public static native boolean isGameUIActive();
 
-	public static native void setDropMip(int i);
+    private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
-	public static native void setMainPackFilePath(String str);
+    public static native void saveGame();
 
-	public static native void setPatchPackFilePath(String str);
+    public static native void setArgs(String str);
 
-	public static native void setNativeLibPath(String str);
+    public static native void setCacheDirectoryPath(String str);
 
-	public static native void setDataDirectoryPath(String str);
+    public static native void setDataDirectoryPath(String str);
 
-	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
+    public static native void setDocumentDirectoryPath(String str);
 
-	public static native void TouchEvent( int fingerid, int x, int y, int action );
-	public static native int setenv( String name, String value, int overwrire );
-	public static native int setLibPath( String path );
-	public static native int unsetLibPath( );
-	public static native void setArgs( String args );
-	public static native void setGame( String game );
+    public static native void setDropMip(int i);
 
-	public abstract Class getResourceKeys();
+    public static native void setGame(String str);
 
-	public abstract String getSourceGame();
-	public static int mWidth, mHeight;
+    public static native void setLanguage(String str);
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                mWidth = size.x;
-                mHeight = size.y;
-	}
+    public static native int setLibPath(String str);
 
-	public static byte[] gpgsDownload(String urlString)
-	{
-		return new byte[0];
-	}
+    public static native void setMainPackFilePath(String str);
 
-	public static void setEnvs(String str)
-	{
-		String[] splited = str.split("\\s+");
-		for( String i : splited )
-		{
-			String ass[] = i.split("=");
-			if( ass.length > 1)
-				setenv(ass[0], ass[1], 1);
-		}
-	}
+    public static native void setNativeLibPath(String str);
 
-	public static void initNatives()
-	{
-		ApplicationInfo appinf = getContext().getApplicationInfo();
-		String gamepath = LauncherActivity.mPref.getString("gamepath", "/sdcard/srceng/");
-		String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
-		String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
-		setMainPackFilePath(gamepath + "/" + GameInfo.main_obb);
-		setPatchPackFilePath(gamepath + "/" + GameInfo.patch_obb);
-		setGame(GameInfo.mod);
-		setDataDirectoryPath(appinf.dataDir);
-		setDocumentDirectoryPath(gamepath);
-		setArgs(argv);
-		setEnvs(env);
-	}
+    public static native void setPatchPackFilePath(String str);
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		nativeOnActivityResult(this, requestCode, resultCode, data);
-	}
+    public static native int setenv(String str, String str2, int i);
+
+    public static native boolean shouldDrawControls();
+
+    public static native void showTouch(boolean z);
+
+    public static native int unsetLibPath();
+
+    public abstract Class getResourceKeys();
+
+    public abstract String getSourceGame();
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        mWidth = size.x;
+        mHeight = size.y;
+    }
+
+    public static byte[] gpgsDownload(String urlString) {
+        return new byte[0];
+    }
+
+    public static void setEnvs(String str) {
+        for (String i : str.split("\\s+")) {
+            String[] ass = i.split("=");
+            if (ass.length > 1) {
+                setenv(ass[0], ass[1], 1);
+            }
+        }
+    }
+
+    public static void initNatives() {
+        ApplicationInfo appinf = getContext().getApplicationInfo();
+        String gamepath = LauncherActivity.mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
+        String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
+        String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
+        setMainPackFilePath(gamepath + "/" + GameInfo.main_obb);
+        setPatchPackFilePath(gamepath + "/" + GameInfo.patch_obb);
+        setGame(GameInfo.mod);
+        setDataDirectoryPath(appinf.dataDir);
+        showTouch(LauncherActivity.mPref.getBoolean("show_touch", true));
+        String lang = new HashMap<String, String>() {
+            {
+                put("rus", "russian");
+                put("bul", "bulgarian");
+                put("cze", "czech");
+                put("ces", "czech");
+                put("dan", "danish");
+                put("dum", "dutch");
+                put("dut", "dutch");
+                put("nld", "dutch");
+                put("fin", "finnish");
+                put("gem", "german");
+                put("ger", "german");
+                put("deu", "german");
+                put("grc", "greek");
+                put("gre", "greek");
+                put("ell", "greek");
+                put("hun", "hungarian");
+                put("ita", "italian");
+                put("jpn", "japanese");
+                put("kor", "korean");
+                put("nno", "norwegian");
+                put("nob", "norwegian");
+                put("nor", "norwegian");
+                put("pol", "polish");
+                put("cpp", "portuguese");
+                put("por", "portuguese");
+                put("rum", "romanian");
+                put("ron", "romanian");
+                put("rup", "romanian");
+                put("spa", "spanish");
+                put("swe", "swedish");
+                put("chi", "tchinese");
+                put("zho", "tchinese");
+                put("chi", "tchinese");
+                put("tha", "thai");
+                put("tur", "turkish");
+                put("crh", "turkish");
+                put("ota", "turkish");
+            }
+        }.get(Locale.getDefault().getISO3Language());
+        if (lang != null) {
+            setLanguage(lang);
+        }
+        if (LauncherActivity.mPref.getBoolean("rodir", false)) {
+            setDocumentDirectoryPath(LauncherActivity.getADataDir());
+        } else {
+            setDocumentDirectoryPath(gamepath);
+        }
+        setArgs(argv);
+        setEnvs(env);
+    }
+
+    /* access modifiers changed from: protected */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        nativeOnActivityResult(this, requestCode, resultCode, data);
+    }
 }
-

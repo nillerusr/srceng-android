@@ -211,6 +211,9 @@ public class SDLActivity extends Activity {
 
 		if( SDLActivity.mImmersiveMode != null )
 			SDLActivity.mImmersiveMode.apply();
+
+		if (sdk >= 28)
+			getWindow().getAttributes().layoutInDisplayCutoutMode = 1;
 	}
 
 	public static void startSDL() {
