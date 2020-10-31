@@ -9,10 +9,9 @@
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:glEsVersion="0x00020000"/>
-    <supports-screens android:largeScreens="true" android:xlargeScreens="true" />
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17" />
-    <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="Source Engine">
-        <activity android:label="Source Engine" android:name="in.celest.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="21" />
+    <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="Half-Life 2">
+        <activity android:label="Half-Life 2" android:name="in.celest.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,5 +23,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <meta-data android:name="android.max_aspect" android:value="9999.0" />
+        <meta-data android:name="android.allow_multiple_resumed_activities" android:value="true" />
     </application>
 </manifest>

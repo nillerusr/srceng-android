@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Pattern;
 import org.libsdl.app.SDLActivity;
+import com.nvidia.valvesoftware.halflife2.R;
+import android.widget.LinearLayout.LayoutParams;
 
 public class LauncherActivity extends Activity {
     static EditText EnvEdit;
@@ -70,10 +72,6 @@ public class LauncherActivity extends Activity {
         return path;
     }
 
-    public static String find_main() {
-        return GameInfo.extras_obb;
-    }
-
     /* access modifiers changed from: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,137 +82,68 @@ public class LauncherActivity extends Activity {
         } else {
             super.setTheme(16973829);
         }
-        RelativeLayout relativeLayout = new RelativeLayout(this);
-        launcher = new LinearLayout(this);
-        launcher.setOrientation(1);
-        launcher.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-        launcher.setBackgroundColor(-14342875);
-        LinearLayout.LayoutParams layparams = new LinearLayout.LayoutParams(-1, -1);
-        layparams.setMargins(5, 12, 5, 1);
-        LinearLayout.LayoutParams buttonparams = new LinearLayout.LayoutParams(-1, -2);
+
+        setContentView(R.layout.activity_launcher);
+
+        LinearLayout.LayoutParams buttonparams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         buttonparams.setMargins(10, 20, 10, 20);
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(1);
-        TextView launcherTitle = new TextView(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(-1, -2);
-        layoutParams.setMargins(5, 5, 5, 1);
-        launcherTitle.setLayoutParams(layoutParams);
-        launcherTitle.setText("Source Engine");
-        launcherTitle.setTextAppearance(this, 16842817);
-        launcherTitle.setTextSize(25.0f);
-        launcherTitle.setGravity(1);
-        linearLayout.setPadding(5, 0, 5, -5);
-        launcherTitle.setBackgroundColor(-11184811);
-        RelativeLayout ass = new RelativeLayout(this);
-        ass.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-        launcher.addView(linearLayout);
-        linearLayout.addView(launcherTitle);
-        LinearLayout launcherBody = new LinearLayout(this);
-        launcherBody.setOrientation(1);
-        launcherBody.setLayoutParams(layparams);
-        launcherBody.setBackgroundColor(-12237499);
-        ScrollView m_Scroll = new ScrollView(this);
-        m_Scroll.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-        m_Scroll.setFillViewport(true);
-        LinearLayout launcherBorder = new LinearLayout(this);
-        launcherBorder.setLayoutParams(layparams);
-        launcherBorder.setBackgroundColor(-11184811);
-        launcherBorder.setOrientation(1);
-        LinearLayout launcherBorder2 = new LinearLayout(this);
-        launcherBorder2.setLayoutParams(layparams);
-        launcherBorder2.setOrientation(1);
-        launcherBorder2.setBackgroundColor(-13290187);
-        launcherBorder2.addView(m_Scroll);
-        launcherBorder2.setPadding(10, 10, 10, 10);
-        launcherBorder.addView(launcherBorder2);
-        launcherBorder.setPadding(10, 0, 10, 10);
-        m_Scroll.addView(launcherBody);
-        RelativeLayout relativeLayout2 = new RelativeLayout(this);
-        RelativeLayout.LayoutParams layp = new RelativeLayout.LayoutParams(-1, -1);
-        layp.addRule(2, relativeLayout.getId());
-        relativeLayout2.setLayoutParams(layp);
-        relativeLayout2.addView(launcherBorder);
-        ass.addView(relativeLayout2);
-        LinearLayout.LayoutParams titleviewparams = new LinearLayout.LayoutParams(-1, -2);
+
+        LinearLayout.LayoutParams titleviewparams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         titleviewparams.setMargins(13, 0, 0, 0);
+
+
+        LinearLayout body = (LinearLayout)findViewById(R.id.body);
+
         TextView textView = new TextView(this);
         textView.setLayoutParams(titleviewparams);
         textView.setText("Command-line arguments");
-        textView.setTextAppearance(this, 16842816);
+        textView.setTextAppearance(this, android.R.attr.textAppearanceMedium);
+
         cmdArgs = new EditText(this);
         cmdArgs.setLayoutParams(buttonparams);
         cmdArgs.setSingleLine(true);
-        if (sdk < 21) {
-            cmdArgs.setBackgroundColor(-13290187);
-            cmdArgs.setTextColor(-13421773);
-            cmdArgs.setPadding(5, 0, 5, 5);
-        }
+
         TextView textView2 = new TextView(this);
         textView2.setLayoutParams(titleviewparams);
         textView2.setText("env's");
-        textView2.setTextAppearance(this, 16842816);
+        textView2.setTextAppearance(this, android.R.attr.textAppearanceMedium);
+
         EnvEdit = new EditText(this);
         EnvEdit.setLayoutParams(buttonparams);
         EnvEdit.setSingleLine(true);
-        if (sdk < 21) {
-            EnvEdit.setBackgroundColor(-13290187);
-            EnvEdit.setTextColor(-13421773);
-            EnvEdit.setPadding(5, 0, 5, 5);
-        }
+
         TextView textView3 = new TextView(this);
         textView3.setLayoutParams(titleviewparams);
         textView3.setText("Path to game resources:");
-        textView3.setTextAppearance(this, 16842816);
+        textView3.setTextAppearance(this, android.R.attr.textAppearanceMedium);
+
         GamePath = new EditText(this);
         GamePath.setLayoutParams(buttonparams);
         GamePath.setSingleLine(true);
-        if (sdk < 21) {
-            GamePath.setBackgroundColor(-13290187);
-            GamePath.setTextColor(-13421773);
-            GamePath.setPadding(5, 0, 5, 5);
-        }
+
         immersiveMode = new CheckBox(this);
         immersiveMode.setLayoutParams(buttonparams);
         immersiveMode.setText("Immersive Mode");
+
         showtouch = new CheckBox(this);
         showtouch.setLayoutParams(buttonparams);
         showtouch.setText("Show Touch");
-        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(-1, -2);
-        layoutParams2.height = 50;
-        layoutParams2.addRule(12);
-        relativeLayout.setLayoutParams(layoutParams2);
-        Button button = new Button(this);
-        button.setText(styleButtonString("Launch Source!"));
-        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(-1, -2, 1.0f);
-        button.setLayoutParams(buttonParams);
-        if (sdk < 21) {
-            button.getBackground().setAlpha(96);
-            button.getBackground().invalidateSelf();
-            button.setTextColor(-1);
-            button.setTextAppearance(this, 16842816);
-            button.setTextSize(20.0f);
-        }
+
+        Button button = (Button)findViewById(R.id.button_launch);
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 LauncherActivity.this.startSource(v);
             }
         });
-        Button aboutButton = new Button(this);
-        aboutButton.setText(styleButtonString("About"));
-        aboutButton.setLayoutParams(buttonParams);
-        if (sdk < 21) {
-            aboutButton.getBackground().setAlpha(96);
-            aboutButton.getBackground().invalidateSelf();
-            aboutButton.setTextColor(-1);
-            aboutButton.setTextAppearance(this, 16842816);
-            aboutButton.setTextSize(20.0f);
-        }
+
+        Button aboutButton = (Button) findViewById(R.id.button_about);
         aboutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Dialog dialog = new Dialog(LauncherActivity.this);
                 dialog.setTitle("About");
                 ScrollView scroll = new ScrollView(LauncherActivity.this);
-                scroll.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+                scroll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 TextView text = new TextView(LauncherActivity.this);
                 text.setText("\nSpecial thanks to:\nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nnillerusr for port\nvalve for source engine\n\nNot for commercial use!\n\nDonate: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr");
                 text.setLinksClickable(true);
@@ -224,24 +153,18 @@ public class LauncherActivity extends Activity {
                 dialog.show();
             }
         });
-        launcherBody.addView(textView);
-        launcherBody.addView(cmdArgs);
-        launcherBody.addView(textView2);
-        launcherBody.addView(EnvEdit);
-        launcherBody.addView(textView3);
-        launcherBody.addView(GamePath);
+
+        body.addView(textView);
+        body.addView(cmdArgs);
+        body.addView(textView2);
+        body.addView(EnvEdit);
+        body.addView(textView3);
+        body.addView(GamePath);
+        body.addView(showtouch);
         if (sdk >= 19) {
-            launcherBody.addView(immersiveMode);
+            body.addView(immersiveMode);
         }
-        launcherBody.addView(showtouch);
-        LinearLayout linearLayout2 = new LinearLayout(this);
-        linearLayout2.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
-        relativeLayout.addView(linearLayout2);
-        linearLayout2.addView(aboutButton);
-        linearLayout2.addView(button);
-        ass.addView(relativeLayout);
-        launcher.addView(ass);
-        setContentView(launcher);
+
         mPref = getSharedPreferences("mod", 0);
         cmdArgs.setText(mPref.getString("argv", "+developer 1"));
         GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
