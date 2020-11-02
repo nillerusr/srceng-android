@@ -58,6 +58,8 @@ public abstract class ValveActivity2 extends SDLActivity {
 
     public static native int unsetLibPath();
 
+    public static native void setExtrasPackFilePath(String str);
+
     public abstract Class getResourceKeys();
 
     public abstract String getSourceGame();
@@ -89,9 +91,7 @@ public abstract class ValveActivity2 extends SDLActivity {
         String gamepath = LauncherActivity.mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
         String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
         String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
-        setMainPackFilePath(gamepath + "/" + GameInfo.main_obb);
-        setPatchPackFilePath(gamepath + "/" + GameInfo.patch_obb);
-        setGame(GameInfo.mod);
+	int game = LauncherActivity.mPref.getInt("game", GameInfo.GAME_HL2);
         setDataDirectoryPath(appinf.dataDir);
         showTouch(LauncherActivity.mPref.getBoolean("show_touch", true));
         String lang = new HashMap<String, String>() {
@@ -145,6 +145,40 @@ public abstract class ValveActivity2 extends SDLActivity {
         }
         setArgs(argv);
         setEnvs(env);
+
+        if( game == GameInfo.GAME_HL2 )
+        {
+            setMainPackFilePath(gamepath + "/" + GameInfo.hl2.main_obb);
+            setPatchPackFilePath(gamepath + "/" + GameInfo.hl2.patch_obb);
+            setGame(GameInfo.hl2.mod);
+            setenv("LIBRARY_SERVER", GameInfo.hl2.server, 1);
+            setenv("LIBRARY_CLIENT", GameInfo.hl2.client, 1);
+        }
+        else if( game == GameInfo.GAME_HL2EP1 )
+        {
+            setMainPackFilePath(gamepath + "/" + GameInfo.hl2ep1.main_obb);
+            setPatchPackFilePath(gamepath + "/" + GameInfo.hl2ep1.patch_obb);
+            setGame(GameInfo.hl2ep1.mod);
+            setenv("LIBRARY_SERVER", GameInfo.hl2ep1.server, 1);
+            setenv("LIBRARY_CLIENT", GameInfo.hl2ep1.client, 1);
+        }
+        else if( game == GameInfo.GAME_HL2EP2 )
+        {
+            setMainPackFilePath(gamepath + "/" + GameInfo.hl2ep2.main_obb);
+            setPatchPackFilePath(gamepath + "/" + GameInfo.hl2ep2.patch_obb);
+            setExtrasPackFilePath(gamepath + "/" + GameInfo.hl2ep2.extras_obb);
+            setGame(GameInfo.hl2ep2.mod);
+            setenv("LIBRARY_SERVER", GameInfo.hl2ep2.server, 1);
+            setenv("LIBRARY_CLIENT", GameInfo.hl2ep2.client, 1);
+        }
+        else if( game == GameInfo.GAME_PORTAL )
+        {
+            setMainPackFilePath(gamepath + "/" + GameInfo.portal.main_obb);
+            setPatchPackFilePath(gamepath + "/" + GameInfo.portal.patch_obb);
+            setGame(GameInfo.portal.mod);
+            setenv("LIBRARY_SERVER", GameInfo.portal.server, 1);
+            setenv("LIBRARY_CLIENT", GameInfo.portal.client, 1);
+        }
     }
 
     /* access modifiers changed from: protected */
