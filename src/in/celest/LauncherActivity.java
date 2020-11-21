@@ -43,6 +43,7 @@ public class LauncherActivity extends Activity {
     public static SharedPreferences mPref;
     public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
     static CheckBox showtouch;
+    static CheckBox useVolumeButtons;
     static Spinner spin;
 
     public static native boolean checkCert(String cert);
@@ -179,6 +180,10 @@ public class LauncherActivity extends Activity {
         showtouch.setLayoutParams(buttonparams);
         showtouch.setText("Show Touch");
 
+        useVolumeButtons = new CheckBox(this);
+        useVolumeButtons.setLayoutParams(buttonparams);
+        useVolumeButtons.setText("Use volume buttons");
+
         Button button = (Button)findViewById(R.id.button_launch);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +218,7 @@ public class LauncherActivity extends Activity {
         body.addView(textView4);
 	body.addView(spin);
         body.addView(showtouch);
+        body.addView(useVolumeButtons);
         if (sdk >= 19) {
             body.addView(immersiveMode);
         }
@@ -226,6 +232,7 @@ public class LauncherActivity extends Activity {
             immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
         }
         showtouch.setChecked(mPref.getBoolean("show_touch", true));
+        useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", true));
     }
 
     /* access modifiers changed from: package-private */
@@ -349,6 +356,7 @@ public class LauncherActivity extends Activity {
                 editor.putBoolean("immersive_mode", false);
             }
             editor.putBoolean("show_touch", showtouch.isChecked());
+            editor.putBoolean("use_volume_buttons", useVolumeButtons.isChecked());
             editor.commit();
             Intent intent = new Intent(this, SDLActivity.class);
             intent.addFlags(268435456);
