@@ -232,7 +232,7 @@ public class LauncherActivity extends Activity {
             immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
         }
         showtouch.setChecked(mPref.getBoolean("show_touch", true));
-        useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", true));
+        useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
     }
 
     /* access modifiers changed from: package-private */
