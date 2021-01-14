@@ -79,8 +79,28 @@ public class SDLSurface
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
-        if(( n == KeyEvent.KEYCODE_VOLUME_DOWN || n == KeyEvent.KEYCODE_VOLUME_UP) && !LauncherActivity.mPref.getBoolean( "use_volume_buttons", false ))
-            return false;
+                if(( n == KeyEvent.KEYCODE_VOLUME_DOWN || n == KeyEvent.KEYCODE_VOLUME_UP) && !LauncherActivity.mPref.getBoolean( "use_volume_buttons", false ))
+                return false;
+                if( n == KeyEvent.KEYCODE_VOLUME_DOWN){
+                        if (keyEvent.getAction() == 0) {
+                                SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_BUTTON_R2);
+                                return true;
+                        }
+                        if (keyEvent.getAction() == 1) {
+                                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_BUTTON_R2);
+                                return true;
+                        }
+                }
+                if(n == KeyEvent.KEYCODE_VOLUME_UP){
+                        if (keyEvent.getAction() == 0) {
+                                SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_BUTTON_L2);
+                                return true;
+                        }
+                        if (keyEvent.getAction() == 1) {
+                                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_BUTTON_L2);
+                                return true;
+                        }
+                } 
 
         if( n == KeyEvent.KEYCODE_BACK )
             n = KeyEvent.KEYCODE_ESCAPE;
