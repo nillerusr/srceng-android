@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="78" android:versionName="78" package="com.nvidia.valvesoftware.halflife2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="78" android:versionName="78" package="com.nvidia.valvesoftware.source" android:allowAudioPlaybackCapture="true">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -9,9 +9,9 @@
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:glEsVersion="0x00020000"/>
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="21" />
-    <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="Half-Life 2">
-        <activity android:label="Half-Life 2" android:name="in.celest.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29" />
+    <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="Source Engine">
+        <activity android:label="Source Engine" android:name="in.celest.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

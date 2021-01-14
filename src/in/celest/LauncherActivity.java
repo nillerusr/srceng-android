@@ -18,6 +18,7 @@ import android.widget.*;
 import com.valvesoftware.GameInfo;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,12 +26,14 @@ import java.io.InputStream;
 import java.util.regex.Pattern;
 import org.libsdl.app.SDLActivity;
 import android.content.pm.PackageManager;
-import com.nvidia.valvesoftware.halflife2.R;
+import com.nvidia.valvesoftware.source.R;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.pm.PackageInfo;
 import android.content.pm.Signature;
 import java.security.MessageDigest;
 import android.util.Base64;
+import android.Manifest;
+
 
 public class LauncherActivity extends Activity {
     static EditText EnvEdit;
@@ -45,6 +48,30 @@ public class LauncherActivity extends Activity {
     static CheckBox showtouch;
     static CheckBox useVolumeButtons;
     static Spinner spin;
+
+    final static int REQUEST_PERMISSIONS = 42;
+
+    public void applyPermissions( final String permissions[], final int code )
+    {
+        List<String> requestPermissions = new ArrayList<String>();
+        for( int i = 0; i < permissions.length; i++ )
+        {
+	    if( checkSelfPermission(permissions[i]) != PackageManager.PERMISSION_GRANTED )
+            {
+                requestPermissions.add(permissions[i]);
+            }
+        }
+
+        if( !requestPermissions.isEmpty() )
+        {
+            String[] requestPermissionsArray = new String[requestPermissions.size()];
+            for( int i = 0; i < requestPermissions.size(); i++ )
+            {
+                requestPermissionsArray[i] = requestPermissions.get(i);
+            }
+            requestPermissions(requestPermissionsArray, code);
+        }
+    }
 
     public static native boolean checkCert(String cert);
 
@@ -118,6 +145,9 @@ public class LauncherActivity extends Activity {
         } else {
             super.setTheme(16973829);
         }
+
+
+	
 
         setContentView(R.layout.activity_launcher);
 
@@ -233,6 +263,11 @@ public class LauncherActivity extends Activity {
         }
         showtouch.setChecked(mPref.getBoolean("show_touch", true));
         useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
+
+	// permissions check
+        if( sdk >= 23 ) {
+            applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, REQUEST_PERMISSIONS );
+        }
     }
 
     /* access modifiers changed from: package-private */
