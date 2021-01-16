@@ -103,7 +103,8 @@ public class SDLSurface
                 } 
 
         if( n == KeyEvent.KEYCODE_BACK )
-            n = KeyEvent.KEYCODE_ESCAPE;
+            n = KeyEvent.KEYCODE_BUTTON_B;
+
         if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
             return true;
