@@ -76,6 +76,18 @@ public class LauncherActivity extends Activity {
 		}
 	}
 
+	public void onRequestPermissionsResult( int requestCode,  String[] permissions,  int[] grantResults )
+	{
+		if( requestCode == REQUEST_PERMISSIONS ) 
+		{
+			if( grantResults[0] == PackageManager.PERMISSION_DENIED ) 
+			{
+				Toast.makeText( this, "Without permissions game won't work", Toast.LENGTH_LONG ).show();
+				finish();
+			}
+		}
+	}
+
 	public SpannableString styleButtonString(String str) {
 		if (sdk < 21) {
 			str = str.toUpperCase();

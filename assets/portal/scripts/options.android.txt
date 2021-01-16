@@ -136,6 +136,47 @@
 		"sliderhome"	"center"
 	}
 	
+	"Bumpmap"
+	{
+		"name"		"Bump mapping"
+		"convar"	"mat_bumpmap"
+		"priority"	"0780"
+		"type"		"choice"
+		"choices"
+		{
+			"Off"		"0"
+			"On"		"1"
+		}
+	}
+
+	"Shadows"
+	{
+		"name"		"Shadows"
+		"convar"	"r_shadowrendertotexture"
+		"priority"	"0781"
+		"type"		"choice"
+		"choices"
+		{
+			"Off"		"0"
+			"On"		"1"
+		}
+	}
+
+	"texturedetail"
+	{
+		"name"		"Texture detail"
+		"convar"	"mat_picmip"
+		"priority"	"0782"
+		"type"		"choice"
+		"choices"
+		{
+			"High"		"0"
+			"Medium"	"1"
+			"Low"		"2"
+			"Very low"	"3"
+		}
+	}
+
 	"Cheats"
 	{
 		"dev"		"1"
