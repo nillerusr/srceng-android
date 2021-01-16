@@ -33,6 +33,8 @@ import android.content.pm.Signature;
 import java.security.MessageDigest;
 import android.util.Base64;
 import android.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class LauncherActivity extends Activity {
@@ -48,6 +50,7 @@ public class LauncherActivity extends Activity {
 	static CheckBox showtouch;
 	static CheckBox useVolumeButtons;
 	static Spinner spin;
+	public static String found_main_obb = null;
 
 	final static int REQUEST_PERMISSIONS = 42;
 
@@ -250,7 +253,7 @@ public class LauncherActivity extends Activity {
 		}
 
 		mPref = getSharedPreferences("mod", 0);
-		cmdArgs.setText(mPref.getString("argv", "+developer 1"));
+		cmdArgs.setText(mPref.getString("argv", "-console"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
 		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
 		spin.setSelection(mPref.getInt("game", GameInfo.GAME_HL2));
@@ -321,11 +324,48 @@ public class LauncherActivity extends Activity {
 		File main_obb = new File(gamepath+"/"+main);
 		File patch_obb = new File(gamepath+"/"+patch);
 		File extras_obb = new File(gamepath+"/"+extras);
-		if (!main_obb.exists() || main_obb.isDirectory() || !patch_obb.exists() || patch_obb.isDirectory() || (extras != null && !extras.trim().isEmpty() && (!extras_obb.exists() || extras_obb.isDirectory())))
+		String missing_obb = "";
+		boolean bCheckFail = false;
+
+		if( !main_obb.exists() || main_obb.isDirectory() )
+		{
+			File fileName = new File(gamepath);
+			File[] fileList = fileName.listFiles();
+				
+			for (File file: fileList)
+			{
+				String fname = file.getName();
+				if( !file.isDirectory() && fname.matches("main.\\d\\d.com.nvidia.valvesoftware.(.*).obb") )
+				{
+					found_main_obb = fname;
+					break;
+				}
+
+			}
+
+			if( found_main_obb == null )
+			{
+				missing_obb += main+"\n";
+				bCheckFail = true;
+			}
+		}
+
+		if( !patch_obb.exists() || patch_obb.isDirectory() )
+		{
+			missing_obb += patch+"\n";
+			bCheckFail = true;
+		}
+		if( extras != null && !extras.trim().isEmpty() && (!extras_obb.exists() || extras_obb.isDirectory()) )
+		{
+			missing_obb += extras+"\n";
+			bCheckFail = true;
+		}
+
+		if( bCheckFail )
 		{
 			new AlertDialog.Builder(this)
 				.setTitle("Error")
-				.setMessage("There are no obb files on the path " + gamepath)
+				.setMessage("There are no\n"+missing_obb+"files on the path " + gamepath)
 				.setPositiveButton("OK", (DialogInterface.OnClickListener) null)
 				.show();
 				return false;

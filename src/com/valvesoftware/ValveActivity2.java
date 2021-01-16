@@ -89,7 +89,7 @@ public abstract class ValveActivity2 extends SDLActivity {
     public static void initNatives() {
         ApplicationInfo appinf = getContext().getApplicationInfo();
         String gamepath = LauncherActivity.mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
-        String argv = LauncherActivity.mPref.getString("argv", "+developer 1");
+        String argv = LauncherActivity.mPref.getString("argv", "-console");
         String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
 	int game = LauncherActivity.mPref.getInt("game", GameInfo.GAME_HL2);
         setDataDirectoryPath(appinf.dataDir);
@@ -179,6 +179,9 @@ public abstract class ValveActivity2 extends SDLActivity {
             setenv("LIBRARY_SERVER", GameInfo.portal.server, 1);
             setenv("LIBRARY_CLIENT", GameInfo.portal.client, 1);
         }
+
+	if( LauncherActivity.found_main_obb != null )
+            setMainPackFilePath(gamepath + "/" + LauncherActivity.found_main_obb);
     }
 
     /* access modifiers changed from: protected */
