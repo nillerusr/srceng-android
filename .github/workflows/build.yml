@@ -20,6 +20,8 @@ jobs:
         git clone --depth 1 https://gitlab.com/LostGamer/ndk-binaries
         git clone --depth 1 https://gitlab.com/LostGamer/android-sdk
 
+	sh scripts/workflow.sh
+
         JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ANDROID_HOME=android-sdk/ ant debug
 
     - name: Upload files
