@@ -20,6 +20,9 @@ jobs:
         git clone --depth 1 https://gitlab.com/LostGamer/ndk-binaries
         git clone --depth 1 https://gitlab.com/LostGamer/android-sdk
         git clone --depth 1 https://github.com/nillerusr/srcsdk
+        cd srcsdk
+        git submodule init && git submodule update
+        cd ../
 
         scripts/workflow.sh
 

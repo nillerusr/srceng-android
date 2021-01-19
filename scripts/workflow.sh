@@ -1,20 +1,33 @@
-#!/bin/sh
+#!/bin/bash
 
 export NDK_HOME=$(pwd)/ndk-binaries
 export PATH=$PATH:$(pwd)/ndk-binaries
+export LIBPATH=$(pwd)/libs/armeabi-v7a
+
+inst()
+{
+	cp $1 $LIBPATH
+}
 
 cd jni/src/tierhook/
 ./build-ndk.sh
-cp libtierhook.so ../../../libs/armeabi-v7a
+inst libtierhook.so
 cd ../../../
 
 cd srcsdk/main
 ./build.sh -j$(nproc --all)
-cp libmain.so ../../libs/armeabi-v7a
+inst libmain.so
+
+cd ../gl4es/
+./build.sh -j$(nproc --all)
+inst libRegal.so
+
 cd ../vinterface_wrapper/client
 ./build-ndk.sh -j$(nproc --all)
-cp libclient.so ../../../libs/armeabi-v7a
+inst libclient.so
+
 cd ../server
 ./build-ndk.sh -j$(nproc --all)
-cp libserver.so ../../../libs/armeabi-v7a
+inst libserver.so
+
 cd ../../../
