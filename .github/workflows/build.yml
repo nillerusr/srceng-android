@@ -27,5 +27,5 @@ jobs:
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        echo "Last 5 changes: \n$(git log -5 --pretty="%B")\n$(curl -s --upload-file bin/srceng-debug.apk https://oshi.at/source_engine.apk/43200 | grep Direct)" > text
+        echo -e "Last 5 changes: \n$(git log -5 --pretty="%B")\n$(curl -s --upload-file bin/srceng-debug.apk https://oshi.at/source_engine.apk/43200 | grep Direct)" > text
         python3 scripts/upload-to-discord.py
