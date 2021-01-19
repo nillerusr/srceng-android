@@ -8,5 +8,13 @@ cd jni/src/tierhook/
 cp libtierhook.so ../../../libs/armeabi-v7a
 cd ../../../
 
-#git clone --depth 1 https://github.com/nillerusr/srcsdk
-
+cd srcsdk/main
+./build.sh -j$(nproc --all)
+cp libmain.so ../../libs/armeabi-v7a
+cd ../vinterface_wrapper/client
+./build-ndk.sh -j$(nproc --all)
+cp libclient.so ../../../libs/armeabi-v7a
+cd ../server
+./build-ndk.sh -j$(nproc --all)
+cp libserver.so ../../../libs/armeabi-v7a
+cd ../../../
