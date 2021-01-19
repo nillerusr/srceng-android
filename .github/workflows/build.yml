@@ -13,11 +13,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: | sudo apt-get update sudo apt install -y make openjdk-8-jdk ant-contrib python-requests
+      run: |
+        sudo apt-get update
+        sudo apt install -y make openjdk-8-jdk ant-contrib python-requests
         git clone --depth 1 https://github.com/LostGamer/ndk-binaries
         git clone --depth 1 https://gitlab.com/LostGamer/android-sdk
 
-	ANDROID_HOME=android-sdk/ ant debug
+        ANDROID_HOME=android-sdk/ ant debug
 
     - name: Upload files
       shell: bash
