@@ -1,17 +1,40 @@
-CC=gcc
-CFLAGS= -O3
-FLAGS= -Wl,--no-undefined -lstdc++ -llog
-LDFLAGS= -shared
+DLLNAME=libtierhook
 
-SOURCES := tierhook.c
-OBJECTS := tierhook.o libtier0.so
+ifeq ($(NDK),1)
+	CC = $(shell $(NDK_PATH)/ndk-which gcc)
+	CXX = $(shell $(NDK_PATH)/ndk-which g++)
+	LD = $(shell $(NDK_PATH)/ndk-which ld)
+	AR = $(shell $(NDK_PATH)/ndk-which ar)
+	LINK = $(shell $(NDK_PATH)/ndk-which g++)
+	STRIP = $(shell $(NDK_PATH)/ndk-which strip)
+else
+	CC=gcc
+endif
 
-TARGET := libtierhook.so
+DLL_SRCDIR=.
 
-all: $(TARGET)
+SRCS_C = tierhook.c
+OBJS += $(patsubst %.c,%.o,$(SRCS_C))
 
+OPTFLAGS=-O2 -fno-rtti -fno-omit-frame-pointer -march=armv7-a -mtune=cortex-a15 -mthumb -mfloat-abi=softfp -mfpu=neon -mcpu=cortex-a9 -pipe -mvectorize-with-neon-quad
+CXXFLAGS=
+CFLAGS=
+
+INCLUDES=-I.
+LDFLAGS = -L../../../libs/armeabi-v7a -Wl,--no-undefined -shared -llog -ltier0 -landroidwrapper
+
+ifeq ($(NDK),1)
+	SYSROOT := "$(NDK_PATH)/platforms/android-$(APP_API_LEVEL)/arch-arm"
+	CFLAGS += "--sysroot=$(SYSROOT)"
+	CXXFLAGS += "--sysroot=$(SYSROOT)"
+	LDFLAGS += -L$(SYSROOT)/usr/lib -Wl,--build-id --sysroot=$(SYSROOT)
+endif
+
+%.o : %.c
+	$(CC) $(OPTFLAGS) $(CFLAGS) $(INCLUDES) $(DEFINES) -c "$<" -o $(PWD)/"$@"
+
+$(DLLNAME).so : $(OBJS)
+	$(CC) -o $(DLLNAME).so $(OPTFLAGS) $(LDFLAGS) $(OBJS) $(LIBS)
 clean:
-	rm -f tierhook.o
-
-$(TARGET) : $(OBJECTS)
-	$(CC) $(FLAGS) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
+	-rm -f $(OBJS)
+	-rm -f $(DLLNAME).so
