@@ -27,4 +27,4 @@ jobs:
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        python3 scripts/upload-to-discord.py "Last changes: $(git log -3 --pretty='\n%B')\n$(curl --upload-file bin/srceng-android.apk https://oshi.at/source_engine.apk/60)"
+        python3 scripts/upload-to-discord.py $'Last changes: $(git log -3 --pretty="\n%B")\n$(curl --upload-file bin/srceng-debug.apk https://oshi.at/source_engine.apk/60)'
