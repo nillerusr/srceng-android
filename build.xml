@@ -27,8 +27,6 @@
 
          -->
     <property file="ant.properties" />
-    <property name="ant.build.javac.source" value="1.6"/>
-    <property name="ant.build.javac.target" value="1.6"/>
 
     <!-- if sdk.dir was not set from one of the property file, then
          get it from the ANDROID_HOME env var.
