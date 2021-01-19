@@ -27,5 +27,5 @@ jobs:
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        echo -e "Last 5 changes: \n$(git log -5 --pretty="%B")\n$(curl -s --upload-file bin/srceng-debug.apk https://oshi.at/source_engine.apk/43200 | grep Direct)" > text
+        echo -e "Commits history: \nhttps://github.com/nillerusr/srceng-android/commits/con-wrappers and https://github.com/nillerusr/srcsdk/commits/master\nBuild: $(curl -s --upload-file bin/srceng-debug.apk https://oshi.at/source_engine-$(date +%Y-%m-%d-%H-%M).apk/43200 | grep Direct)\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
         python3 scripts/upload-to-discord.py
