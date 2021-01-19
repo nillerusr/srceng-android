@@ -15,7 +15,8 @@ jobs:
     - name: Build
       run: |
         sudo apt-get update
-        sudo apt install -y make openjdk-8-jdk ant-contrib python3-requests websocket-client
+        sudo apt install -y make openjdk-8-jdk ant-contrib python3-requests python3-pip
+	sudo pip3 install websocket-client
         git clone --depth 1 https://github.com/LostGamer/ndk-binaries
         git clone --depth 1 https://gitlab.com/LostGamer/android-sdk
 
