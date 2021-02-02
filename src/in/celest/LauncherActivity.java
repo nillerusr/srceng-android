@@ -78,9 +78,9 @@ public class LauncherActivity extends Activity {
 
 	public void onRequestPermissionsResult( int requestCode,  String[] permissions,  int[] grantResults )
 	{
-		if( requestCode == REQUEST_PERMISSIONS ) 
+		if( requestCode == REQUEST_PERMISSIONS )
 		{
-			if( grantResults[0] == PackageManager.PERMISSION_DENIED ) 
+			if( grantResults[0] == PackageManager.PERMISSION_DENIED )
 			{
 				Toast.makeText( this, "Without permissions game won't work", Toast.LENGTH_LONG ).show();
 				finish();
@@ -342,17 +342,20 @@ public class LauncherActivity extends Activity {
 		if( !main_obb.exists() || main_obb.isDirectory() )
 		{
 			File fileName = new File(gamepath);
-			File[] fileList = fileName.listFiles();
-				
-			for (File file: fileList)
+			if( fileName.exists() )
 			{
-				String fname = file.getName();
-				if( !file.isDirectory() && fname.matches("main.\\d\\d.com.nvidia.valvesoftware.(.*).obb") )
-				{
-					found_main_obb = fname;
-					break;
-				}
+				File[] fileList = fileName.listFiles();
 
+				for (File file: fileList)
+				{
+					String fname = file.getName();
+					if( !file.isDirectory() && fname.matches("main.\\d\\d.com.nvidia.valvesoftware.(.*).obb") )
+					{
+						found_main_obb = fname;
+						break;
+					}
+
+				}
 			}
 
 			if( found_main_obb == null )
