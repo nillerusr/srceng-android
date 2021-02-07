@@ -35,11 +35,11 @@ import android.util.Base64;
 import android.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import in.celest.DirchActivity;
 
 public class LauncherActivity extends Activity {
 	static EditText EnvEdit;
-	static EditText GamePath;
+	public static EditText GamePath;
 	public static String PKG_NAME;
 	public static boolean can_write = true;
 	static EditText cmdArgs;
@@ -250,6 +250,17 @@ public class LauncherActivity extends Activity {
 			}
 		});
 
+		Button dirButton = new Button(this);
+		dirButton.setText("Set game directory");
+		dirButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(LauncherActivity.this, DirchActivity.class);
+				intent.addFlags(268435456);
+				startActivity(intent);
+			}
+		});
+
+
 		body.addView(textView);
 		body.addView(cmdArgs);
 		body.addView(textView2);
@@ -258,6 +269,7 @@ public class LauncherActivity extends Activity {
 		body.addView(GamePath);
 		body.addView(textView4);
 		body.addView(spin);
+		body.addView(dirButton);
 		body.addView(showtouch);
 		body.addView(useVolumeButtons);
 		if (sdk >= 19) {

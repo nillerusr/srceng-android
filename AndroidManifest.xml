@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:label="Directory" android:name="in.celest.DirchActivity" android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.DIRCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
           <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize" android:label="Source Engine" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="org.libsdl.app.SDLACTIVITY"/>
