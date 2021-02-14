@@ -77,7 +77,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 
 	public void ListDirectory( String path )
 	{
-
 		TextView header = (TextView)findViewById(R.id.header_txt);
 		File myDirectory = new File(path);
 
@@ -115,7 +114,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		view.setOnTouchListener(this);
 
 		for ( File dir : directories )
-		{	
+		{
 			view = ltInflater.inflate(R.layout.directory, body, false);
 			txt = (TextView)view.findViewById(R.id.dirname);
 			txt.setText(dir.getName());
@@ -128,14 +127,16 @@ public class DirchActivity extends Activity implements OnTouchListener{
 	{
 		List<String> list = new ArrayList<String>();
 		File fileList[] = new File("/storage/").listFiles();
+		if( fileList == null )
+			return list;
+
 		for (File file : fileList)
 		{
-			Log.v("SHIT", file.getAbsolutePath());
 			if(!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath()) && file.isDirectory() && file.canRead())
            		list.add(file.getAbsolutePath());
-        }
-	    return list;
-	} 
+		}
+		return list;
+	}
 
 	/* access modifiers changed from: protected */
 	public void onCreate(Bundle savedInstanceState) {

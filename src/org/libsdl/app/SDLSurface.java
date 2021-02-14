@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import com.valvesoftware.ValveActivity2;
+import java.lang.Math;
 
 import in.celest.LauncherActivity;
 
@@ -32,6 +33,7 @@ public class SDLSurface
     private static SensorManager mSensorManager;
     public static float mWidth;
     public static boolean isTouch = true;
+    public static boolean mUseVolume = false;
 
     final int desiredVisibility = 5894;
     Runnable visibilityRunnable = null;
@@ -54,6 +56,7 @@ public class SDLSurface
                 }
             }
         });
+	this.mUseVolume = LauncherActivity.mPref.getBoolean( "use_volume_buttons", false );
     }
 
     public void enableSensor(int n, boolean bl) {
@@ -79,33 +82,19 @@ public class SDLSurface
     }
 
     public boolean onKey(View view, int n, KeyEvent keyEvent) {
-                if(( n == KeyEvent.KEYCODE_VOLUME_DOWN || n == KeyEvent.KEYCODE_VOLUME_UP) && !LauncherActivity.mPref.getBoolean( "use_volume_buttons", false ))
-                return false;
-                if( n == KeyEvent.KEYCODE_VOLUME_DOWN){
-                        if (keyEvent.getAction() == 0) {
-                                SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_BUTTON_R2);
-                                return true;
-                        }
-                        if (keyEvent.getAction() == 1) {
-                                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_BUTTON_R2);
-                                return true;
-                        }
-                }
-                if(n == KeyEvent.KEYCODE_VOLUME_UP){
-                        if (keyEvent.getAction() == 0) {
-                                SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_BUTTON_L2);
-                                return true;
-                        }
-                        if (keyEvent.getAction() == 1) {
-                                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_BUTTON_L2);
-                                return true;
-                        }
-                } 
+	if( mUseVolume ) {
+		if( n == KeyEvent.KEYCODE_VOLUME_DOWN)
+			SDLActivity.onNativeJoystickAxis(5, Math.abs(keyEvent.getAction()-1));
+		else if( n == KeyEvent.KEYCODE_VOLUME_UP )
+			SDLActivity.onNativeJoystickAxis(2, Math.abs(keyEvent.getAction()-1));
+		return true;
+	} else if( n == KeyEvent.KEYCODE_VOLUME_DOWN || n == KeyEvent.KEYCODE_VOLUME_UP )
+		return false;
 
-        if( n == KeyEvent.KEYCODE_BACK )
-            n = KeyEvent.KEYCODE_BUTTON_B;
+	if( n == KeyEvent.KEYCODE_BACK )
+		n = KeyEvent.KEYCODE_BUTTON_B;
 
-        if (keyEvent.getAction() == 0) {
+	if (keyEvent.getAction() == 0) {
             SDLActivity.onNativeKeyDown(n);
             return true;
         }
