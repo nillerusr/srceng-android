@@ -36,6 +36,7 @@ import android.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import in.celest.DirchActivity;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class LauncherActivity extends Activity {
 	static EditText EnvEdit;
@@ -224,6 +225,14 @@ public class LauncherActivity extends Activity {
 		useVolumeButtons = new CheckBox(this);
 		useVolumeButtons.setLayoutParams(buttonparams);
 		useVolumeButtons.setText("Use volume buttons");
+
+		useVolumeButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+				if( isChecked )
+					Toast.makeText(LauncherActivity.this, "Volume up button can bound as L_TRIGGER, and volume down as R_TRIGGER!!!", 5000).show();
+			}
+		});
 
 		Button button = (Button)findViewById(R.id.button_launch);
 
