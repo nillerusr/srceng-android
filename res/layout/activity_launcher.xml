@@ -1,87 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" 
+	android:background="#FF252525"
+	xmlns:ads="http://schemas.android.com/apk/res-auto">
+	<LinearLayout
+		android:id="@+id/header"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" 
-		android:background="#FF252525"
-		xmlns:ads="http://schemas.android.com/apk/res-auto">
-		<LinearLayout
-			android:id="@+id/header"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:gravity="center"
+		android:background="#FF555555"		
+		android:layout_gravity="center">
+		<TextView
+			android:id="@+id/header_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Source Engine"
+			android:textColor="#FFFFFF"
+			android:textSize="25sp"/>
+	</LinearLayout>
+	<LinearLayout
+		android:id="@+id/footer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:background="#FF454545"
+		android:orientation="horizontal">
+		<Button
+			android:id="@+id/button_about"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:gravity="center"
-			android:background="#FF555555"		
-			android:layout_gravity="center">
-			<TextView
-				android:id="@+id/header_text"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Source Engine"
-				android:textColor="#FFFFFF"
-				android:textSize="25sp"/>
-		</LinearLayout>
-		<LinearLayout
-			android:id="@+id/footer"
+			android:text="about"
+			android:layout_weight="1"
+			android:textColor="#FFFFFF"/>
+		<Button
+			android:id="@+id/button_launch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:background="#FF454545"
-			android:orientation="horizontal">
-			<Button
-				android:id="@+id/button_about"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="about"
-				android:layout_weight="1"
-				android:textColor="#FFFFFF"/>
-			<Button
-				android:id="@+id/button_launch"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="launch"
-				android:layout_weight="1"
-				android:textColor="#FFFFFF"/>
-		</LinearLayout>
+			android:text="launch"
+			android:layout_weight="1"
+			android:textColor="#FFFFFF"/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_above="@+id/footer"
+		android:layout_below="@+id/header"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:layout_gravity="center">
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:layout_above="@+id/footer"
-			android:layout_below="@+id/header"
-			android:paddingTop="5dp"
-			android:paddingBottom="5dp"
-			android:layout_gravity="center">
+			android:orientation="vertical"
+			android:background="#FF555555"
+			android:paddingTop="10dp"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingBottom="10dp">
 			<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:background="#FF555555"
+				android:background="#FF454545"
 				android:paddingTop="10dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
 				android:paddingBottom="10dp">
-				<LinearLayout
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
-					android:orientation="vertical"
-					android:background="#FF454545"
-					android:paddingTop="10dp"
-					android:paddingLeft="10dp"
-					android:paddingRight="10dp"
-					android:paddingBottom="10dp">
-					<ScrollView
-		    			android:layout_width="fill_parent"
-					    android:layout_height="fill_parent"
-		    			android:fillViewport="true">
-		    			<LinearLayout
-		    				android:id="@+id/body"
+				<ScrollView
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:fillViewport="true">
+					<LinearLayout
+						android:id="@+id/body"
+						android:layout_width="fill_parent"
+						android:layout_height="fill_parent"
+						android:orientation="vertical"
+						android:background="#FF454545">
+						<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" 
+							android:layout_marginLeft="5dp"
+							android:text="Command-line arguments"
+							android:textAppearance="?android:attr/textAppearanceMedium"/>
+						<EditText
+							android:id="@+id/edit_cmdline"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:maxLines="1"
+							android:inputType="text"
+							android:text="-console"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"/>
+						<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" 
+							android:layout_marginLeft="5dp"
+							android:text="Env"
+							android:textAppearance="?android:attr/textAppearanceMedium"/>
+						<EditText
+							android:id="@+id/edit_env"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" 
+							android:text="LIBGL_USEVBO=0"
+							android:maxLines="1"
+							android:inputType="text"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"/>
+						<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" 
+							android:layout_marginLeft="5dp"
+							android:text="Path to game resources"
+							android:textAppearance="?android:attr/textAppearanceMedium"/>
+						<EditText
+							android:id="@+id/edit_gamepath"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:maxLines="1"
+							android:inputType="text"
+							android:text="/sdcard/srceng/"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"/>
+						<Button
+							android:id="@+id/button_gamedir"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:text="Set game directory"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:textColor="#FFFFFF"/>
+						<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" 
+							android:layout_marginLeft="5dp"
+							android:text="Game"
+							android:textAppearance="?android:attr/textAppearanceMedium"/>
+						<Spinner
+							android:id="@+id/spinner_games"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" />
+						<CheckBox
+							android:id="@+id/checkbox_show_touch"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:text="Show touch controls"/>
+						<CheckBox
+							android:id="@+id/checkbox_use_volume"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:text="Use volume buttons"/>
+						<CheckBox
+							android:id="@+id/checkbox_immersive_mode"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:visibility="gone"
+							android:text="Immersive mode"/>
+						<CheckBox
+							android:id="@+id/checkbox_fixed_resolution"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:text="Fixed screen resolution"/>					
+						<LinearLayout
+							android:id="@+id/layout_resolution"
 							android:layout_width="fill_parent"
-							android:layout_height="fill_parent"
-							android:orientation="vertical"
-							android:background="#FF454545">
+							android:layout_height="wrap_content"
+							android:orientation="horizontal"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:visibility="gone"
+							android:layout_marginBottom="5dp">
+							<EditText
+								android:id="@+id/edit_resolution_width"
+								android:maxLines="1"
+								android:inputType="text"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content" 
+								android:layout_weight="1"
+								android:text=""/>
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="X"/>
+							<EditText
+								android:id="@+id/edit_resolution_height"
+								android:maxLines="1"
+								android:inputType="text"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content" 
+								android:layout_weight="1"
+								android:text=""/>
 						</LinearLayout>
-		    		</ScrollView>
-				</LinearLayout>
+
+					</LinearLayout>
+				</ScrollView>
 			</LinearLayout>
 		</LinearLayout>
+	</LinearLayout>
 </RelativeLayout>

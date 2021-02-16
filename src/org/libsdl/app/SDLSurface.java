@@ -29,9 +29,7 @@ public class SDLSurface
         View.OnKeyListener,
         View.OnTouchListener,
         SensorEventListener {
-    public static float mHeight;
     private static SensorManager mSensorManager;
-    public static float mWidth;
     public static boolean isTouch = true;
     public static boolean mUseVolume = false;
 
@@ -46,8 +44,7 @@ public class SDLSurface
         this.setOnKeyListener((View.OnKeyListener)this);
         this.setOnTouchListener((View.OnTouchListener)this);
         mSensorManager = (SensorManager)context.getSystemService("sensor");
-        mWidth = 1.f;
-        mHeight = 1.f;
+
         this.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
 
             public void onSystemUiVisibilityChange(int n) {
@@ -127,7 +124,7 @@ public class SDLSurface
                     x = event.getX( i );
                     y = event.getY( i );
                     p = event.getPressure( i );
-                    ValveActivity2.TouchEvent( pointerFingerId, x/mWidth, y/mHeight, 2 );
+                    ValveActivity2.TouchEvent( pointerFingerId, x/LauncherActivity.scr_res.width, y/LauncherActivity.scr_res.height, 2 );
                 }
                 break;
 
@@ -146,12 +143,11 @@ public class SDLSurface
 
                 x = event.getX( i );
                 y = event.getY( i );
-                Log.v((String)"SDL", (String)"x: "+x);
-                Log.v((String)"SDL", (String)"y: "+y);
+
                 if( action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP )
-                    ValveActivity2.TouchEvent( pointerFingerId, x/mWidth, y/mHeight, 1 );
+                    ValveActivity2.TouchEvent( pointerFingerId, x/LauncherActivity.scr_res.width, y/LauncherActivity.scr_res.height, 1 );
                 if( action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN )
-                    ValveActivity2.TouchEvent( pointerFingerId, x/mWidth, y/mHeight, 0 );
+                    ValveActivity2.TouchEvent( pointerFingerId, x/LauncherActivity.scr_res.width, y/LauncherActivity.scr_res.height, 0 );
                 break;
             case MotionEvent.ACTION_CANCEL:
                 for( i = 0; i < pointerCount; i++ )
@@ -159,7 +155,7 @@ public class SDLSurface
                     pointerFingerId = event.getPointerId( i );
                     x = event.getX( i );
                     y = event.getY( i );
-                    ValveActivity2.TouchEvent( pointerFingerId, x/mWidth, y/mHeight, 1 );
+                    ValveActivity2.TouchEvent( pointerFingerId, x/LauncherActivity.scr_res.width, y/LauncherActivity.scr_res.height, 1 );
                 }
                 break;
 
@@ -209,69 +205,75 @@ public class SDLSurface
     /*
      * Enabled aggressive block sorting
      */
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int n, int n2, int n3) {
-        mWidth = n2;
-        mHeight = n3;
-        n2 = 353701890;
-        switch (n) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        if( LauncherActivity.mPref.getBoolean("fixed_resolution", false) )
+        {
+            width = LauncherActivity.mPref.getInt("resolution_width", LauncherActivity.scr_res.width);
+            height = LauncherActivity.mPref.getInt("resolution_height", LauncherActivity.scr_res.height);
+            holder.setFixedSize(width, height);
+        }
+
+        int n2 = 353701890;
+        switch (format) {
             default: {
-                Log.v((String)"SDL", (String)("pixel format unknown " + n));
-                n = n2;
+                Log.v((String)"SDL", (String)("pixel format unknown " + format));
+                format = n2;
                 break;
             }
             case 8: {
                 Log.v((String)"SDL", (String)"pixel format A_8");
-                n = n2;
+                format = n2;
                 break;
             }
             case 10: {
                 Log.v((String)"SDL", (String)"pixel format LA_88");
-                n = n2;
+                format = n2;
                 break;
             }
             case 9: {
                 Log.v((String)"SDL", (String)"pixel format L_8");
-                n = n2;
+                format = n2;
                 break;
             }
             case 7: {
                 Log.v((String)"SDL", (String)"pixel format RGBA_4444");
-                n = 356651010;
+                format = 356651010;
                 break;
             }
             case 6: {
                 Log.v((String)"SDL", (String)"pixel format RGBA_5551");
-                n = 356782082;
+                format = 356782082;
                 break;
             }
             case 1: {
                 Log.v((String)"SDL", (String)"pixel format RGBA_8888");
-                n = 373694468;
+                format = 373694468;
                 break;
             }
             case 2: {
                 Log.v((String)"SDL", (String)"pixel format RGBX_8888");
-                n = 371595268;
+                format = 371595268;
                 break;
             }
             case 11: {
                 Log.v((String)"SDL", (String)"pixel format RGB_332");
-                n = 336660481;
+                format = 336660481;
                 break;
             }
             case 4: {
                 Log.v((String)"SDL", (String)"pixel format RGB_565");
-                n = 353701890;
+                format = 353701890;
                 break;
             }
             case 3: {
                 Log.v((String)"SDL", (String)"pixel format RGB_888");
-                n = 370546692;
+                format = 370546692;
             }
         }
 
-        SDLActivity.onNativeResize((int)mWidth, (int)mHeight, n);
-        Log.v((String)"SDL", (String)("Window size:" + mWidth + "x" + mHeight));
+        SDLActivity.onNativeResize(width, height, format );
+        Log.v((String)"SDL", (String)("Window size:" + width + "x" + height));
         SDLActivity.mIsSurfaceReady = true;
         SDLActivity.onNativeSurfaceChanged();
         SDLActivity.startApp();

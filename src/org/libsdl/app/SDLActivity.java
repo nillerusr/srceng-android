@@ -601,6 +601,6 @@ class ImmersiveMode_v19 extends ImmersiveMode
 				| 0x00001000 // View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 				);
 		else
-                        SDLActivity.mDecorView.setSystemUiVisibility( 0 );
+            SDLActivity.mDecorView.setSystemUiVisibility( 0 );
 	}
 }
