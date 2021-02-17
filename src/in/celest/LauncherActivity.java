@@ -176,8 +176,7 @@ public class LauncherActivity extends Activity {
 			}
 		});
 
-		Button dirButton = new Button(this);
-		dirButton.setText("Set game directory");
+		Button dirButton = findViewById(R.id.button_gamedir);
 		dirButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(LauncherActivity.this, DirchActivity.class);
