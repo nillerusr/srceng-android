@@ -54,10 +54,8 @@ public abstract class ValveActivity2 extends SDLActivity {
 
     public static native boolean shouldDrawControls();
 
-    public static native void showTouch(boolean z);
-
+    public static native void showTouch(boolean z, int width, int height);
     public static native int unsetLibPath();
-
     public static native void setExtrasPackFilePath(String str);
 
     public abstract Class getResourceKeys();
@@ -93,7 +91,7 @@ public abstract class ValveActivity2 extends SDLActivity {
         String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
 	int game = LauncherActivity.mPref.getInt("game", GameInfo.GAME_HL2);
         setDataDirectoryPath(appinf.dataDir);
-        showTouch(LauncherActivity.mPref.getBoolean("show_touch", true));
+        showTouch(LauncherActivity.mPref.getBoolean("show_touch", true), LauncherActivity.scr_res.width, LauncherActivity.scr_res.height);
         String lang = new HashMap<String, String>() {
             {
                 put("rus", "russian");

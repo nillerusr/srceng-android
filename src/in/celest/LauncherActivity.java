@@ -192,8 +192,9 @@ public class LauncherActivity extends Activity {
 
 		if (sdk >= 19)
 		{
-			immersiveMode.setVisibility(View.VISIBLE);
-			immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
+			immersiveMode.setChecked(true);
+			//immersiveMode.setVisibility(View.VISIBLE);
+			//immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
 		}
 
 		cmdArgs.setText(mPref.getString("argv", "-console"));
