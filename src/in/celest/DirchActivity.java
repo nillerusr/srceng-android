@@ -46,8 +46,8 @@ import android.view.View.OnTouchListener;
 
 public class DirchActivity extends Activity implements OnTouchListener{
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
-	public String cur_dir;
-	LinearLayout body;
+	public static String cur_dir;
+	static LinearLayout body;
 
 	public SpannableString styleButtonString(String str) {
 		if (sdk < 21) {
@@ -154,7 +154,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		body = (LinearLayout)findViewById(R.id.bodych);
 		TextView header = (TextView)findViewById(R.id.header_txt);
 		header.setText("");
-
 
 		Button button = (Button)findViewById(R.id.button_choice);
 
