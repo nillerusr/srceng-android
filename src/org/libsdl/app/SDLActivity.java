@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.FrameLayout;
+import android.view.InputDevice;
 import in.celest.LauncherActivity;
 import com.valvesoftware.ValveActivity2;
 import java.nio.ByteBuffer;
@@ -35,7 +36,14 @@ public class SDLActivity extends Activity {
 	static final int COMMAND_TEXTEDIT_HIDE = 3;
 	static final int COMMAND_UNUSED = 2;
 	protected static final int COMMAND_USER = 32768;
-	private static final String TAG = "SDL";
+	public static final int viewFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+		| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+		| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+		| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+	private static final String TAG = "SDLActivity";
 	private static Thread mAudioThread;
 	private static AudioTrack mAudioTrack;
 	private static EGLConfig mEGLConfig;
@@ -60,11 +68,7 @@ public class SDLActivity extends Activity {
 	public static ImmersiveMode mImmersiveMode;
 	public static final int sdk = Integer.valueOf( Build.VERSION.SDK );
 
-	/* renamed from: org.libsdl.app.SDLActivity.1 */
-	static class C00231 implements Runnable {
-		C00231() {
-		}
-
+	static class SDLAudioThread implements Runnable {
 		public void run() {
 			SDLActivity.mAudioTrack.play();
 			SDLActivity.nativeRunAudioThread();
@@ -72,31 +76,27 @@ public class SDLActivity extends Activity {
 	}
 
 	protected static class SDLCommandHandler extends Handler {
-		protected SDLCommandHandler() {
-		}
-
 		public void handleMessage(Message msg) {
 			Context context = SDLActivity.getContext();
 			if (context == null) {
 				Log.e(SDLActivity.TAG, "error handling message, getContext() returned null");
 				return;
 			}
+
 			switch (msg.arg1) {
 				case SDLActivity.COMMAND_CHANGE_TITLE /*1*/:
-					if (context instanceof Activity) {
+					if (context instanceof Activity)
 						((Activity) context).setTitle((String) msg.obj);
-					} else {
+					else
 						Log.e(SDLActivity.TAG, "error handling message, getContext() returned no Activity");
-					}
 				case SDLActivity.COMMAND_TEXTEDIT_HIDE /*3*/:
 					if (SDLActivity.mTextEdit != null) {
 						SDLActivity.mTextEdit.setVisibility(8);
 						((InputMethodManager) context.getSystemService("input_method")).hideSoftInputFromWindow(SDLActivity.mTextEdit.getWindowToken(), 0);
 					}
 				default:
-					if ((context instanceof SDLActivity) && !((SDLActivity) context).onUnhandledMessage(msg.arg1, msg.obj)) {
+					if ((context instanceof SDLActivity) && !((SDLActivity) context).onUnhandledMessage(msg.arg1, msg.obj))
 						Log.e(SDLActivity.TAG, "error handling message, command is " + msg.arg1);
-					}
 			}
 		}
 	}
@@ -110,24 +110,20 @@ public class SDLActivity extends Activity {
 		 */
 		private int show;
 
-		public ShowTextInputTask( int show1 ) 
-		{
+		public ShowTextInputTask( int show1 ) {
 			show = show1;
 		}
 
 		@Override
-		public void run() 
-		{
+		public void run() {
 			InputMethodManager imm = ( InputMethodManager )getContext().getSystemService( Context.INPUT_METHOD_SERVICE );
-			
-			if( mTextEdit == null )
-			{
+
+			if( mTextEdit == null ) {
 				mTextEdit = new DummyEdit( getContext() );
 				mLayout.addView( mTextEdit );
 			}
 
-			if( show == 1 )
-			{
+			if( show == 1 ) {
 				mTextEdit.setVisibility( View.VISIBLE );
 				mTextEdit.requestFocus();
 				imm.showSoftInput( mTextEdit, 0 );
@@ -135,8 +131,7 @@ public class SDLActivity extends Activity {
                                 if( SDLActivity.mImmersiveMode != null )
                                         SDLActivity.mImmersiveMode.apply();
 			}
-			else
-			{
+			else {
 				mTextEdit.setVisibility( View.GONE );
 				imm.hideSoftInputFromWindow( mTextEdit.getWindowToken(), 0 );
 				keyboardVisible = false;
@@ -146,40 +141,25 @@ public class SDLActivity extends Activity {
 		}
 	}
 
-	public static void showKeyboard( int show )
-	{
+	public static void showKeyboard( int show ) {
 		// Transfer the task to the main thread as a Runnable
 		mSingleton.runOnUiThread( new ShowTextInputTask( show ) );
 	}
 
 	public static native void initAssetManager(AssetManager assetManager);
-
 	public static native void nativeInit();
-
 	public static native void nativePause();
-
 	public static native void nativeQuit();
-
 	public static native void nativeResume();
-
 	public static native void nativeRunAudioThread();
-
 	public static native void onNativeAccel(float f, float f2, float f3);
-
 	public static native void onNativeJoystickAxis(int i, float f);
-
 	public static native void onNativeJoystickHat(int i, int i2);
-
 	public static native void onNativeKeyDown(int i);
-
 	public static native void onNativeKeyUp(int i);
-
 	public static native void onNativeResize(int i, int i2, int i3);
-
 	public static native void onNativeSurfaceChanged();
-
 	public static native void onNativeSurfaceDestroyed();
-
 	public static native void onNativeTouch(int i, int i2, int i3, float f, float f2, float f3);
 
 	public SDLActivity() {
@@ -202,7 +182,8 @@ public class SDLActivity extends Activity {
 		com.valvesoftware.ValveActivity2.initNatives();
 		initAssetManager(getAssets());
 		startSDL();
-		 mDecorView = getWindow().getDecorView();
+		mDecorView = getWindow().getDecorView();
+
 		// Immersive Mode is available only at >KitKat
 		Boolean enableImmersive = ( sdk >= 19 ) && ( LauncherActivity.mPref.getBoolean( "immersive_mode", true ) );
 		if( enableImmersive )
@@ -250,24 +231,19 @@ public class SDLActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		mHasFocus = hasFocus;
-		if (hasFocus) {
+		if (hasFocus)
 			handleResume();
-		}
+
 		if( mImmersiveMode != null )
-                {
                         mImmersiveMode.apply();
-                }
 	}
 
 	protected void onDestroy() {
 		super.onDestroy();
 		nativeQuit();
 		if (mSDLThread != null) {
-			try {
-				mSDLThread.join();
-			} catch (Exception e) {
-				Log.v(TAG, "Problem stopping thread: " + e);
-			}
+			try { mSDLThread.join(); }
+			catch (Exception e) { Log.v(TAG, "Problem stopping thread: " + e); }
 			mSDLThread = null;
 		}
 	}
@@ -334,13 +310,12 @@ public class SDLActivity extends Activity {
 	}
 
 	public static boolean initEGL(int majorVersion, int minorVersion, int[] attribs) {
-		//System.loadLibrary("tierhook");
 		String str = ((("Debug-infos:" + "\n OS Version: " + System.getProperty("os.version") + "(" + VERSION.INCREMENTAL + ")") + "\n OS API Level: " + VERSION.SDK) + "\n Device: " + Build.DEVICE) + "\n Model (and Product): " + Build.MODEL + " (" + Build.PRODUCT + ")";
 		try {
 			String bigGLVar = System.getenv("USE_BIG_GL");
-			if (bigGLVar == null) {
+			if (bigGLVar == null)
 				bigGLVar = "0";
-			}
+
 			Log.v(TAG, "USE_BIG_GL = " + bigGLVar);
 			boolean tryBigGL = bigGLVar.equals("1");
 			EGLDisplay display;
@@ -384,9 +359,9 @@ public class SDLActivity extends Activity {
 			Log.v(TAG, e + "");
 			StackTraceElement[] arr$ = e.getStackTrace();
 			int len$ = arr$.length;
-			for (int i$ = 0; i$ < len$; i$ += COMMAND_CHANGE_TITLE) {
+			for (int i$ = 0; i$ < len$; i$ += COMMAND_CHANGE_TITLE)
 				Log.v(TAG, arr$[i$].toString());
-			}
+
 			return false;
 		}
 	}
@@ -401,13 +376,14 @@ public class SDLActivity extends Activity {
 		EGLDisplay eGLDisplay = mEGLDisplay;
 		EGLConfig eGLConfig = mEGLConfig;
 		EGLContext eGLContext = EGL14.EGL_NO_CONTEXT;
-		if (mGLMajor > COMMAND_UNUSED) {
+
+		if (mGLMajor > COMMAND_UNUSED)
 			esAttrs = glAttrs;
-		}
+
 		mEGLContext = EGL14.eglCreateContext(eGLDisplay, eGLConfig, eGLContext, esAttrs, 0);
-		if (mEGLContext != EGL14.EGL_NO_CONTEXT) {
+		if (mEGLContext != EGL14.EGL_NO_CONTEXT)
 			return true;
-		}
+
 		Log.e(TAG, "Couldn't create context");
 		return false;
 	}
@@ -417,16 +393,18 @@ public class SDLActivity extends Activity {
 			Log.e(TAG, "Surface creation failed, display = " + mEGLDisplay + ", config = " + mEGLConfig);
 			return false;
 		}
-		if (mEGLContext == null) {
+		if (mEGLContext == null)
 			createEGLContext();
-		}
+
 		int[] surfaceAttribs = new int[COMMAND_CHANGE_TITLE];
 		surfaceAttribs[0] = 12344;
 		EGLSurface surface = EGL14.eglCreateWindowSurface(mEGLDisplay, mEGLConfig, mSurface, surfaceAttribs, 0);
+
 		if (surface == EGL14.EGL_NO_SURFACE) {
 			Log.e(TAG, "Couldn't create surface");
 			return false;
 		}
+
 		if (!(EGL14.eglGetCurrentContext() == mEGLContext || EGL14.eglMakeCurrent(mEGLDisplay, surface, surface, mEGLContext))) {
 			Log.e(TAG, "Old EGL Context doesnt work, trying with a new one");
 			createEGLContext();
@@ -435,6 +413,7 @@ public class SDLActivity extends Activity {
 				return false;
 			}
 		}
+
 		mEGLSurface = surface;
 		return true;
 	}
@@ -460,30 +439,29 @@ public class SDLActivity extends Activity {
 		int audioFormat;
 		int i;
 		String str;
-		if (isStereo) {
+		if (isStereo)
 			channelConfig = COMMAND_TEXTEDIT_HIDE;
-		} else {
+		else
 			channelConfig = COMMAND_UNUSED;
-		}
-		if (is16Bit) {
+
+		if (is16Bit)
 			audioFormat = COMMAND_UNUSED;
-		} else {
+		else
 			audioFormat = COMMAND_TEXTEDIT_HIDE;
-		}
-		if (isStereo) {
+
+		if (isStereo)
 			i = COMMAND_UNUSED;
-		} else {
+		else
 			i = COMMAND_CHANGE_TITLE;
-		}
+
 		int frameSize = i * (is16Bit ? COMMAND_UNUSED : COMMAND_CHANGE_TITLE);
-		String str2 = TAG;
-		StringBuilder append = new StringBuilder().append("SDL audio: wanted ").append(isStereo ? "stereo" : "mono").append(" ");
-		if (is16Bit) {
-			str = "16-bit";
-		} else {
-			str = "8-bit";
-		}
-		Log.v(str2, append.append(str).append(" ").append(((float) sampleRate) / 1000.0f).append("kHz, ").append(desiredFrames).append(" frames buffer").toString());
+		str = "SDL audio: wanted "+(isStereo ? "stereo" : "mono")+" ";
+		if (is16Bit)
+			str += "16-bit";
+		else
+			str += "8-bit";
+
+		Log.v(TAG,  str+" "+(sampleRate / 1000.0f)+"kHz, "+desiredFrames+" frames buffer");
 		desiredFrames = Math.max(desiredFrames, ((AudioTrack.getMinBufferSize(sampleRate, channelConfig, audioFormat) + frameSize) - 1) / frameSize);
 		mAudioTrack = new AudioTrack(COMMAND_TEXTEDIT_HIDE, sampleRate, channelConfig, audioFormat, desiredFrames * frameSize, COMMAND_CHANGE_TITLE);
 		audioStartThread();
@@ -491,7 +469,7 @@ public class SDLActivity extends Activity {
 	}
 
 	public static void audioStartThread() {
-		mAudioThread = new Thread(new C00231());
+		mAudioThread = new Thread(new SDLAudioThread());
 		mAudioThread.setPriority(10);
 		mAudioThread.start();
 	}
@@ -503,10 +481,8 @@ public class SDLActivity extends Activity {
 			if (result > 0) {
 				i += result;
 			} else if (result == 0) {
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-				}
+				try { Thread.sleep(1); }
+				catch (InterruptedException e) {}
 			} else {
 				Log.w(TAG, "SDL audio: error return from write(short)");
 				return;
@@ -521,10 +497,8 @@ public class SDLActivity extends Activity {
 			if (result > 0) {
 				i += result;
 			} else if (result == 0) {
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-				}
+				try { Thread.sleep(1); }
+				catch (InterruptedException e) { }
 			} else {
 				Log.w(TAG, "SDL audio: error return from write(byte)");
 				return;
@@ -534,11 +508,8 @@ public class SDLActivity extends Activity {
 
 	public static void audioQuit() {
 		if (mAudioThread != null) {
-			try {
-				mAudioThread.join();
-			} catch (Exception e) {
-				Log.v(TAG, "Problem stopping audio thread: " + e);
-			}
+			try { mAudioThread.join(); }
+			catch (Exception e) { Log.v(TAG, "Problem stopping audio thread: " + e); }
 			mAudioThread = null;
 		}
 		if (mAudioTrack != null) {
@@ -548,36 +519,35 @@ public class SDLActivity extends Activity {
 	}
 
 	public boolean dispatchGenericMotionEvent(MotionEvent event) {
-		if ((event.getSource() & 8194) != 0) {
+		if ( ( event.getSource() & InputDevice.SOURCE_MOUSE ) != 0 )
 			return false;
-		}
-		if ((event.getSource() & 16) != 0) {
-//			Log.v("HL2EVENT", "AXIS_X: " + String.valueOf(event.getAxisValue(MotionEvent.AXIS_X)));
-//			Log.v("HL2EVENT", "AXIS_Y: " + String.valueOf(event.getAxisValue(MotionEvent.AXIS_Y)));
+
+		if ( ( event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK ) != 0 ) {
 			onNativeJoystickAxis(0, event.getAxisValue(MotionEvent.AXIS_X));
 			onNativeJoystickAxis(1, event.getAxisValue(MotionEvent.AXIS_Y));
 			onNativeJoystickAxis(3, event.getAxisValue(MotionEvent.AXIS_RZ));
 			onNativeJoystickAxis(4, event.getAxisValue(MotionEvent.AXIS_Z));
-			onNativeJoystickAxis(2, Math.max(event.getAxisValue(17), event.getAxisValue(23)));
-			onNativeJoystickAxis(5, Math.max(event.getAxisValue(18), event.getAxisValue(22)));
+			onNativeJoystickAxis(2, Math.max(event.getAxisValue(MotionEvent.AXIS_LTRIGGER), event.getAxisValue(MotionEvent.AXIS_BRAKE)));
+			onNativeJoystickAxis(5, Math.max(event.getAxisValue(MotionEvent.AXIS_RTRIGGER), event.getAxisValue(MotionEvent.AXIS_GAS)));
 			int axisValue = 0;
-			int axisHatX = (int) event.getAxisValue(15);
-			int axisHatY = (int) event.getAxisValue(16);
-			if (axisHatX == COMMAND_CHANGE_TITLE) {
+			int axisHatX = (int) event.getAxisValue(MotionEvent.AXIS_HAT_X);
+			int axisHatY = (int) event.getAxisValue(MotionEvent.AXIS_HAT_Y);
+			if (axisHatX == COMMAND_CHANGE_TITLE)
 				axisValue = 0 | COMMAND_UNUSED;
-			} else if (axisHatX == -1) {
+			else if (axisHatX == -1)
 				axisValue = 0 | 8;
-			}
-			if (axisHatY == COMMAND_CHANGE_TITLE) {
+
+			if (axisHatY == COMMAND_CHANGE_TITLE)
 				axisValue |= 4;
-			} else if (axisHatY == -1) {
+			else if (axisHatY == -1)
 				axisValue |= COMMAND_CHANGE_TITLE;
-			}
 			onNativeJoystickHat(0, axisValue);
 		}
+
 		return super.dispatchGenericMotionEvent(event);
 	}
 }
+
 class ImmersiveMode
 {
 	void apply()
@@ -592,15 +562,8 @@ class ImmersiveMode_v19 extends ImmersiveMode
 	void apply()
 	{
 		if( !SDLActivity.keyboardVisible )
-			SDLActivity.mDecorView.setSystemUiVisibility(
-				0x00000100   // View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-				| 0x00000200 // View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-				| 0x00000400 // View.SYSTEM_UI_FLAG_LAYOUT_FULSCREEN
-				| 0x00000002 // View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-				| 0x00000004 // View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-				| 0x00001000 // View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-				);
+			SDLActivity.mDecorView.setSystemUiVisibility(SDLActivity.viewFlags);
 		else
-            SDLActivity.mDecorView.setSystemUiVisibility( 0 );
+			SDLActivity.mDecorView.setSystemUiVisibility( 0 );
 	}
 }

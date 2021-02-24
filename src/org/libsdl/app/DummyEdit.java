@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0_118.
- * 
- * Could not load the following classes:
- *  android.content.Context
- *  android.view.KeyEvent
- *  android.view.View
- *  android.view.View$OnKeyListener
- *  android.view.inputmethod.EditorInfo
- *  android.view.inputmethod.InputConnection
- */
 package org.libsdl.app;
 
 import android.content.Context;
@@ -43,9 +32,8 @@ class DummyEdit extends View implements View.OnKeyListener {
 
 		// This handles the hardware keyboard input
 		if (event.isPrintingKey()|| keyCode == 62) {
-			if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			if (event.getAction() == KeyEvent.ACTION_DOWN)
 				ic.commitText(String.valueOf((char) event.getUnicodeChar()), 1);
-			}
 			return true;
 		}
 
@@ -69,12 +57,9 @@ class DummyEdit extends View implements View.OnKeyListener {
 		// FIXME: A more effective solution would be to change our Layout from AbsoluteLayout to Relative or Linear
 		// FIXME: And determine the keyboard presence doing this: http://stackoverflow.com/questions/2150078/how-to-check-visibility-of-software-keyboard-in-android
 		// FIXME: An even more effective way would be if Android provided this out of the box, but where would the fun be in that :)
-		if (event.getAction()==KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-			if (SDLActivity.mTextEdit != null && SDLActivity.mTextEdit.getVisibility() == View.VISIBLE) {
-				//SDLActivity.onNativeKeyboardFocusLost();
+		if (event.getAction()==KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK)
+			if (SDLActivity.mTextEdit != null && SDLActivity.mTextEdit.getVisibility() == View.VISIBLE)
 				SDLActivity.showTextInput(0);
-			}
-		}
 		return super.onKeyPreIme(keyCode, event);
 	}
 
@@ -83,8 +68,7 @@ class DummyEdit extends View implements View.OnKeyListener {
 		ic = new SDLInputConnection(this, true);
 
 		outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
-				| 33554432 /* API 11: EditorInfo.IME_FLAG_NO_FULLSCREEN */;
-
+				| EditorInfo.IME_FLAG_NO_FULLSCREEN;
 		return ic;
 	}
 }

@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0_118.
- * 
- * Could not load the following classes:
- *  android.view.KeyEvent
- *  android.view.View
- *  android.view.inputmethod.BaseInputConnection
- */
 package org.libsdl.app;
 
 import android.view.KeyEvent;
@@ -36,7 +28,6 @@ class SDLInputConnection extends BaseInputConnection {
 			SDLActivity.onNativeKeyDown(keyCode);
 			return true;
 		} else if (event.getAction() == KeyEvent.ACTION_UP) {
-
 			SDLActivity.onNativeKeyUp(keyCode);
 			return true;
 		}
@@ -45,22 +36,17 @@ class SDLInputConnection extends BaseInputConnection {
 
 	@Override
 	public boolean commitText(CharSequence text, int newCursorPosition) {
-
 		nativeCommitText(text.toString(), newCursorPosition);
-
 		return super.commitText(text, newCursorPosition);
 	}
 
 	@Override
 	public boolean setComposingText(CharSequence text, int newCursorPosition) {
-
 		nativeSetComposingText(text.toString(), newCursorPosition);
-
 		return super.setComposingText(text, newCursorPosition);
 	}
 
 	public native void nativeCommitText(String text, int newCursorPosition);
-
 	public native void nativeSetComposingText(String text, int newCursorPosition);
 
 	@Override

@@ -93,7 +93,6 @@ public class LauncherActivity extends Activity {
 		return path;
 	}
 
-	/* access modifiers changed from: protected */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PKG_NAME = getApplication().getPackageName();

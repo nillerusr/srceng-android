@@ -49,17 +49,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 	public static String cur_dir;
 	static LinearLayout body;
 
-	public SpannableString styleButtonString(String str) {
-		if (sdk < 21) {
-			str = str.toUpperCase();
-		}
-		SpannableString spanString = new SpannableString(str.toUpperCase());
-		if (sdk < 21) {
-			spanString.setSpan(new StyleSpan(1), 0, str.length(), 0);
-		}
-		return spanString;
-	}
-
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
@@ -71,7 +60,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 			else
 				ListDirectory(cur_dir+"/"+btn.getText());
 		}
-
 		return false;
 	}
 
@@ -81,10 +69,10 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		File myDirectory = new File(path);
 
 		File[] directories = myDirectory.listFiles(new FileFilter() {
-	    	@Override
-	    	public boolean accept(File pathname) {
-    		    return pathname.isDirectory();
-    		}
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory();
+			}
 		});
 
 		if (directories != null && directories.length > 1) {
@@ -100,8 +88,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		if( directories == null )
 			return;
 
-		try
-		{
+		try {
 			cur_dir = myDirectory.getCanonicalPath();
 			header.setText(cur_dir);
 		} catch( IOException e ) { }
@@ -113,8 +100,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		body.addView(view);
 		view.setOnTouchListener(this);
 
-		for ( File dir : directories )
-		{
+		for ( File dir : directories ) {
 			view = ltInflater.inflate(R.layout.directory, body, false);
 			txt = (TextView)view.findViewById(R.id.dirname);
 			txt.setText(dir.getName());
@@ -123,31 +109,27 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		}
 	}
 
-	public List<String> getExtStoragePaths()
-	{
+	public List<String> getExtStoragePaths() {
 		List<String> list = new ArrayList<String>();
 		File fileList[] = new File("/storage/").listFiles();
 		if( fileList == null )
 			return list;
 
-		for (File file : fileList)
-		{
+		for (File file : fileList) {
 			if(!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath()) && file.isDirectory() && file.canRead())
            		list.add(file.getAbsolutePath());
 		}
 		return list;
 	}
 
-	/* access modifiers changed from: protected */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(1);
-		if (sdk >= 21) {
+		if (sdk >= 21)
 			super.setTheme(16974372);
-		} else {
+		else
 			super.setTheme(16973829);
-		}
 
 		setContentView(R.layout.activity_directory_choice);
 		cur_dir = null;
@@ -159,8 +141,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if( cur_dir != null )
-				{
+				if( cur_dir != null ) {
 					LauncherActivity.GamePath.setText(cur_dir+"/");
 					SharedPreferences.Editor editor = LauncherActivity.mPref.edit();
 					editor.putString("gamepath", cur_dir+"/");
@@ -171,8 +152,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		});
 
 		List<String> l = getExtStoragePaths();
-		if( l == null || l.isEmpty() )
-		{
+		if( l == null || l.isEmpty() ) {
 			ListDirectory(LauncherActivity.getDefaultDir());
 			return;
 		}
@@ -184,8 +164,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		body.addView(view);
 		view.setOnTouchListener(this);
 
-		for( String dir : l)
-		{
+		for( String dir : l) {
 			view = ltInflater.inflate(R.layout.directory, body, false);
 			txt = (TextView)view.findViewById(R.id.dirname);
 			txt.setText(dir);
