@@ -15,7 +15,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.valvesoftware.GameInfo;
+import com.valvesoftware.Games;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,10 +116,9 @@ public class LauncherActivity extends Activity {
 
 		spin = (Spinner)findViewById(R.id.spinner_games);
 		ArrayList<String> spinnerArray = new ArrayList<String>();
-		spinnerArray.add("Half-Life 2");
-		spinnerArray.add("Half-Life 2 Episode 1");
-		spinnerArray.add("Half-Life 2 Episode 2");
-		spinnerArray.add("Portal");
+		for( int j = 0;j < Games.count(); j++)
+			spinnerArray.add(Games.at(j).name);
+		//spinnerArray.add("Half-Life 2");
 
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
 		spin.setAdapter(spinnerArrayAdapter);
@@ -168,7 +167,7 @@ public class LauncherActivity extends Activity {
 				TextView text = new TextView(LauncherActivity.this);
 				text.setText("\nSpecial thanks to:\nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nRusJJ for the particles fix\nnillerusr for port\nvalve for source engine\n\nNot for commercial use!\n\nDonate: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr");
 				text.setLinksClickable(true);
-				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), GameInfo.hl2.extras_obb);
+				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), "");
 				scroll.addView(text);
 				dialog.setContentView(scroll);
 				dialog.show();
@@ -199,7 +198,7 @@ public class LauncherActivity extends Activity {
 		cmdArgs.setText(mPref.getString("argv", "-console"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
 		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
-		spin.setSelection(mPref.getInt("game", GameInfo.GAME_HL2));
+		spin.setSelection(mPref.getInt("game", 0));
 		showtouch.setChecked(mPref.getBoolean("show_touch", true));
 		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
 		fixedResolution.setChecked(mPref.getBoolean("fixed_resolution", false));
@@ -327,24 +326,9 @@ public class LauncherActivity extends Activity {
 		editor.putInt("resolution_height", Integer.parseInt(res_height.getText().toString()));
 		boolean rodir = mPref.getBoolean("rodir", false);
 
-		switch(  spin.getSelectedItemPosition() ) {
-			case GameInfo.GAME_HL2:
-				if( !checkObb( GameInfo.hl2.main_obb, GameInfo.hl2.patch_obb, null) )
-					return;
-			break;
-			case GameInfo.GAME_HL2EP1:
-				if( !checkObb( GameInfo.hl2ep1.main_obb, GameInfo.hl2ep1.patch_obb, null) )
-					return;
-			break;
-			case GameInfo.GAME_HL2EP2:
-				if( !checkObb( GameInfo.hl2ep2.main_obb, GameInfo.hl2ep2.patch_obb, GameInfo.hl2ep2.extras_obb) )
-					return;
-			break;
-			case GameInfo.GAME_PORTAL:
-				if( !checkObb( GameInfo.portal.main_obb, GameInfo.portal.patch_obb, null) )
-					return;
-			break;
-		}
+		Games.Game game = Games.at(spin.getSelectedItemPosition() );
+		if( !checkObb( game.main_obb, game.patch_obb,  game.extras_obb) )
+				return;
 
 		boolean can_write = writeTest(gamepath);
 

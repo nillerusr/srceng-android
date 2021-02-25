@@ -15,7 +15,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.valvesoftware.GameInfo;
+import com.valvesoftware.Games;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
