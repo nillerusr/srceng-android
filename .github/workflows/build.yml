@@ -15,7 +15,7 @@ jobs:
     - name: Build
       run: |
         sudo apt-get update
-        sudo apt install -y make jq openjdk-8-jdk openjdk-8-jre ant-contrib python3-requests python3-pip
+        sudo apt install -y make openjdk-8-jdk openjdk-8-jre ant-contrib python3-requests python3-pip
         sudo pip3 install websocket-client
         git clone --depth 1 https://gitlab.com/LostGamer/ndk-binaries
         git clone --depth 1 https://gitlab.com/LostGamer/android-sdk
@@ -33,5 +33,5 @@ jobs:
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: $(curl -s -F "file=@bin/srceng-debug.apk" https://file.io | jq -r ".link")\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
+        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: $(curl -s -F "file=@bin/srceng-debug.apk" http://0x0.st)\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
         python3 scripts/upload-to-discord.py
