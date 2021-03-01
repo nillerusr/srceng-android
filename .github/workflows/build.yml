@@ -25,7 +25,8 @@ jobs:
         cd ../
 
         scripts/workflow.sh
-
+        mkdir $HOME/.android
+        cp debug.keystore $HOME/.android
         JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ANDROID_HOME=android-sdk/ ant debug
 
     - name: Upload files
