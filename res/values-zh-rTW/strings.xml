@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">起源引擎</string>
+
+    <string name="srceng_launcher_about">關於</string>
+    <string name="srceng_launcher_about_text">\n特別感謝：\nptitSeb 製作的 gl4es 程式：https://github.com/ptitSeb/gl4es\nRusJJ 製作的 particles fix 粒子修復程式\nnillerusr 製作的 port 程式\nvalve 製作的起源引擎\n\n不得用於商業用途！\n\n給作者打賞點小錢：https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string>
+    <string name="srceng_launcher_launch">啟動</string>
+    <string name="srceng_launcher_ok">確定</string>
+    <string name="srceng_launcher_error">錯誤</string>
+    <string name="srceng_launcher_error_missing_obb_a">遊戲資源目錄中缺少\n</string>
+    <string name="srceng_launcher_error_missing_obb_b">檔案。請檢查該路徑的檔案是否完整：</string>
+    <string name="srceng_launcher_error_test_write">測試寫入失敗，所有檔案將儲存到：</string>
+    <string name="srceng_launcher_error_no_permission">遊戲需要足夠的許可權才能執行。</string>
+
+    <string name="srceng_launcher_command_args">命令列參數</string>
+    <string name="srceng_launcher_env">執行環境</string>
+    <string name="srceng_launcher_game_path">遊戲資源路徑</string>
+    <string name="srceng_launcher_set_game_path">設定遊戲資源路徑</string>
+    <string name="srceng_launcher_game_menu">選擇遊戲</string>
+    <string name="srceng_launcher_touch_controls">顯示遊戲控制可觸按鈕</string>
+    <string name="srceng_launcher_volume_buttons">使用音量鍵射擊</string>
+    <string name="srceng_launcher_volume_buttons_desc">音量 + 鍵現已繫結至 L_TRIGGER（主射擊鍵），音量 - 鍵現已繫結至 R_TRIGGER（副射擊鍵）！！！</string>
+    <string name="srceng_launcher_immersive_mode">沉浸模式</string>
+    <string name="srceng_launcher_screen_resolution">固定螢幕解析度</string>
+
+    <string name="srceng_game_hl2">戰慄時空 2</string>
+    <string name="srceng_game_hl2ep1">戰慄時空 2 第一章</string>
+    <string name="srceng_game_hl2ep2">戰慄時空 2 第二章</string>
+    <string name="srceng_game_portal">傳送門</string>
+
+    <string name="srceng_dir_choice_btn">設定當前目錄為遊戲資源路徑</string>
+</resources>
