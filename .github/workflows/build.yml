@@ -1,11 +1,8 @@
 name: Build android package
 
 on:
-  push:
-    branches: [ con-wrappers ]
-  pull_request:
-    branches: [ con-wrappers ]
-
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,10 +26,13 @@ jobs:
         cp debug.keystore $HOME/.android
         JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ANDROID_HOME=android-sdk/ ant debug
 
-    - name: Upload files
-      shell: bash
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       env:
-        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      run: |
-        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: $(curl -s -F "file=@bin/srceng-debug.apk" http://0x0.st)\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
-        python3 scripts/upload-to-discord.py
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: true
