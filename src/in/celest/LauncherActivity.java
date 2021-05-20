@@ -72,7 +72,7 @@ public class LauncherActivity extends Activity {
 	public void onRequestPermissionsResult( int requestCode,  String[] permissions,  int[] grantResults ) {
 		if( requestCode == REQUEST_PERMISSIONS ) {
 			if( grantResults[0] == PackageManager.PERMISSION_DENIED ) {
-				Toast.makeText( this, "Without permissions game won't work", Toast.LENGTH_LONG ).show();
+				Toast.makeText( this, R.string.srceng_launcher_error_no_permission, Toast.LENGTH_LONG ).show();
 				finish();
 			}
 		}
@@ -131,7 +131,7 @@ public class LauncherActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
 				if( isChecked )
-					Toast.makeText(LauncherActivity.this, "Volume up button can bound as L_TRIGGER, and volume down as R_TRIGGER!!!", 5000).show();
+					Toast.makeText(LauncherActivity.this, R.string.srceng_launcher_volume_buttons_desc, 5000).show();
 			}
 		});
 
@@ -161,11 +161,11 @@ public class LauncherActivity extends Activity {
 		aboutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(LauncherActivity.this);
-				dialog.setTitle("About");
+				dialog.setTitle(R.string.srceng_launcher_about);
 				ScrollView scroll = new ScrollView(LauncherActivity.this);
 				scroll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				TextView text = new TextView(LauncherActivity.this);
-				text.setText("\nSpecial thanks to:\nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nRusJJ for the particles fix\nnillerusr for port\nvalve for source engine\n\nNot for commercial use!\n\nDonate: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr");
+				text.setText(R.string.srceng_launcher_about_text);
 				text.setLinksClickable(true);
 				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), "");
 				scroll.addView(text);
@@ -287,9 +287,9 @@ public class LauncherActivity extends Activity {
 
 		if( bCheckFail ) {
 			new AlertDialog.Builder(this)
-				.setTitle("Error")
-				.setMessage("There are no\n"+missing_obb+"files on the path " + gamepath)
-				.setPositiveButton("OK", (DialogInterface.OnClickListener) null)
+				.setTitle(R.string.srceng_launcher_error)
+				.setMessage(R.string.srceng_launcher_error_missing_obb_a+"\n"+missing_obb+R.string.srceng_launcher_error_missing_obb_b+gamepath)
+				.setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null)
 				.show();
 				return false;
 		}
@@ -359,7 +359,7 @@ public class LauncherActivity extends Activity {
 			return;
 		}
 
-		new AlertDialog.Builder(this).setTitle("Wraning").setMessage("Test write failed, all files will be stored in " + getADataDir()).setPositiveButton("OK", (DialogInterface.OnClickListener) null).show();
+		new AlertDialog.Builder(this).setTitle("Wraning").setMessage(R.string.srceng_launcher_error_test_write + getADataDir()).setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null).show();
 		editor.putBoolean("rodir", true);
 		editor.commit();
 	}
