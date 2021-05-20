@@ -33,7 +33,7 @@
 				android:id="@+id/button_choice"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Set current directory"
+				android:text="@string/srceng_dir_choice_btn"
 				android:layout_weight="1"
 				android:textColor="#FFFFFF"/>
 		</LinearLayout>
