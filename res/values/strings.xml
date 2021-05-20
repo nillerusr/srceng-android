@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_command_args">Command-line arguments</string>
+    <string name="srceng_launcher_env">Env</string>
+    <string name="srceng_launcher_game_path">Path to game resources</string>
+    <string name="srceng_launcher_set_game_path">Set game directory</string>
+    <string name="srceng_launcher_game_menu">Game</string>
+    <string name="srceng_launcher_touch_controls">Show touch controls</string>
+    <string name="srceng_launcher_volume_buttons">Use volume buttons</string>
+    <string name="srceng_launcher_immersive_mode">Immersive mode</string>
+    <string name="srceng_launcher_screen_resolution">Fixed screen resolution</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string>
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string>
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">Set current directory</string>
+</resources>
