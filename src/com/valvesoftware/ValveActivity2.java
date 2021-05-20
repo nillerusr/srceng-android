@@ -103,9 +103,8 @@ public abstract class ValveActivity2 extends SDLActivity {
 				put("rup", "romanian");
 				put("spa", "spanish");
 				put("swe", "swedish");
-				put("chi", "tchinese");
+				put("chi", "schinese");
 				put("zho", "tchinese");
-				put("chi", "tchinese");
 				put("tha", "thai");
 				put("tur", "turkish");
 				put("crh", "turkish");
