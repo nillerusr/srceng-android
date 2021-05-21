@@ -290,7 +290,7 @@ public class LauncherActivity extends Activity {
 		if( bCheckFail ) {
 			new AlertDialog.Builder(this)
 				.setTitle(R.string.srceng_launcher_error)
-				.setMessage(missing_obb_desc_a + "\n" + missing_obb + missing_obb_desc_b + gamepath)
+				.setMessage(missing_obb_desc_a + "\n" + missing_obb + missing_obb_desc_b + "\n" + gamepath)
 				.setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null)
 				.show();
 				return false;
