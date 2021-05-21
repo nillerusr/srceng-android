@@ -7,8 +7,8 @@
     <string name="srceng_launcher_launch">Launch</string>
     <string name="srceng_launcher_ok">OK</string>
     <string name="srceng_launcher_error">Error</string>
-    <string name="srceng_launcher_error_missing_obb_a">There are no</string> <!--- Bug -->
-    <string name="srceng_launcher_error_missing_obb_b">files on the path </string> <!--- Bug -->
+    <string name="srceng_launcher_error_missing_obb_a">There are no</string>
+    <string name="srceng_launcher_error_missing_obb_b">files on the path </string>
     <string name="srceng_launcher_error_test_write">Test write failed, all files will be stored in </string>
     <string name="srceng_launcher_error_no_permission">Without permissions game won\'t work</string>
 
