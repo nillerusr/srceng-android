@@ -254,6 +254,8 @@ public class LauncherActivity extends Activity {
 		File extras_obb = new File(gamepath+"/"+extras);
 		String missing_obb = "";
 		boolean bCheckFail = false;
+		String missing_obb_desc_a = this.getResources().getString(R.string.srceng_launcher_error_missing_obb_a);
+		String missing_obb_desc_b = this.getResources().getString(R.string.srceng_launcher_error_missing_obb_b);
 
 		if( !main_obb.exists() || main_obb.isDirectory() ) {
 			File fileName = new File(gamepath);
@@ -288,7 +290,7 @@ public class LauncherActivity extends Activity {
 		if( bCheckFail ) {
 			new AlertDialog.Builder(this)
 				.setTitle(R.string.srceng_launcher_error)
-				.setMessage(R.string.srceng_launcher_error_missing_obb_a+"\n"+missing_obb+R.string.srceng_launcher_error_missing_obb_b+gamepath)
+				.setMessage(missing_obb_desc_a + "\n" + missing_obb + missing_obb_desc_b + gamepath)
 				.setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null)
 				.show();
 				return false;
