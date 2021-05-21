@@ -17,7 +17,7 @@
 			android:id="@+id/header_text"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Source Engine"
+			android:text="@string/srceng_app_name"
 			android:textColor="#FFFFFF"
 			android:textSize="25sp"/>
 	</LinearLayout>
@@ -32,14 +32,14 @@
 			android:id="@+id/button_about"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="about"
+			android:text="@string/srceng_launcher_about"
 			android:layout_weight="1"
 			android:textColor="#FFFFFF"/>
 		<Button
 			android:id="@+id/button_launch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="launch"
+			android:text="@string/srceng_launcher_launch"
 			android:layout_weight="1"
 			android:textColor="#FFFFFF"/>
 	</LinearLayout>
@@ -83,7 +83,7 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
 							android:layout_marginLeft="5dp"
-							android:text="Command-line arguments"
+							android:text="@string/srceng_launcher_command_args"
 							android:textAppearance="?android:attr/textAppearanceMedium"/>
 						<EditText
 							android:id="@+id/edit_cmdline"
@@ -100,7 +100,7 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
 							android:layout_marginLeft="5dp"
-							android:text="Env"
+							android:text="@string/srceng_launcher_env"
 							android:textAppearance="?android:attr/textAppearanceMedium"/>
 						<EditText
 							android:id="@+id/edit_env"
@@ -117,7 +117,7 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
 							android:layout_marginLeft="5dp"
-							android:text="Path to game resources"
+							android:text="@string/srceng_launcher_game_path"
 							android:textAppearance="?android:attr/textAppearanceMedium"/>
 						<EditText
 							android:id="@+id/edit_gamepath"
@@ -134,7 +134,7 @@
 							android:id="@+id/button_gamedir"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:text="Set game directory"
+							android:text="@string/srceng_launcher_set_game_path"
 							android:layout_marginLeft="3dp"
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
@@ -144,7 +144,7 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
 							android:layout_marginLeft="5dp"
-							android:text="Game"
+							android:text="@string/srceng_launcher_game_menu"
 							android:textAppearance="?android:attr/textAppearanceMedium"/>
 						<Spinner
 							android:id="@+id/spinner_games"
@@ -158,7 +158,7 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
-							android:text="Show touch controls"/>
+							android:text="@string/srceng_launcher_touch_controls"/>
 						<CheckBox
 							android:id="@+id/checkbox_use_volume"
 							android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
-							android:text="Use volume buttons"/>
+							android:text="@string/srceng_launcher_volume_buttons"/>
 						<CheckBox
 							android:id="@+id/checkbox_immersive_mode"
 							android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
 							android:visibility="gone"
-							android:text="Immersive mode"/>
+							android:text="@string/srceng_launcher_immersive_mode"/>
 						<CheckBox
 							android:id="@+id/checkbox_fixed_resolution"
 							android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
-							android:text="Fixed screen resolution"/>					
+							android:text="@string/srceng_launcher_screen_resolution"/>					
 						<LinearLayout
 							android:id="@+id/layout_resolution"
 							android:layout_width="fill_parent"
