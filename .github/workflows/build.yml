@@ -30,9 +30,15 @@ jobs:
         JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ANDROID_HOME=android-sdk/ ant debug
 
     - name: Upload files
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: apk
+        path: bin/srceng-debug.apk
+
+    - name: Post link to Discord
       shell: bash
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: $(curl -s -F "file=@bin/srceng-debug.apk" http://0x0.st)\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
+        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild artifact available at: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
         python3 scripts/upload-to-discord.py
