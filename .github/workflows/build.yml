@@ -43,7 +43,7 @@ jobs:
         source_file: 'bin/srceng-debug.apk'
         destination_repo: 'nillerusr/srceng-deploy'
         destination_branch: 'srceng-old-port'
-        user_email: 'nillerusr@users.noreply.github.com'
+        user_email: '42746659+nillerusr@users.noreply.github.com'
         user_name: 'nillerusr'
 
     - name: Post link to Discord
