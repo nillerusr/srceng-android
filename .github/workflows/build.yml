@@ -36,12 +36,15 @@ jobs:
         path: bin/srceng-debug.apk
 
     - name: Upload files
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        commit_message: ${{ steps.last-commit-message.outputs.msg }}
-        file_pattern: bin/srceng-debug.apk
-        branch: srceng-old-port
-        repository: srceng-deploy
+        source_file: 'bin/srceng-debug.apk'
+        destination_repo: 'nillerusr/srceng-deploy'
+        destination_branch: 'srceng-old-port'
+        user_email: 'nillerusr@users.noreply.github.com'
+        user_name: 'nillerusr'
 
     - name: Post link to Discord
       shell: bash
