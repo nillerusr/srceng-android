@@ -29,16 +29,24 @@ jobs:
         cp debug.keystore $HOME/.android
         JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ANDROID_HOME=android-sdk/ ant debug
 
-    - name: Upload files
+    - name: Upload artifact
       uses: actions/upload-artifact@v2.2.3
       with:
         name: apk
         path: bin/srceng-debug.apk
+
+    - name: Upload files
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: ${{ steps.last-commit-message.outputs.msg }}
+        file_pattern: bin/srceng-debug.apk
+        branch: srceng-old-port
+        repository: srceng-deploy
 
     - name: Post link to Discord
       shell: bash
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
       run: |
-        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild artifact available at: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
+        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: https://github.com/nillerusr/srceng-deploy/raw/srceng-old-port/srceng-debug.apk\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
         python3 scripts/upload-to-discord.py
