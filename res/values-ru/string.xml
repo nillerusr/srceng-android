@@ -13,7 +13,7 @@
     <string name="srceng_launcher_error_no_permission">Без разрешений игра не будет работать</string>
 
     <string name="srceng_launcher_command_args">Аргументы командной строки</string>
-    <string name="srceng_launcher_env">Параметры gl4es</string>
+    <string name="srceng_launcher_env">Env</string>
     <string name="srceng_launcher_game_path">Путь к игровым ресурсам</string>
     <string name="srceng_launcher_set_game_path">Указать путь</string>
     <string name="srceng_launcher_game_menu">Игра</string>
