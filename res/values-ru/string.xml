@@ -3,7 +3,7 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">О порте</string>
-    <string name="srceng_launcher_about_text">\nОсобая благодарность \nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nRusJJ за исправление партиклей\nnillerusr за порт \nvalve за source engine\n\nНе для коммерческого использования!\n\nДонат: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
+    <string name="srceng_launcher_about_text">\nОсобая благодарность \nptitSeb за gl4es: https://github.com/ptitSeb/gl4es\nRusJJ за исправление партиклей\nnillerusr за порт \nvalve за source engine\n\nНе для коммерческого использования!\n\nДонат: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
     <string name="srceng_launcher_launch">Запустить</string>
     <string name="srceng_launcher_ok">OK</string>
     <string name="srceng_launcher_error">Ошибка</string>
