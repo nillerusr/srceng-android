@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">О порте</string>
+    <string name="srceng_launcher_about_text">\nОсобая благодарность \nptitSeb за gl4es: https://github.com/ptitSeb/gl4es\nRusJJ за исправление партиклей\nnillerusr за порт \nvalve за source engine\n\nНе для коммерческого использования!\n\nДонат: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
+    <string name="srceng_launcher_launch">Запустить</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">Ошибка</string>
+    <string name="srceng_launcher_error_missing_obb_a">Здесь нет </string>
+    <string name="srceng_launcher_error_missing_obb_b">файлов по пути </string>
+    <string name="srceng_launcher_error_test_write">Тест записи провален,файлы будут храниться в </string>
+    <string name="srceng_launcher_error_no_permission">Без разрешений игра не будет работать</string>
+
+    <string name="srceng_launcher_command_args">Аргументы командной строки</string>
+    <string name="srceng_launcher_env">Env</string>
+    <string name="srceng_launcher_game_path">Путь к игровым ресурсам</string>
+    <string name="srceng_launcher_set_game_path">Указать путь</string>
+    <string name="srceng_launcher_game_menu">Игра</string>
+    <string name="srceng_launcher_touch_controls">Показывать сенсорное управление</string>
+    <string name="srceng_launcher_volume_buttons">Использовать кнопки громкости</string>
+    <string name="srceng_launcher_volume_buttons_desc">Кнопка увеличения громкости будет использоваться как L_TRIGGER, и кнопка уменьшения громкости как R_TRIGGER!!!</string>
+    <string name="srceng_launcher_immersive_mode">Режим погружения</string>
+    <string name="srceng_launcher_screen_resolution">Пользовательское разрешение</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string> <!--- Not available -->
+    <string name="srceng_game_portal">Portal</string> <!--- Not available -->
+
+    <string name="srceng_dir_choice_btn">Указать данный путь</string>
+</resources>
