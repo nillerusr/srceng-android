@@ -33,6 +33,8 @@ jobs:
       shell: bash
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        GH_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
       run: |
-        echo -e "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: $(curl -s -F "file=@bin/srceng-debug.apk" http://0x0.st)\nBuild finished at: $(date +%Y-%m-%d-%H:%M)" > text
-        python3 scripts/upload-to-discord.py
+        DEPLOY_BRANCH=srceng-old-port scripts/upload-to-github.sh
+        CHANNEL_ID=801092155090927626 python3 scripts/send-to-discord.py "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: https://github.com/nillerusr/srceng-deploy/\nBuild finished at: $(date +%Y-%m-%d-%H:%M)"
+
