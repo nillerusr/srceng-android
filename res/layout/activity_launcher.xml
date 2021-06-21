@@ -10,12 +10,19 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true"
+		android:paddingLeft="10dp"
 		android:gravity="center"
-		android:background="#FF555555"		
+		android:background="#FF3A3A3A"
 		android:layout_gravity="center">
+		<ImageView
+			android:layout_height="wrap_content"
+			android:layout_marginRight="5dp"
+			android:layout_width="wrap_content"
+			android:layout_gravity="left"
+			android:src="@drawable/ic_launcher"/>
 		<TextView
 			android:id="@+id/header_text"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/srceng_app_name"
 			android:textColor="#FFFFFF"
@@ -26,7 +33,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:background="#FF454545"
+		android:background="#FF3A3A3A"
 		android:orientation="horizontal">
 		<Button
 			android:id="@+id/button_about"
@@ -55,7 +62,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:orientation="vertical"
-			android:background="#FF555555"
+			android:background="#FF353535"
 			android:paddingTop="10dp"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
@@ -64,7 +71,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:background="#FF454545"
+				android:background="#FF212121"
 				android:paddingTop="10dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
@@ -78,7 +85,7 @@
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent"
 						android:orientation="vertical"
-						android:background="#FF454545">
+						android:background="#FF313131">
 						<TextView
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
@@ -218,7 +225,6 @@
 								android:layout_weight="1"
 								android:text=""/>
 						</LinearLayout>
-
 					</LinearLayout>
 				</ScrollView>
 			</LinearLayout>
