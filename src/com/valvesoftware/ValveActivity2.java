@@ -116,11 +116,11 @@ public abstract class ValveActivity2 extends SDLActivity {
 		if (lang != null)
 			if (country == "CN")
 				setLanguage("schinese");
-			if (country == "TW")
+			else if (country == "TW")
 				setLanguage("tchinese");
-			if (country == "HK")
+			else if (country == "HK")
 				setLanguage("tchinese");
-			if (country == "MO")
+			else if (country == "MO")
 				setLanguage("tchinese");
 			else
 				setLanguage(lang);
