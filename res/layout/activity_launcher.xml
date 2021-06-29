@@ -102,7 +102,8 @@
 							android:layout_marginLeft="3dp"
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"/>
+							android:layout_marginBottom="5dp"
+							android:backgroundTint="@color/hl_color"/>
 						<TextView
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
@@ -119,7 +120,8 @@
 							android:layout_marginLeft="3dp"
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"/>
+							android:layout_marginBottom="5dp"
+							android:backgroundTint="@color/hl_color"/>
 						<TextView
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" 
@@ -136,7 +138,8 @@
 							android:layout_marginLeft="3dp"
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"/>
+							android:layout_marginBottom="5dp"
+							android:backgroundTint="@color/hl_color"/>
 						<Button
 							android:id="@+id/button_gamedir"
 							android:layout_width="match_parent"
@@ -155,6 +158,11 @@
 							android:textAppearance="?android:attr/textAppearanceMedium"/>
 						<Spinner
 							android:id="@+id/spinner_games"
+							android:layout_marginLeft="3dp"
+							android:layout_marginRight="3dp"
+							android:layout_marginTop="5dp"
+							android:layout_marginBottom="5dp"
+							android:popupBackground="#FF333333"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content" />
 						<CheckBox
@@ -165,6 +173,7 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
+							android:buttonTint="@color/hl_color"
 							android:text="@string/srceng_launcher_touch_controls"/>
 						<CheckBox
 							android:id="@+id/checkbox_use_volume"
@@ -174,6 +183,7 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
+							android:buttonTint="@color/hl_color"
 							android:text="@string/srceng_launcher_volume_buttons"/>
 						<CheckBox
 							android:id="@+id/checkbox_immersive_mode"
@@ -184,6 +194,7 @@
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
 							android:visibility="gone"
+							android:buttonTint="@color/hl_color"
 							android:text="@string/srceng_launcher_immersive_mode"/>
 						<CheckBox
 							android:id="@+id/checkbox_fixed_resolution"
@@ -193,7 +204,8 @@
 							android:layout_marginRight="3dp"
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
-							android:text="@string/srceng_launcher_screen_resolution"/>					
+							android:buttonTint="@color/hl_color"
+							android:text="@string/srceng_launcher_screen_resolution"/>
 						<LinearLayout
 							android:id="@+id/layout_resolution"
 							android:layout_width="fill_parent"
@@ -211,6 +223,7 @@
 								android:layout_width="match_parent"
 								android:layout_height="wrap_content" 
 								android:layout_weight="1"
+								android:backgroundTint="@color/hl_color"
 								android:text=""/>
 							<TextView
 								android:layout_width="wrap_content"
@@ -223,6 +236,7 @@
 								android:layout_width="match_parent"
 								android:layout_height="wrap_content" 
 								android:layout_weight="1"
+								android:backgroundTint="@color/hl_color"
 								android:text=""/>
 						</LinearLayout>
 					</LinearLayout>

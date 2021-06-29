@@ -13,8 +13,6 @@ import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.util.Linkify;
 import android.util.Log;
-import android.view.View;
-import android.widget.*;
 import com.valvesoftware.Games;
 import java.io.File;
 import java.util.ArrayList;
@@ -39,6 +37,10 @@ import in.celest.DirchActivity;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.util.DisplayMetrics;
 import me.nillerusr.Screen;
+import android.view.*;
+import android.widget.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 
 public class LauncherActivity extends Activity {
 	public static String PKG_NAME;
@@ -93,21 +95,66 @@ public class LauncherActivity extends Activity {
 		return path;
 	}
 
+	public static void changeButtonsStyle( ViewGroup parent )
+	{
+		if( sdk >= 21 )
+			return;
+
+		for( int i = parent.getChildCount() - 1; i >= 0; i-- )
+		{
+			try
+			{
+				final View child = parent.getChildAt(i);
+
+				if( child == null )
+					continue;
+
+				if( child instanceof ViewGroup )
+				{
+					changeButtonsStyle((ViewGroup) child);
+					// DO SOMETHING WITH VIEWGROUP, AFTER CHILDREN HAS BEEN LOOPED
+				}
+				else if( child instanceof Button )
+				{
+					final Button b = (Button)child;
+					final Drawable bg = b.getBackground();
+					if(bg!= null)bg.setAlpha( 96 );
+					b.setTextColor( 0xFFFFFFFF );
+					b.setTextSize( 15f );
+					//b.setText(b.getText().toString().toUpperCase());
+					b.setTypeface( b.getTypeface(),Typeface.BOLD );
+				}
+				else if( child instanceof EditText )
+				{
+					final EditText b = ( EditText )child;
+					b.setBackgroundColor( 0xFF272727 );
+					b.setTextColor( 0xFFFFFFFF );
+					b.setTextSize( 15f );
+				}
+			}
+			catch( Exception e )
+			{
+			}
+		}
+	}
+
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PKG_NAME = getApplication().getPackageName();
 		requestWindowFeature(1);
 
 		if (sdk >= 21)
-			super.setTheme(16974372);
+			super.setTheme(0x01030224);
 		else
-			super.setTheme(16973829);
+			super.setTheme(0x01030005);
 
 		scr_res = Screen.getResolution( this );
 
 		mPref = getSharedPreferences("mod", 0);
 
 		setContentView(R.layout.activity_launcher);
+
 		LinearLayout body = (LinearLayout)findViewById(R.id.body);
 
 		cmdArgs = (EditText)findViewById(R.id.edit_cmdline);
@@ -118,9 +165,14 @@ public class LauncherActivity extends Activity {
 		ArrayList<String> spinnerArray = new ArrayList<String>();
 		for( int j = 0;j < Games.count(); j++)
 			spinnerArray.add(Games.at(j).name);
-		//spinnerArray.add("Half-Life 2");
 
-		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+		ArrayAdapter<String> spinnerArrayAdapter;
+
+		if( sdk >= 21 )
+			spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+		else
+			spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_v8, spinnerArray);
+
 		spin.setAdapter(spinnerArrayAdapter);
 
 		immersiveMode = (CheckBox)findViewById(R.id.checkbox_immersive_mode);
@@ -164,10 +216,12 @@ public class LauncherActivity extends Activity {
 				dialog.setTitle(R.string.srceng_launcher_about);
 				ScrollView scroll = new ScrollView(LauncherActivity.this);
 				scroll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				scroll.setPadding(5,5,5,5);
 				TextView text = new TextView(LauncherActivity.this);
 				text.setText(R.string.srceng_launcher_about_text);
 				text.setLinksClickable(true);
-				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), "");
+				Linkify.addLinks(text, Linkify.WEB_URLS|Linkify.EMAIL_ADDRESSES);
+//				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), "");
 				scroll.addView(text);
 				dialog.setContentView(scroll);
 				dialog.show();
@@ -202,6 +256,8 @@ public class LauncherActivity extends Activity {
 		showtouch.setChecked(mPref.getBoolean("show_touch", true));
 		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
 		fixedResolution.setChecked(mPref.getBoolean("fixed_resolution", false));
+
+		changeButtonsStyle((ViewGroup)this.getWindow().getDecorView());
 
 		// permissions check
 		if( sdk >= 23 )

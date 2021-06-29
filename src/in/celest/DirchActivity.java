@@ -13,7 +13,7 @@ import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.util.Linkify;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import com.valvesoftware.Games;
 import java.io.File;
@@ -150,6 +150,8 @@ public class DirchActivity extends Activity implements OnTouchListener{
 				}
 			}
 		});
+
+		LauncherActivity.changeButtonsStyle((ViewGroup)this.getWindow().getDecorView());
 
 		List<String> l = getExtStoragePaths();
 		if( l == null || l.isEmpty() ) {

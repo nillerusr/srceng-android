@@ -3,14 +3,14 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" 
-		android:background="#FF252525"
+		android:background="#FF1A1A1A"
 		xmlns:ads="http://schemas.android.com/apk/res-auto">
 		<LinearLayout
 			android:id="@+id/header_ch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
-			android:background="#FF555555"		
+			android:background="#FF3A3A3A"		
 			android:layout_gravity="center">
 			<TextView
 				android:id="@+id/header_txt"
@@ -27,7 +27,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
-			android:background="#FF454545"
+			android:background="#FF3A3A3A"
 			android:orientation="horizontal">
 			<Button
 				android:id="@+id/button_choice"
@@ -49,7 +49,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:background="#FF454545"
+				android:background="#FF2A2A2A"
 				android:paddingTop="1dp"
 				android:paddingLeft="2dp"
 				android:paddingRight="2dp"
@@ -63,7 +63,7 @@
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
 						android:orientation="vertical"
-						android:background="#FF454545">
+						android:background="#FF3A3A3A">
 					</LinearLayout>
 		    		</ScrollView>
 			</LinearLayout>
