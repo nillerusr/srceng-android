@@ -20,6 +20,7 @@
     <string name="srceng_launcher_touch_controls">Показывать сенсорное управление</string>
     <string name="srceng_launcher_volume_buttons">Использовать кнопки громкости</string>
     <string name="srceng_launcher_volume_buttons_desc">Кнопка увеличения громкости будет использоваться как L_TRIGGER, и кнопка уменьшения громкости как R_TRIGGER!!!</string>
+    <string name="srceng_launcher_check_updates">Проверять обновления</string>
     <string name="srceng_launcher_immersive_mode">Режим погружения</string>
     <string name="srceng_launcher_screen_resolution">Пользовательское разрешение</string>
 
@@ -29,4 +30,5 @@
     <string name="srceng_game_portal">Portal</string> <!--- Not available -->
 
     <string name="srceng_dir_choice_btn">Указать данный путь</string>
+    <string name="srceng_update">Доступно обновление</string>
 </resources>

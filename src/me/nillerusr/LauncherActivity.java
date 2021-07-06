@@ -1,4 +1,4 @@
-package in.celest;
+package me.nillerusr;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,7 +33,7 @@ import android.util.Base64;
 import android.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import in.celest.DirchActivity;
+import me.nillerusr.DirchActivity;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.util.DisplayMetrics;
 import me.nillerusr.Screen;
@@ -41,6 +41,8 @@ import android.view.*;
 import android.widget.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import me.nillerusr.UpdateService;
+import me.nillerusr.UpdateSystem;
 
 public class LauncherActivity extends Activity {
 	public static String PKG_NAME;
@@ -48,7 +50,7 @@ public class LauncherActivity extends Activity {
 	static EditText cmdArgs, GamePath, EnvEdit, res_width, res_height;
 	public static SharedPreferences mPref;
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
-	static CheckBox showtouch, useVolumeButtons, immersiveMode, fixedResolution;
+	static CheckBox showtouch, useVolumeButtons, immersiveMode, fixedResolution, check_updates;
 	static Spinner spin;
 	public static String found_main_obb = null;
 	public static Screen.Resolution scr_res;
@@ -242,12 +244,14 @@ public class LauncherActivity extends Activity {
 		res_width.setText(""+mPref.getInt("resolution_width", scr_res.width));
 		res_height.setText(""+mPref.getInt("resolution_height", scr_res.height));
 
-		if (sdk >= 19)
-		{
+		if (sdk >= 19) {
 			immersiveMode.setChecked(true);
 			//immersiveMode.setVisibility(View.VISIBLE);
 			//immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
 		}
+
+		check_updates = (CheckBox)findViewById(R.id.checkbox_check_updates);
+		String last_commit = getResources().getString(R.string.last_commit);
 
 		cmdArgs.setText(mPref.getString("argv", "-console"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
@@ -256,12 +260,20 @@ public class LauncherActivity extends Activity {
 		showtouch.setChecked(mPref.getBoolean("show_touch", true));
 		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
 		fixedResolution.setChecked(mPref.getBoolean("fixed_resolution", false));
+		check_updates.setChecked(mPref.getBoolean("check_updates", true));
 
 		changeButtonsStyle((ViewGroup)this.getWindow().getDecorView());
 
 		// permissions check
 		if( sdk >= 23 )
 			applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, REQUEST_PERMISSIONS );
+
+		if( last_commit == null || last_commit.isEmpty() )
+			check_updates.setVisibility(View.GONE);
+		else if( check_updates.isChecked() ) {
+			UpdateSystem update = new UpdateSystem(this);
+			update.execute();
+		}
 	}
 
 	/* access modifiers changed from: package-private */
@@ -382,6 +394,7 @@ public class LauncherActivity extends Activity {
 		editor.putInt("game", spin.getSelectedItemPosition());
 		editor.putInt("resolution_width", Integer.parseInt(res_width.getText().toString()));
 		editor.putInt("resolution_height", Integer.parseInt(res_height.getText().toString()));
+		editor.putBoolean("check_updates", check_updates.isChecked());
 		boolean rodir = mPref.getBoolean("rodir", false);
 
 		Games.Game game = Games.at(spin.getSelectedItemPosition() );
@@ -420,5 +433,6 @@ public class LauncherActivity extends Activity {
 		new AlertDialog.Builder(this).setTitle("Wraning").setMessage(R.string.srceng_launcher_error_test_write + getADataDir()).setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null).show();
 		editor.putBoolean("rodir", true);
 		editor.commit();
+
 	}
 }

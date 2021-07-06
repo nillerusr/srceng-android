@@ -20,6 +20,8 @@
     <string name="srceng_launcher_touch_controls">Show touch controls</string>
     <string name="srceng_launcher_volume_buttons">Use volume buttons</string>
     <string name="srceng_launcher_volume_buttons_desc">Volume up button can bound as L_TRIGGER, and volume down as R_TRIGGER!!!</string>
+
+    <string name="srceng_launcher_check_updates">Check updates</string>
     <string name="srceng_launcher_immersive_mode">Immersive mode</string>
     <string name="srceng_launcher_screen_resolution">Fixed screen resolution</string>
 
@@ -29,4 +31,5 @@
     <string name="srceng_game_portal">Portal</string> <!--- Not available -->
 
     <string name="srceng_dir_choice_btn">Set current directory</string>
+    <string name="srceng_update">Update avalible!</string>
 </resources>

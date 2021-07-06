@@ -22,7 +22,7 @@ import com.valvesoftware.ValveActivity2;
 import android.graphics.PixelFormat;
 import java.lang.Math;
 
-import in.celest.LauncherActivity;
+import me.nillerusr.LauncherActivity;
 
 public class SDLSurface extends SurfaceView
 	implements SurfaceHolder.Callback,

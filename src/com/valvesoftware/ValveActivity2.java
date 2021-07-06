@@ -9,7 +9,7 @@ import android.view.Display;
 import java.util.HashMap;
 import java.util.Locale;
 import org.libsdl.app.SDLActivity;
-import in.celest.LauncherActivity;
+import me.nillerusr.LauncherActivity;
 
 public abstract class ValveActivity2 extends SDLActivity {
 	public static int mHeight;
@@ -20,17 +20,14 @@ public abstract class ValveActivity2 extends SDLActivity {
 	public static native void clientCommand(String str);
 	public static native boolean isGameUIActive();
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
-	public static native void saveGame();
 	public static native void setArgs(String str);
 	public static native void setCacheDirectoryPath(String str);
 	public static native void setDataDirectoryPath(String str);
 	public static native void setDocumentDirectoryPath(String str);
-	public static native void setDropMip(int i);
 	public static native void setGame(String str);
 	public static native void setLanguage(String str);
 	public static native int setLibPath(String str);
 	public static native void setMainPackFilePath(String str);
-	public static native void setNativeLibPath(String str);
 	public static native void setPatchPackFilePath(String str);
 	public static native int setenv(String str, String str2, int i);
 	public static native boolean shouldDrawControls();

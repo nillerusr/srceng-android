@@ -1,4 +1,4 @@
-package in.celest;
+package me.nillerusr;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,7 +37,7 @@ import android.util.Base64;
 import android.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import in.celest.LauncherActivity;
+import me.nillerusr.LauncherActivity;
 import android.view.LayoutInflater;
 import android.graphics.Bitmap;
 import java.util.Arrays;

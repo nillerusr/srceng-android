@@ -24,7 +24,7 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.FrameLayout;
 import android.view.InputDevice;
-import in.celest.LauncherActivity;
+import me.nillerusr.LauncherActivity;
 import com.valvesoftware.ValveActivity2;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
