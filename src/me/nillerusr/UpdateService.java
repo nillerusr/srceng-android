@@ -17,6 +17,7 @@ import com.nvidia.valvesoftware.source.R;
 public class UpdateService extends Service {
 	NotificationManager nm;
 	Bundle extras;
+	static boolean service_work = false;
 
 	@Override
 	public void onCreate() {
@@ -25,10 +26,15 @@ public class UpdateService extends Service {
 	}
 
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		extras = intent.getExtras();
-		sendNotif();
-
-		return super.onStartCommand(intent, flags, startId);
+		if( !service_work )
+		{
+			service_work = true;
+			try {
+				extras = intent.getExtras();
+				sendNotif();
+			} catch( Exception e ) { }
+		}
+		return START_NOT_STICKY;
 	}
 
 	private void sendNotif() {
