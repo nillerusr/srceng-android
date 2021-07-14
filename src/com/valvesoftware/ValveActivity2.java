@@ -68,6 +68,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 		int game = LauncherActivity.mPref.getInt("game", 0);
 		setDataDirectoryPath(appinf.dataDir);
 		showTouch(LauncherActivity.mPref.getBoolean("show_touch", true), LauncherActivity.scr_res.width, LauncherActivity.scr_res.height);
+		String country = Locale.getDefault().getCountry();
 		String lang = new HashMap<String, String>() {
 			{
 				put("rus", "russian");
@@ -100,9 +101,8 @@ public abstract class ValveActivity2 extends SDLActivity {
 				put("rup", "romanian");
 				put("spa", "spanish");
 				put("swe", "swedish");
-				put("chi", "tchinese");
-				put("zho", "tchinese");
-				put("chi", "tchinese");
+				put("chi", "schinese");
+				put("zho", "schinese");
 				put("tha", "thai");
 				put("tur", "turkish");
 				put("crh", "turkish");
@@ -111,7 +111,16 @@ public abstract class ValveActivity2 extends SDLActivity {
 		}.get(Locale.getDefault().getISO3Language());
 
 		if (lang != null)
-			setLanguage(lang);
+			if (country == "CN")
+				setLanguage("schinese");
+			else if (country == "TW")
+				setLanguage("tchinese");
+			else if (country == "HK")
+				setLanguage("tchinese");
+			else if (country == "MO")
+				setLanguage("tchinese");
+			else
+				setLanguage(lang);
 
 		if (LauncherActivity.mPref.getBoolean("rodir", false))
 			setDocumentDirectoryPath(LauncherActivity.getADataDir());
