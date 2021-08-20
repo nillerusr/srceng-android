@@ -3,7 +3,7 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">About</string>
-    <string name="srceng_launcher_about_text">\nSpecial thanks to:\nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nRusJJ for the particles fix\nnillerusr for port\nvalve for source engine\n\nNot for commercial use!\nContact Us: unknownandlost11@gmail.com\n\nDonate: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
+    <string name="srceng_launcher_about_text">\nSpecial thanks to:\nptitSeb for gl4es: https://github.com/ptitSeb/gl4es\nRusJJ for the particles fix\nnillerusr for port\nvalve for source engine\n\nNot for commercial use!\nDiscord: https://discord.gg/SYb7D7fDm5\nContact Us: unknownandlost11@gmail.com\n\nDonate: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
     <string name="srceng_launcher_launch">Launch</string>
     <string name="srceng_launcher_ok">OK</string>
     <string name="srceng_launcher_error">Error</string>

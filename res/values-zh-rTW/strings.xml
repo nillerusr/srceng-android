@@ -3,7 +3,7 @@
     <string name="srceng_app_name">起源引擎</string>
 
     <string name="srceng_launcher_about">關於</string>
-    <string name="srceng_launcher_about_text">\n特別感謝：\nptitSeb 製作的 gl4es 程式：https://github.com/ptitSeb/gl4es\nRusJJ 製作的 particles fix 粒子修復程式\nnillerusr 製作的 port 程式\nvalve 製作的起源引擎\n\n不得用於商業用途！\n\n給作者打賞點小錢：https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string>
+    <string name="srceng_launcher_about_text">\n特別感謝：\nptitSeb 製作的 gl4es 程式：https://github.com/ptitSeb/gl4es\nRusJJ 製作的 particles fix 粒子修復程式\nnillerusr 製作的 port 程式\nvalve 製作的起源引擎\n\n不得用於商業用途！\n\n給作者打賞點小錢：https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr\nDiscord: https://discord.gg/SYb7D7fDm5</string>
     <string name="srceng_launcher_launch">啟動</string>
     <string name="srceng_launcher_ok">確定</string>
     <string name="srceng_launcher_error">錯誤</string>
