@@ -398,8 +398,8 @@ public class LauncherActivity extends Activity {
 		boolean rodir = mPref.getBoolean("rodir", false);
 
 		Games.Game game = Games.at(spin.getSelectedItemPosition() );
-		if( !checkObb( game.main_obb, game.patch_obb,  game.extras_obb) )
-				return;
+		//if( !checkObb( game.main_obb, game.patch_obb,  game.extras_obb) )
+		//		return;
 
 		boolean can_write = writeTest(gamepath);
 

@@ -60,7 +60,7 @@ public abstract class ValveActivity2 extends SDLActivity {
 		}
 	}
 
-	public static void initNatives() {
+	public static void initNatives() {		
 		ApplicationInfo appinf = getContext().getApplicationInfo();
 		String gamepath = LauncherActivity.mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
 		String argv = LauncherActivity.mPref.getString("argv", "-console");
