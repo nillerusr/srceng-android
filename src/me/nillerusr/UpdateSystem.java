@@ -29,7 +29,7 @@ public class UpdateSystem extends AsyncTask<String, Integer, String> {
 
 	private static String toString(InputStream inputStream)
 	{
-        	try {
+        try {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			String inputLine;
 			StringBuilder stringBuilder = new StringBuilder();
@@ -37,11 +37,12 @@ public class UpdateSystem extends AsyncTask<String, Integer, String> {
 				stringBuilder.append(inputLine);
 			}
 			return stringBuilder.toString();
-        	}
+        }
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	        return "";
+
+		return "";
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class UpdateSystem extends AsyncTask<String, Integer, String> {
 	}
 
 	protected void onPostExecute(String result) {
-		if( result != "" && !last_commit.equals(result) ) {
+		if( result && !result.equals("") && !last_commit.equals(result) ) {
 			Intent notif = new Intent(mContext, UpdateService.class);
 			notif.putExtra("update_url", git_url+"/"+deploy_branch+"/"+app);
 			mContext.startService(notif);
