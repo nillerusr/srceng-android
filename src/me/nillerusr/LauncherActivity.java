@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.util.regex.Pattern;
 import org.libsdl.app.SDLActivity;
 import android.content.pm.PackageManager;
-import com.nvidia.valvesoftware.source.R;
+import com.valvesoftware.source.R;
 import android.widget.LinearLayout.LayoutParams;
 import android.content.pm.PackageInfo;
 import android.content.pm.Signature;
@@ -397,7 +397,7 @@ public class LauncherActivity extends Activity {
 		editor.putBoolean("check_updates", check_updates.isChecked());
 		boolean rodir = mPref.getBoolean("rodir", false);
 
-		Games.Game game = Games.at(spin.getSelectedItemPosition() );
+		//Games.Game game = Games.at(spin.getSelectedItemPosition() );
 		//if( !checkObb( game.main_obb, game.patch_obb,  game.extras_obb) )
 		//		return;
 
@@ -430,7 +430,9 @@ public class LauncherActivity extends Activity {
 			return;
 		}
 
-		new AlertDialog.Builder(this).setTitle("Wraning").setMessage(R.string.srceng_launcher_error_test_write + getADataDir()).setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null).show();
+		new AlertDialog.Builder(this).setTitle("Warning").setMessage(
+			this.getResources().getString(R.string.srceng_launcher_error_test_write) + getADataDir()
+		).setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null).show();
 		editor.putBoolean("rodir", true);
 		editor.commit();
 

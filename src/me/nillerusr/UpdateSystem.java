@@ -3,7 +3,7 @@ package me.nillerusr;
 import android.content.*;
 import java.io.*;
 import java.net.*;
-import com.nvidia.valvesoftware.source.R;
+import com.valvesoftware.source.R;
 import android.os.AsyncTask;
 import java.net.URL;
 import java.net.URLConnection;
@@ -62,7 +62,7 @@ public class UpdateSystem extends AsyncTask<String, Integer, String> {
 	}
 
 	protected void onPostExecute(String result) {
-		if( result && !result.equals("") && !last_commit.equals(result) ) {
+		if( result != null && !result.equals("") && !last_commit.equals(result) ) {
 			Intent notif = new Intent(mContext, UpdateService.class);
 			notif.putExtra("update_url", git_url+"/"+deploy_branch+"/"+app);
 			mContext.startService(notif);
