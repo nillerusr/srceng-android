@@ -269,6 +269,20 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         mClipboardHandler = new SDLClipboardHandler();
 
+	if (Build.VERSION.SDK_INT >= 19) {
+                int flags = View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.INVISIBLE;
+
+                SDLActivity.this.getWindow().getDecorView().setSystemUiVisibility(flags);
+	}
+
+	if (Build.VERSION.SDK_INT >= 28)
+		getWindow().getAttributes().layoutInDisplayCutoutMode = 1;
+
         // Set up the surface
         mSurface = new SDLSurface(getApplication());
 
@@ -633,7 +647,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     if (context instanceof Activity) {
                         Window window = ((Activity) context).getWindow();
                         if (window != null) {
-                            if ((msg.obj instanceof Integer) && ((Integer) msg.obj != 0)) {
                                 int flags = View.SYSTEM_UI_FLAG_FULLSCREEN |
                                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
@@ -644,13 +657,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                                 window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                                 window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                                 SDLActivity.mFullscreenModeActive = true;
-                            } else {
-                                int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_VISIBLE;
-                                window.getDecorView().setSystemUiVisibility(flags);
-                                window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-                                window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                                SDLActivity.mFullscreenModeActive = false;
-                            }
                         }
                     } else {
                         Log.e(TAG, "error handling message, getContext() returned no Activity");
@@ -1832,6 +1838,9 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                 source = device.getSources();
             }
         }
+
+	if( keyCode == KeyEvent.KEYCODE_BACK )
+            keyCode = KeyEvent.KEYCODE_ESCAPE;
 
 //        if (event.getAction() == KeyEvent.ACTION_DOWN) {
 //            Log.v("SDL", "key down: " + keyCode + ", deviceId = " + deviceId + ", source = " + source);
