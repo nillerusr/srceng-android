@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "vgui\touch\show_weapons"
-	"$translucent" 1
-	"$ignorez" 1
-}

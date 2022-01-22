@@ -10,11 +10,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import org.libsdl.app.SDLActivity;
 import me.nillerusr.LauncherActivity;
+import android.content.SharedPreferences;
+import android.content.Context;
+import android.util.Log;
 
-public abstract class ValveActivity2 extends SDLActivity {
-	public static int mHeight;
+public class ValveActivity2 { // not activity, i am lazy to change native methods
 	private static ValveActivity2 mSingleton;
-	public static int mWidth;
+	public static SharedPreferences mPref;
 
 	public static native void setArgs(String args);
 	public static native void setGameDirectoryPath(String path);
@@ -22,36 +24,31 @@ public abstract class ValveActivity2 extends SDLActivity {
 	public static native int setenv(String name, String value, int overwrite);
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
-	public abstract Class getResourceKeys();
-	public abstract String getSourceGame();
+	static public void initNatives(Context context, String argv, String gamedir, String gamelibdir, String customVPK) {
+		mPref = context.getSharedPreferences("mod", 0);
+		ApplicationInfo appinf = context.getApplicationInfo();
+		String gamepath = mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		mWidth = size.x;
-		mHeight = size.y;
-	}
+		if( argv == null || argv.isEmpty() )
+			argv = mPref.getString("argv", "-console");
 
-	public static void setEnvs(String str) {
-		for (String i : str.split("\\s+")) {
-			String[] ass = i.split("=");
-			if (ass.length > 1) {
-				setenv(ass[0], ass[1], 1);
-			}
-		}
-	}
+		if( gamedir == null || gamedir.isEmpty() )
+			gamedir = "hl2";
 
-	public static void initNatives() {
-		ApplicationInfo appinf = getContext().getApplicationInfo();
-		String gamepath = LauncherActivity.mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
-		String argv = LauncherActivity.mPref.getString("argv", "-console");
-		String env = LauncherActivity.mPref.getString("env", "LIBGL_USEVBO=0");
+		argv = "-game "+gamedir+" "+argv;
+
+		if( gamelibdir != null && !gamelibdir.isEmpty() )
+			setenv( "APP_MOD_LIB", gamelibdir, 1 );
+
+		String vpks = context.getFilesDir().getPath()+"/"+LauncherActivity.VPK_NAME;
+		if( customVPK != null && !customVPK.isEmpty() )
+			vpks = customVPK+","+vpks;
+
+		setenv( "EXTRAS_VPK_PATH", vpks, 1 );
 
 		// TODO: set laungage
-
-/*		String lang = new HashMap<String, String>() {
+/*
+		String lang = new HashMap<String, String>() {
 			{
 				put("rus", "russian");
 				put("bul", "bulgarian");
@@ -99,17 +96,11 @@ public abstract class ValveActivity2 extends SDLActivity {
 
 		setDataDirectoryPath(appinf.dataDir);
 
-		if (LauncherActivity.mPref.getBoolean("rodir", false))
+		if (mPref.getBoolean("rodir", false))
 			setGameDirectoryPath(LauncherActivity.getADataDir());
 		else
 			setGameDirectoryPath(gamepath);
 
 		setArgs(argv);
-		setEnvs(env);
-	}
-
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		nativeOnActivityResult(this, requestCode, resultCode, data);
 	}
 }

@@ -43,15 +43,20 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import me.nillerusr.UpdateService;
 import me.nillerusr.UpdateSystem;
+import me.nillerusr.ExtractAssets;
+import android.content.pm.ApplicationInfo;
+
 
 public class LauncherActivity extends Activity {
+	public static final int VPK_VERSION = 1;
 	public static String PKG_NAME;
+
 	public static boolean can_write = true;
 	static EditText cmdArgs, GamePath, EnvEdit, res_width, res_height;
-	public static SharedPreferences mPref;
+	public SharedPreferences mPref;
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
 	static CheckBox showtouch, useVolumeButtons, immersiveMode, fixedResolution, check_updates;
-	static Spinner spin;
+//	static Spinner spin;
 	public static String found_main_obb = null;
 	public static Screen.Resolution scr_res;
 	static LinearLayout res_layout;
@@ -163,6 +168,7 @@ public class LauncherActivity extends Activity {
 		EnvEdit = (EditText)findViewById(R.id.edit_env);
 		GamePath = (EditText)findViewById(R.id.edit_gamepath);
 
+/*
 		spin = (Spinner)findViewById(R.id.spinner_games);
 		ArrayList<String> spinnerArray = new ArrayList<String>();
 		for( int j = 0;j < Games.count(); j++)
@@ -175,7 +181,7 @@ public class LauncherActivity extends Activity {
 		else
 			spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_v8, spinnerArray);
 
-		spin.setAdapter(spinnerArrayAdapter);
+		spin.setAdapter(spinnerArrayAdapter);*/
 
 		immersiveMode = (CheckBox)findViewById(R.id.checkbox_immersive_mode);
 		showtouch = (CheckBox)findViewById(R.id.checkbox_show_touch);
@@ -256,7 +262,7 @@ public class LauncherActivity extends Activity {
 		cmdArgs.setText(mPref.getString("argv", "-console"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
 		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
-		spin.setSelection(mPref.getInt("game", 0));
+//		spin.setSelection(mPref.getInt("game", 0));
 		showtouch.setChecked(mPref.getBoolean("show_touch", true));
 		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
 		fixedResolution.setChecked(mPref.getBoolean("fixed_resolution", false));
@@ -267,103 +273,13 @@ public class LauncherActivity extends Activity {
 		// permissions check
 		if( sdk >= 23 )
 			applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, REQUEST_PERMISSIONS );
-
+/*
 		if( last_commit == null || last_commit.isEmpty() )
 			check_updates.setVisibility(View.GONE);
 		else if( check_updates.isChecked() ) {
 			UpdateSystem update = new UpdateSystem(this);
 			update.execute();
-		}
-	}
-
-	/* access modifiers changed from: package-private */
-	public void extractTouchIcons(String path) {
-		FileOutputStream os;
-		try {
-			String[] Files = getApplicationContext().getAssets().list("hl2/materials/vgui/touch");
-			File directory = new File(path + "/hl2/materials/vgui/touch");
-			if (!directory.exists())
-				directory.mkdirs();
-
-			int length = Files.length;
-			int i = 0;
-			FileOutputStream os2 = null;
-			while (i < length) {
-				String file = Files[i];
-				if (new File(path + "/hl2/materials/vgui/touch/" + file).exists())
-					os = os2;
-				else {
-					InputStream is = getAssets().open("hl2/materials/vgui/touch/" + file);
-					os = new FileOutputStream(path + "/hl2/materials/vgui/touch/" + file);
-					byte[] buffer = new byte[1024];
-					while (true) {
-						int length2 = is.read(buffer);
-						if (length2 <= 0)
-							break;
-						os.write(buffer, 0, length2);
-					}
-					os.close();
-					is.close();
-				}
-				i++;
-				os2 = os;
-			}
-		}
-		catch (Exception e) {
-			Log.e("SRCAPK", "Failed to extract touch icons:" + e.toString());
-		}
-	}
-
-	public boolean checkObb( String main, String patch, String extras)
-	{
-		String gamepath = GamePath.getText().toString();
-		File main_obb = new File(gamepath+"/"+main);
-		File patch_obb = new File(gamepath+"/"+patch);
-		File extras_obb = new File(gamepath+"/"+extras);
-		String missing_obb = "";
-		boolean bCheckFail = false;
-		String missing_obb_desc_a = this.getResources().getString(R.string.srceng_launcher_error_missing_obb_a);
-		String missing_obb_desc_b = this.getResources().getString(R.string.srceng_launcher_error_missing_obb_b);
-
-		if( !main_obb.exists() || main_obb.isDirectory() ) {
-			File fileName = new File(gamepath);
-			if( fileName.exists() ) {
-				File[] fileList = fileName.listFiles();
-
-				for (File file: fileList) {
-					String fname = file.getName();
-					if( !file.isDirectory() && fname.matches("main.\\d\\d.com.nvidia.valvesoftware.(.*).obb") ) {
-						found_main_obb = fname;
-						break;
-					}
-				}
-			}
-
-			if( found_main_obb == null ) {
-				missing_obb += main+"\n";
-				bCheckFail = true;
-			}
-		}
-
-		if( !patch_obb.exists() || patch_obb.isDirectory() ) {
-			missing_obb += patch+"\n";
-			bCheckFail = true;
-		}
-
-		if( extras != null && !extras.trim().isEmpty() && (!extras_obb.exists() || extras_obb.isDirectory()) ) {
-			missing_obb += extras+"\n";
-			bCheckFail = true;
-		}
-
-		if( bCheckFail ) {
-			new AlertDialog.Builder(this)
-				.setTitle(R.string.srceng_launcher_error)
-				.setMessage(missing_obb_desc_a + "\n" + missing_obb + missing_obb_desc_b + "\n" + gamepath)
-				.setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null)
-				.show();
-				return false;
-		}
-		return true;
+		}*/
 	}
 
 	public boolean writeTest(String gamepath)
@@ -391,7 +307,7 @@ public class LauncherActivity extends Activity {
 		editor.putString("argv", argv);
 		editor.putString("gamepath", gamepath);
 		editor.putString("env", env);
-		editor.putInt("game", spin.getSelectedItemPosition());
+//		editor.putInt("game", spin.getSelectedItemPosition());
 		editor.putInt("resolution_width", Integer.parseInt(res_width.getText().toString()));
 		editor.putInt("resolution_height", Integer.parseInt(res_height.getText().toString()));
 		editor.putBoolean("check_updates", check_updates.isChecked());
@@ -410,10 +326,7 @@ public class LauncherActivity extends Activity {
 				rodir = false;
 			}
 
-			if (rodir)
-				extractTouchIcons(getADataDir());
-			else
-				extractTouchIcons(gamepath);
+			ExtractAssets.extractVPK(this, false);
 
 			if (sdk >= 19)
 				editor.putBoolean("immersive_mode", immersiveMode.isChecked());

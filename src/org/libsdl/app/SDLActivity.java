@@ -265,7 +265,13 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mSingleton = this;
         SDL.setContext(this);
 
-	ValveActivity2.initNatives();
+	Intent intent = getIntent();
+	String argv = intent.getStringExtra("id");
+	String gamedir = intent.getStringExtra("gamedir");
+	String gamelibdir = intent.getStringExtra("gamelibdir");
+	String vpk = intent.getStringExtra("vpk");
+
+	ValveActivity2.initNatives(this, argv, gamedir, gamelibdir, vpk);
 
         mClipboardHandler = new SDLClipboardHandler();
 
@@ -310,7 +316,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
 
         // Get filename from "Open with" of another application
-        Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
             String filename = intent.getData().getPath();
             if (filename != null) {
