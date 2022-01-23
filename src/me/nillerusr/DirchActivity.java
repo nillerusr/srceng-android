@@ -15,7 +15,6 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-import com.valvesoftware.Games;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -48,6 +47,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
 	public static String cur_dir;
 	static LinearLayout body;
+	public SharedPreferences mPref;
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
@@ -125,6 +125,8 @@ public class DirchActivity extends Activity implements OnTouchListener{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mPref = getSharedPreferences("mod", 0);
+
 		requestWindowFeature(1);
 		if (sdk >= 21)
 			super.setTheme(16974372);
@@ -143,7 +145,7 @@ public class DirchActivity extends Activity implements OnTouchListener{
 			public void onClick(View v) {
 				if( cur_dir != null ) {
 					LauncherActivity.GamePath.setText(cur_dir+"/");
-					SharedPreferences.Editor editor = LauncherActivity.mPref.edit();
+					SharedPreferences.Editor editor = mPref.edit();
 					editor.putString("gamepath", cur_dir+"/");
 					editor.commit();
 					finish();

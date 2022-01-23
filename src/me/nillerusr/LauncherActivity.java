@@ -1,65 +1,48 @@
 package me.nillerusr;
 
+import com.valvesoftware.source.R;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.Manifest;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.util.Linkify;
 import android.util.Log;
-import com.valvesoftware.Games;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.regex.Pattern;
-import org.libsdl.app.SDLActivity;
-import android.content.pm.PackageManager;
-import com.valvesoftware.source.R;
 import android.widget.LinearLayout.LayoutParams;
-import android.content.pm.PackageInfo;
-import android.content.pm.Signature;
-import java.security.MessageDigest;
-import android.util.Base64;
-import android.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import me.nillerusr.DirchActivity;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.util.DisplayMetrics;
-import me.nillerusr.Screen;
 import android.view.*;
 import android.widget.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+
 import me.nillerusr.UpdateService;
 import me.nillerusr.UpdateSystem;
 import me.nillerusr.ExtractAssets;
-import android.content.pm.ApplicationInfo;
+import me.nillerusr.DirchActivity;
 
+import org.libsdl.app.SDLActivity;
 
 public class LauncherActivity extends Activity {
-	public static final int VPK_VERSION = 1;
 	public static String PKG_NAME;
 
 	public static boolean can_write = true;
 	static EditText cmdArgs, GamePath, EnvEdit, res_width, res_height;
 	public SharedPreferences mPref;
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
-	static CheckBox showtouch, useVolumeButtons, immersiveMode, fixedResolution, check_updates;
-//	static Spinner spin;
-	public static String found_main_obb = null;
-	public static Screen.Resolution scr_res;
-	static LinearLayout res_layout;
+	static CheckBox useVolumeButtons, check_updates;
 
 	final static int REQUEST_PERMISSIONS = 42;
 
@@ -94,7 +77,7 @@ public class LauncherActivity extends Activity {
 		return dir.getPath();
 	}
 
-	public static String getADataDir() {
+	public static String getAndroidDataDir() {
 		String path = getDefaultDir() + "/Android/data/" + PKG_NAME + "/files";
 		File directory = new File(path);
 		if (!directory.exists())
@@ -156,8 +139,6 @@ public class LauncherActivity extends Activity {
 		else
 			super.setTheme(0x01030005);
 
-		scr_res = Screen.getResolution( this );
-
 		mPref = getSharedPreferences("mod", 0);
 
 		setContentView(R.layout.activity_launcher);
@@ -168,24 +149,9 @@ public class LauncherActivity extends Activity {
 		EnvEdit = (EditText)findViewById(R.id.edit_env);
 		GamePath = (EditText)findViewById(R.id.edit_gamepath);
 
-/*
-		spin = (Spinner)findViewById(R.id.spinner_games);
-		ArrayList<String> spinnerArray = new ArrayList<String>();
-		for( int j = 0;j < Games.count(); j++)
-			spinnerArray.add(Games.at(j).name);
+//		immersiveMode = (CheckBox)findViewById(R.id.checkbox_immersive_mode);
 
-		ArrayAdapter<String> spinnerArrayAdapter;
-
-		if( sdk >= 21 )
-			spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-		else
-			spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_v8, spinnerArray);
-
-		spin.setAdapter(spinnerArrayAdapter);*/
-
-		immersiveMode = (CheckBox)findViewById(R.id.checkbox_immersive_mode);
-		showtouch = (CheckBox)findViewById(R.id.checkbox_show_touch);
-		useVolumeButtons = (CheckBox)findViewById(R.id.checkbox_use_volume);
+/*		useVolumeButtons = (CheckBox)findViewById(R.id.checkbox_use_volume);
 
 		useVolumeButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -193,22 +159,7 @@ public class LauncherActivity extends Activity {
 				if( isChecked )
 					Toast.makeText(LauncherActivity.this, R.string.srceng_launcher_volume_buttons_desc, 5000).show();
 			}
-		});
-
-		res_layout = (LinearLayout)findViewById(R.id.layout_resolution);
-
-		fixedResolution = (CheckBox)findViewById(R.id.checkbox_fixed_resolution);
-		fixedResolution.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-				if( isChecked )
-					LauncherActivity.this.res_layout.setVisibility(View.VISIBLE);
-				else
-					LauncherActivity.this.res_layout.setVisibility(View.GONE);
-			}
-		});
-
-
+		});*/
 
 		Button button = (Button)findViewById(R.id.button_launch);
 		button.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +180,6 @@ public class LauncherActivity extends Activity {
 				text.setText(R.string.srceng_launcher_about_text);
 				text.setLinksClickable(true);
 				Linkify.addLinks(text, Linkify.WEB_URLS|Linkify.EMAIL_ADDRESSES);
-//				Linkify.addLinks(text, Pattern.compile("[a-z]+:\\/\\/[^ \\n]*"), "");
 				scroll.addView(text);
 				dialog.setContentView(scroll);
 				dialog.show();
@@ -245,28 +195,19 @@ public class LauncherActivity extends Activity {
 			}
 		});
 
-		res_width = findViewById(R.id.edit_resolution_width);
-		res_height = findViewById(R.id.edit_resolution_height);
-		res_width.setText(""+mPref.getInt("resolution_width", scr_res.width));
-		res_height.setText(""+mPref.getInt("resolution_height", scr_res.height));
-
-		if (sdk >= 19) {
+/*		if (sdk >= 19) {
 			immersiveMode.setChecked(true);
-			//immersiveMode.setVisibility(View.VISIBLE);
-			//immersiveMode.setChecked(mPref.getBoolean("immersive_mode", true));
-		}
+		}*/
 
-		check_updates = (CheckBox)findViewById(R.id.checkbox_check_updates);
+//		check_updates = (CheckBox)findViewById(R.id.checkbox_check_updates);
 		String last_commit = getResources().getString(R.string.last_commit);
 
 		cmdArgs.setText(mPref.getString("argv", "-console"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
 		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
-//		spin.setSelection(mPref.getInt("game", 0));
-		showtouch.setChecked(mPref.getBoolean("show_touch", true));
-		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
-		fixedResolution.setChecked(mPref.getBoolean("fixed_resolution", false));
-		check_updates.setChecked(mPref.getBoolean("check_updates", true));
+
+//		useVolumeButtons.setChecked(mPref.getBoolean("use_volume_buttons", false));
+//		check_updates.setChecked(mPref.getBoolean("check_updates", true));
 
 		changeButtonsStyle((ViewGroup)this.getWindow().getDecorView());
 
@@ -279,75 +220,81 @@ public class LauncherActivity extends Activity {
 		else if( check_updates.isChecked() ) {
 			UpdateSystem update = new UpdateSystem(this);
 			update.execute();
-		}*/
-	}
-
-	public boolean writeTest(String gamepath)
-	{
-		try {
-			FileWriter myWriter = new FileWriter(gamepath + "/testwrite");
-			myWriter.write("TEST!");
-			myWriter.close();
 		}
-		catch (IOException e) { return false; }
-
-		File f = new File(gamepath + "/testwrite");
-		if (!f.exists())
-			return false;
-
-		f.delete();
-		return true;
+*/
 	}
 
-	public void startSource(View view) {
+	public void saveSettings(SharedPreferences.Editor editor)
+	{
 		String argv = cmdArgs.getText().toString();
 		String gamepath = GamePath.getText().toString();
 		String env = EnvEdit.getText().toString();
-		SharedPreferences.Editor editor = mPref.edit();
+
 		editor.putString("argv", argv);
 		editor.putString("gamepath", gamepath);
 		editor.putString("env", env);
-//		editor.putInt("game", spin.getSelectedItemPosition());
-		editor.putInt("resolution_width", Integer.parseInt(res_width.getText().toString()));
-		editor.putInt("resolution_height", Integer.parseInt(res_height.getText().toString()));
-		editor.putBoolean("check_updates", check_updates.isChecked());
-		boolean rodir = mPref.getBoolean("rodir", false);
+//		editor.putBoolean("use_volume_buttons", useVolumeButtons.isChecked());
+//		editor.putBoolean("check_updates", check_updates.isChecked());
+		editor.commit();
+	}
 
-		//Games.Game game = Games.at(spin.getSelectedItemPosition() );
-		//if( !checkObb( game.main_obb, game.patch_obb,  game.extras_obb) )
-		//		return;
+	public void startSource(View view)
+	{
+		String gamepath = GamePath.getText().toString();
 
-		boolean can_write = writeTest(gamepath);
+		SharedPreferences.Editor editor = mPref.edit();
+		saveSettings(editor);
 
-		if (can_write || rodir) {
+//		boolean rodir = mPref.getBoolean("rodir", false);
+//		boolean can_write = writeTest(gamepath);
+
+		if (sdk >= 19)
+			editor.putBoolean("immersive_mode", true /*immersiveMode.isChecked()*/ );
+		else
+			editor.putBoolean("immersive_mode", false);
+
+		editor.commit();
+
+		Intent intent = new Intent(this, SDLActivity.class);
+		intent.addFlags(268435456);
+		startActivity(intent);
+
+
+/*		if (can_write || rodir) {
 			if (can_write) {
 				editor.putBoolean("rodir", false);
 				editor.commit();
 				rodir = false;
 			}
 
-			ExtractAssets.extractVPK(this, false);
-
 			if (sdk >= 19)
-				editor.putBoolean("immersive_mode", immersiveMode.isChecked());
+				editor.putBoolean("immersive_mode", true ); //immersiveMode.isChecked() );
 			else
 				editor.putBoolean("immersive_mode", false);
 
-			editor.putBoolean("show_touch", showtouch.isChecked());
-			editor.putBoolean("use_volume_buttons", useVolumeButtons.isChecked());
-			editor.putBoolean("fixed_resolution", fixedResolution.isChecked());
 			editor.commit();
+
 			Intent intent = new Intent(this, SDLActivity.class);
 			intent.addFlags(268435456);
 			startActivity(intent);
+
 			return;
 		}
 
 		new AlertDialog.Builder(this).setTitle("Warning").setMessage(
-			this.getResources().getString(R.string.srceng_launcher_error_test_write) + getADataDir()
+			this.getResources().getString(R.string.srceng_launcher_error_test_write) + getAndroidDataDir()
 		).setPositiveButton(R.string.srceng_launcher_ok, (DialogInterface.OnClickListener) null).show();
+
 		editor.putBoolean("rodir", true);
 		editor.commit();
+*/
+	}
 
+	public void onPause()
+	{
+		Log.v("SRCAPK", "onPause");
+		saveSettings(mPref.edit());
+		super.onPause();
 	}
 }
+

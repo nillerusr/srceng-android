@@ -150,31 +150,7 @@
 							android:layout_marginTop="5dp"
 							android:layout_marginBottom="5dp"
 							android:textColor="#FFFFFF"/>
-						<TextView
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content" 
-							android:layout_marginLeft="5dp"
-							android:text="@string/srceng_launcher_game_menu"
-							android:textAppearance="?android:attr/textAppearanceMedium"/>
-						<Spinner
-							android:id="@+id/spinner_games"
-							android:layout_marginLeft="3dp"
-							android:layout_marginRight="3dp"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
-							android:popupBackground="#FF333333"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content" />
-						<CheckBox
-							android:id="@+id/checkbox_show_touch"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginLeft="3dp"
-							android:layout_marginRight="3dp"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
-							android:buttonTint="@color/hl_color"
-							android:text="@string/srceng_launcher_touch_controls"/>
+<!--
 						<CheckBox
 							android:id="@+id/checkbox_use_volume"
 							android:layout_width="wrap_content"
@@ -206,49 +182,7 @@
 							android:layout_marginBottom="5dp"
 							android:buttonTint="@color/hl_color"
 							android:text="@string/srceng_launcher_check_updates"/>
-						<CheckBox
-							android:id="@+id/checkbox_fixed_resolution"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginLeft="3dp"
-							android:layout_marginRight="3dp"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
-							android:buttonTint="@color/hl_color"
-							android:text="@string/srceng_launcher_screen_resolution"/>
-						<LinearLayout
-							android:id="@+id/layout_resolution"
-							android:layout_width="fill_parent"
-							android:layout_height="wrap_content"
-							android:orientation="horizontal"
-							android:layout_marginLeft="3dp"
-							android:layout_marginRight="3dp"
-							android:layout_marginTop="5dp"
-							android:visibility="gone"
-							android:layout_marginBottom="5dp">
-							<EditText
-								android:id="@+id/edit_resolution_width"
-								android:maxLines="1"
-								android:inputType="text"
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content" 
-								android:layout_weight="1"
-								android:backgroundTint="@color/hl_color"
-								android:text=""/>
-							<TextView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:text="X"/>
-							<EditText
-								android:id="@+id/edit_resolution_height"
-								android:maxLines="1"
-								android:inputType="text"
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content" 
-								android:layout_weight="1"
-								android:backgroundTint="@color/hl_color"
-								android:text=""/>
-						</LinearLayout>
+-->
 					</LinearLayout>
 				</ScrollView>
 			</LinearLayout>

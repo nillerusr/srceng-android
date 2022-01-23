@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="srceng_app_name">Source Engine</string>
-
     <string name="srceng_launcher_about">О порте</string>
     <string name="srceng_launcher_about_text">\nОсобая благодарность \nptitSeb за gl4es: https://github.com/ptitSeb/gl4es\nRusJJ за исправление партиклей\nnillerusr за порт \nvalve за source engine\n\nНе для коммерческого использования!\nКонтакты: unknownandlost11@gmail.com\n\nДонат: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
     <string name="srceng_launcher_launch">Запустить</string>
@@ -11,6 +9,7 @@
     <string name="srceng_launcher_error_missing_obb_b">файлов по пути </string>
     <string name="srceng_launcher_error_test_write">Тест записи провален,файлы будут храниться в </string>
     <string name="srceng_launcher_error_no_permission">Без разрешений игра не будет работать</string>
+    <string name="srceng_launcher_error_find_gameinfo">Не удалось обнаружить игровые ресурсы. Провертье указанный путь к игре!</string>
 
     <string name="srceng_launcher_command_args">Аргументы командной строки</string>
     <string name="srceng_launcher_env">Env</string>

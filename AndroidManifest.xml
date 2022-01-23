@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="78" android:versionName="78" package="com.valvesoftware.source">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="1" android:versionName="1.06" package="com.valvesoftware.source">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-          <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize" android:label="@string/srceng_app_name" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+          <activity android:configChanges="layoutDirection|locale|orientation|uiMode|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation" android:label="@string/srceng_app_name" android:name="org.libsdl.app.SDLActivity" android:screenOrientation="sensorLandscape" android:launchMode="singleTask" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="org.libsdl.app.SDLACTIVITY"/>
                 <category android:name="android.intent.category.DEFAULT"/>

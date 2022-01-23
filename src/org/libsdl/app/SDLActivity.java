@@ -1,5 +1,7 @@
 package org.libsdl.app;
 
+import com.valvesoftware.source.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -255,6 +257,25 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
            return;
         }
 
+        if( !ValveActivity2.preInit(this) )
+        {
+        	mBrokenLibraries = true; // Funny hack, but should work
+            mSingleton = this;
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            dlgAlert.setTitle(getResources().getString(R.string.srceng_launcher_error));
+            dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_gameinfo));
+            dlgAlert.setPositiveButton(R.string.srceng_launcher_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    mSingleton.finish();
+                }
+            });
+            dlgAlert.setCancelable(false);
+            dlgAlert.create().show();
+
+            return;
+        }
+
         // Set up JNI
         SDL.setupJNI();
 
@@ -265,17 +286,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mSingleton = this;
         SDL.setContext(this);
 
-	Intent intent = getIntent();
-	String argv = intent.getStringExtra("id");
-	String gamedir = intent.getStringExtra("gamedir");
-	String gamelibdir = intent.getStringExtra("gamelibdir");
-	String vpk = intent.getStringExtra("vpk");
-
-	ValveActivity2.initNatives(this, argv, gamedir, gamelibdir, vpk);
+        Intent intent = getIntent();
+        ValveActivity2.initNatives(this, getIntent());
 
         mClipboardHandler = new SDLClipboardHandler();
 
-	if (Build.VERSION.SDK_INT >= 19) {
+    if (Build.VERSION.SDK_INT >= 19) {
                 int flags = View.SYSTEM_UI_FLAG_FULLSCREEN |
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
@@ -284,10 +300,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.INVISIBLE;
 
                 SDLActivity.this.getWindow().getDecorView().setSystemUiVisibility(flags);
-	}
+    }
 
-	if (Build.VERSION.SDK_INT >= 28)
-		getWindow().getAttributes().layoutInDisplayCutoutMode = 1;
+    if (Build.VERSION.SDK_INT >= 28)
+        getWindow().getAttributes().layoutInDisplayCutoutMode = 1;
 
         // Set up the surface
         mSurface = new SDLSurface(getApplication());
@@ -1844,7 +1860,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             }
         }
 
-	if( keyCode == KeyEvent.KEYCODE_BACK )
+    if( keyCode == KeyEvent.KEYCODE_BACK )
             keyCode = KeyEvent.KEYCODE_ESCAPE;
 
 //        if (event.getAction() == KeyEvent.ACTION_DOWN) {
