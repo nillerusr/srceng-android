@@ -24,8 +24,6 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 
 
 	public static native void setArgs(String args);
-	public static native void setGameDirectoryPath(String path);
-	public static native void setDataDirectoryPath(String path);
 	public static native int setenv(String name, String value, int overwrite);
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
@@ -50,12 +48,30 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		return false;
 	}
 
-	static public boolean preInit(Context context)
+	static public boolean isModGameinfoExists(String path)
+	{
+		File dir = new File(path);
+		if( !dir.isDirectory() )
+			return false;
+
+		for( File file : dir.listFiles() )
+		{
+			if( file.isFile() && file.getName().toLowerCase().equals("gameinfo.txt") )
+				return true;
+		}
+
+		return false;
+	}
+
+	static public boolean preInit(Context context, Intent intent)
 	{
 		mPref = context.getSharedPreferences("mod", 0);
 		String gamepath = mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
+		String gamedir = intent.getStringExtra("gamedir");
+		if( gamedir == null || gamedir.isEmpty() )
+			gamedir = "hl2";
 
-		if( !findGameinfo(gamepath) )
+		if( !findGameinfo(gamepath) || !isModGameinfoExists(gamepath+"/"+gamedir) )
 			return false;
 
 		return true;
@@ -66,18 +82,19 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		ApplicationInfo appinf = context.getApplicationInfo();
 		String gamepath = mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
 
-		String argv = intent.getStringExtra("id");
+		String argv = intent.getStringExtra("argv");
 		String gamedir = intent.getStringExtra("gamedir");
 		String gamelibdir = intent.getStringExtra("gamelibdir");
 		String customVPK = intent.getStringExtra("vpk");
-
-		if( argv == null || argv.isEmpty() )
-			argv = mPref.getString("argv", "-console");
+		Log.v("SRCAPK", "argv="+argv);
 
 		if( gamedir == null || gamedir.isEmpty() )
 			gamedir = "hl2";
 
-		argv += "-game "+gamedir;
+		if( argv == null || argv.isEmpty() )
+			argv = mPref.getString("argv", "-console");
+
+		argv = "-game "+gamedir+" "+argv;
 
 		if( gamelibdir != null && !gamelibdir.isEmpty() )
 			setenv( "APP_MOD_LIB", gamelibdir, 1 );
@@ -88,18 +105,19 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		if( customVPK != null && !customVPK.isEmpty() )
 			vpks = customVPK+","+vpks;
 
+		Log.v("SRCAPK", "vpks="+vpks);
+
 		setenv( "EXTRAS_VPK_PATH", vpks, 1 );
-
-		// TODO: set laungage
-		//setLanguage(Locale.getDefault().toString());
-
-		setDataDirectoryPath(appinf.dataDir);
+		setenv( "LANG", Locale.getDefault().toString(), 1 );
+		setenv( "APP_DATA_PATH", appinf.dataDir, 1);
+		setenv( "APP_LIB_PATH", appinf.nativeLibraryDir, 1);
 
 		if (mPref.getBoolean("rodir", false))
-			setGameDirectoryPath(LauncherActivity.getAndroidDataDir());
+			setenv( "VALVE_GAME_PATH", LauncherActivity.getAndroidDataDir(), 1 );
 		else
-			setGameDirectoryPath(gamepath);
+			setenv( "VALVE_GAME_PATH", gamepath, 1 );
 
+		Log.v("SRCAPK", "argv="+argv);
 		setArgs(argv);
 	}
 }

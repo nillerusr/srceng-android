@@ -51,6 +51,7 @@
 			android:textColor="#FFFFFF"/>
 	</LinearLayout>
 	<LinearLayout
+		android:id="@+id/center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_above="@+id/footer"

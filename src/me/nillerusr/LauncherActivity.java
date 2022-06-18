@@ -11,11 +11,14 @@ import java.util.List;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.Environment;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.os.Handler;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import java.lang.Thread;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -27,6 +30,7 @@ import android.view.*;
 import android.widget.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.net.Uri;
 
 import me.nillerusr.UpdateService;
 import me.nillerusr.UpdateSystem;
@@ -39,7 +43,7 @@ public class LauncherActivity extends Activity {
 	public static String PKG_NAME;
 
 	public static boolean can_write = true;
-	static EditText cmdArgs, GamePath, EnvEdit, res_width, res_height;
+	static EditText cmdArgs, GamePath = null, EnvEdit, res_width, res_height;
 	public SharedPreferences mPref;
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
 	static CheckBox useVolumeButtons, check_updates;
@@ -179,6 +183,7 @@ public class LauncherActivity extends Activity {
 				TextView text = new TextView(LauncherActivity.this);
 				text.setText(R.string.srceng_launcher_about_text);
 				text.setLinksClickable(true);
+				text.setTextIsSelectable(true);
 				Linkify.addLinks(text, Linkify.WEB_URLS|Linkify.EMAIL_ADDRESSES);
 				scroll.addView(text);
 				dialog.setContentView(scroll);
@@ -213,7 +218,7 @@ public class LauncherActivity extends Activity {
 
 		// permissions check
 		if( sdk >= 23 )
-			applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, REQUEST_PERMISSIONS );
+			applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO }, REQUEST_PERMISSIONS );
 /*
 		if( last_commit == null || last_commit.isEmpty() )
 			check_updates.setVisibility(View.GONE);
@@ -255,7 +260,7 @@ public class LauncherActivity extends Activity {
 
 		editor.commit();
 
-		Intent intent = new Intent(this, SDLActivity.class);
+		Intent intent = new Intent(LauncherActivity.this, SDLActivity.class);
 		intent.addFlags(268435456);
 		startActivity(intent);
 

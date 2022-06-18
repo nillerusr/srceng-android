@@ -14,7 +14,7 @@ public class ExtractAssets
 	static SharedPreferences mPref;
 
 	public static final String VPK_NAME = "extras_dir.vpk";
-	public static int PAK_VERSION = 1;
+	public static int PAK_VERSION = 9;
 
     private static int chmod(String path, int mode)
     {
@@ -54,6 +54,10 @@ public class ExtractAssets
 		try {
 			if( mPref == null )
 				mPref = context.getSharedPreferences("mod", 0);
+
+			File file = new File( context.getFilesDir().getPath() +"/"+ VPK_NAME );
+			if( !file.exists() )
+				force = true;
 
 			if( mPref.getInt( "pakversion", 0 ) == PAK_VERSION && !force )
 				return;

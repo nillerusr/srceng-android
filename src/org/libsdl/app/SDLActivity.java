@@ -55,6 +55,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+import android.Manifest;
+import me.nillerusr.DirchActivity;
 
 import com.valvesoftware.ValveActivity2;
 
@@ -67,6 +71,7 @@ import java.util.Locale;
 public class SDLActivity extends Activity implements View.OnSystemUiVisibilityChangeListener {
     private static final String TAG = "SDL";
 
+    public static boolean mIsInitCalled;
     public static boolean mIsResumedCalled, mHasFocus;
     public static final boolean mHasMultiWindow = (Build.VERSION.SDK_INT >= 24);
 
@@ -205,13 +210,42 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mCurrentNativeState = NativeState.INIT;
     }
 
-    // Setup
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.v(TAG, "Device: " + Build.DEVICE);
-        Log.v(TAG, "Model: " + Build.MODEL);
-        Log.v(TAG, "onCreate()");
-        super.onCreate(savedInstanceState);
+	final static int REQUEST_PERMISSIONS = 42;
+
+	public void applyPermissions( final String permissions[], final int code ) {
+		List<String> requestPermissions = new ArrayList<String>();
+		for( int i = 0; i < permissions.length; i++ ) {
+			if( checkSelfPermission(permissions[i]) != PackageManager.PERMISSION_GRANTED )
+				requestPermissions.add(permissions[i]);
+		}
+
+		if( !requestPermissions.isEmpty() ) {
+			String[] requestPermissionsArray = new String[requestPermissions.size()];
+			for( int i = 0; i < requestPermissions.size(); i++ )
+				requestPermissionsArray[i] = requestPermissions.get(i);
+			requestPermissions(requestPermissionsArray, code);
+		}
+	}
+
+	public void onRequestPermissionsResult( int requestCode,  String[] permissions,  int[] grantResults ) {
+		if( requestCode == REQUEST_PERMISSIONS ) {
+			for( int grantResult : grantResults ) {
+				if( grantResult == PackageManager.PERMISSION_DENIED ) {
+					Toast.makeText( this, R.string.srceng_launcher_error_no_permission, Toast.LENGTH_LONG ).show();
+					finish();
+					return;
+				}
+			}
+			init();
+		}
+	}
+
+    public void init()
+    {
+        if( mIsInitCalled )
+            return;
+
+        mIsInitCalled = true;
 
         try {
             Thread.currentThread().setName("SDLActivity");
@@ -257,13 +291,24 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
            return;
         }
 
-        if( !ValveActivity2.preInit(this) )
+
+        if( !ValveActivity2.preInit(this, getIntent()) )
         {
         	mBrokenLibraries = true; // Funny hack, but should work
             mSingleton = this;
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
             dlgAlert.setTitle(getResources().getString(R.string.srceng_launcher_error));
             dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_gameinfo));
+            dlgAlert.setNegativeButton(R.string.srceng_launcher_set, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                	Intent intent = new Intent(SDLActivity.this, DirchActivity.class);
+					intent.addFlags(268435456);
+					startActivity(intent);
+                    mSingleton.finish();
+                }
+            });
+
             dlgAlert.setPositiveButton(R.string.srceng_launcher_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
@@ -339,6 +384,24 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 SDLActivity.onNativeDropFile(filename);
             }
         }
+    }
+
+    // Setup
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.v(TAG, "Device: " + Build.DEVICE);
+        Log.v(TAG, "Model: " + Build.MODEL);
+        Log.v(TAG, "onCreate()");
+        super.onCreate(savedInstanceState);
+
+        mIsInitCalled = false;
+
+        if( Build.VERSION.SDK_INT >= 23 )
+            applyPermissions( new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO }, REQUEST_PERMISSIONS );
+
+        if( checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && 
+            checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED )
+            init();
     }
 
     protected void pauseNativeThread() {
@@ -1569,12 +1632,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         } else {
             nativePermissionResult(requestCode, true);
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        boolean result = (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
-        nativePermissionResult(requestCode, result);
     }
 
     /**

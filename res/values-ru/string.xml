@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_about">О порте</string>
-    <string name="srceng_launcher_about_text">\nОсобая благодарность \nptitSeb за gl4es: https://github.com/ptitSeb/gl4es\nRusJJ за исправление партиклей\nnillerusr за порт \nvalve за source engine\n\nНе для коммерческого использования!\nКонтакты: unknownandlost11@gmail.com\n\nДонат: https://www.patreon.com/nillerusr\nhttps://donatepay.ru/don/nillerusr</string> <!--- Not available -->
+    <string name="srceng_launcher_about_text">\nОсобая благодарность:\nnillerusr,Jusic за порт \nvalve за source engine\n\nНе для коммерческого использования!\nКонтакты: unknownandlost11@gmail.com\n\nДонат: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
     <string name="srceng_launcher_launch">Запустить</string>
     <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_set">Выбрать</string>
     <string name="srceng_launcher_error">Ошибка</string>
     <string name="srceng_launcher_error_missing_obb_a">Здесь нет </string>
     <string name="srceng_launcher_error_missing_obb_b">файлов по пути </string>

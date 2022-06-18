@@ -144,7 +144,8 @@ public class DirchActivity extends Activity implements OnTouchListener{
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if( cur_dir != null ) {
-					LauncherActivity.GamePath.setText(cur_dir+"/");
+					if( LauncherActivity.GamePath != null )
+						LauncherActivity.GamePath.setText(cur_dir+"/");
 					SharedPreferences.Editor editor = mPref.edit();
 					editor.putString("gamepath", cur_dir+"/");
 					editor.commit();
