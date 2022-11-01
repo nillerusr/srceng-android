@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_launcher_about">关于</string>
+    <string name="srceng_launcher_about_text">"感谢nillerusr和jusic提供的端口
+起源源引擎的Valve
+
+不用于商业用途!
+联系我们: unknownandlost11@gmail.com
+
+捐赠：https://new.donatepay.ru/@nillerusr
+BTC（比特币）: bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na
+XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg
+通过DeepL翻译 https://www.deepl.com"</string>
+    <string name="srceng_launcher_launch">启动</string>
+    <string name="srceng_launcher_ok">确定</string>
+    <string name="srceng_launcher_error">错误</string>
+    <string name="srceng_launcher_error_missing_obb_a">不存在</string>
+    <string name="srceng_launcher_error_missing_obb_b">路径上的文件</string>
+    <string name="srceng_launcher_error_test_write">测试写入失败，所有文件将存储在</string>
+    <string name="srceng_launcher_error_no_permission">没有权限，游戏就无法运行</string>
+    <string name="srceng_launcher_command_args">命令行参数</string>
+    <string name="srceng_launcher_env">环境变量</string>
+    <string name="srceng_launcher_game_path">游戏资源路径</string>
+    <string name="srceng_launcher_set_game_path">选择游戏目录</string>
+    <string name="srceng_launcher_game_menu">游戏</string>
+    <string name="srceng_launcher_touch_controls">显示按键图标</string>
+    <string name="srceng_launcher_volume_buttons">使用音量按钮</string>
+    <string name="srceng_launcher_volume_buttons_desc">音量增加键可以作为L_TRIGGER，音量减少键可以作为R_TRIGGER!!!</string>
+    <string name="srceng_launcher_check_updates">检查更新</string>
+    <string name="srceng_launcher_immersive_mode">沉浸模式</string>
+    <string name="srceng_launcher_screen_resolution">修改屏幕分辨率</string>
+    <string name="srceng_dir_choice_btn">选择当前目录</string>
+    <string name="srceng_update">更新可用！</string>
+    <string name="srceng_app_name">起源引擎</string>
+    <string name="srceng_game_hl2">半条命2</string>
+    <string name="srceng_game_hl2ep1">半条命2：第一章</string>
+    <string name="srceng_game_hl2ep2">半条命2：第二章</string>
+    <string name="srceng_game_portal">传送门</string>
+</resources>
