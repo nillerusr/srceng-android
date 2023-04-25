@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">Acerca de</string>
+    <string name="srceng_launcher_about_text">\nGracias a nillerusr y jusic por el port\nSource Engine por Valve\n\n¡No utilizar para fines comerciales!\nContáctanos: unknownandlost11@gmail.com\n\nDonar: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
+    <string name="srceng_launcher_launch">Lanzar</string>
+    <string name="srceng_launcher_set">ESTABLECER</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">Error</string>
+    <string name="srceng_launcher_error_missing_obb_a">No hay</string>
+    <string name="srceng_launcher_error_missing_obb_b">archivos en la ruta </string>
+    <string name="srceng_launcher_error_test_write">Falló la prueba de escritura, todos los archivos se guardarán en </string>
+    <string name="srceng_launcher_error_no_permission">Sin permisos, el juego no funcionará</string>
+    <string name="srceng_launcher_error_find_gameinfo">No se pudieron encontrar los recursos del juego. ¿Has establecido correctamente la ruta?</string>
+
+    <string name="srceng_launcher_command_args">Argumentos de línea de comandos</string>
+    <string name="srceng_launcher_env">Entorno</string>
+    <string name="srceng_launcher_game_path">Ruta a los recursos del juego</string>
+    <string name="srceng_launcher_set_game_path">Establecer directorio del juego</string>
+    <string name="srceng_launcher_game_menu">Juego</string>
+    <string name="srceng_launcher_touch_controls">Mostrar controles táctiles</string>
+    <string name="srceng_launcher_volume_buttons">Usar botones del volumen</string>
+    <string name="srceng_launcher_volume_buttons_desc">¡¡¡El botón de subir volumen se puede asignar como L_TRIGGER y el de bajar volumen como R_TRIGGER!!!</string>
+
+    <string name="srceng_launcher_check_updates">Comprobar actualizaciones</string>
+    <string name="srceng_launcher_immersive_mode">Modo inmersivo</string>
+    <string name="srceng_launcher_screen_resolution">Resolución de pantalla fija</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episodio 1</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episodio 2</string> <!--- Not available -->
+    <string name="srceng_game_portal">Portal</string> <!--- Not available -->
+
+    <string name="srceng_dir_choice_btn">Establecer directorio actual</string>
+    <string name="srceng_update">¡Actualización disponible!</string>
+</resources>
