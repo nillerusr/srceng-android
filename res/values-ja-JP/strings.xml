@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Sourceエンジン</string>
+
+    <string name="srceng_launcher_about">概要</string>
+    <string name="srceng_launcher_about_text">「nillerusr」と「jusic」がポートを提供してくれたことに感謝します。
+ValveによるSourceエンジン
+商業用途には使用しないでください！
+お問い合わせ：unknownandlost11@gmail.com
+
+寄付：https://new.donatepay.ru/@nillerusr
+BTC(Bitcoin)：bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na
+XMR(Monero)：48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg
+DeepL翻訳による翻訳 https://www.deepl.com/app/?utm_medium=android-share</string>
+    <string name="srceng_launcher_launch">起動する</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">エラー</string>
+    <string name="srceng_launcher_error_missing_obb_a">パスにファイルが</string>
+    <string name="srceng_launcher_error_missing_obb_b">ありません</string>
+    <string name="srceng_launcher_error_test_write">書き込みのテストに失敗しました、すべてのファイルは以下に保存されます</string>
+    <string name="srceng_launcher_error_no_permission">アクセス権がありません、ゲームを実行できません</string>
+    <string name="srceng_launcher_error_find_gameinfo">ゲームリソースが見つかりませんでした。パスを正しく設定しましたか?</string>
+
+    <string name="srceng_launcher_command_args">コマンドライン引数</string>
+    <string name="srceng_launcher_env">環境変数</string>
+    <string name="srceng_launcher_game_path">ゲームリソースのパス</string>
+    <string name="srceng_launcher_set_game_path">ゲームディレクトリを選択する</string>
+    <string name="srceng_launcher_game_menu">ゲーム</string>
+    <string name="srceng_launcher_touch_controls">キーボードのアイコンを表示する</string>
+    <string name="srceng_launcher_volume_buttons">音量ボタンを使用する</string>
+    <string name="srceng_launcher_volume_buttons_desc">音量アップボタンはL_TRIGGER、音量ダウンボタンはR_TRIGGERとして機能します!!!</string>
+
+    <string name="srceng_launcher_check_updates">更新を確認する</string>
+    <string name="srceng_launcher_immersive_mode">没入モード</string>
+    <string name="srceng_launcher_screen_resolution">画面解像度の変更</string>
+
+    <string name="srceng_game_hl2">ハーフライフ2</string>
+    <string name="srceng_game_hl2ep1">ハーフライフ2：エピソード1</string>
+    <string name="srceng_game_hl2ep2">ハーフライフ2：エピソード2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">現在のディレクトリを選択する</string>
+    <string name="srceng_update">アップデートが利用可能です!</string>
+</resources>
