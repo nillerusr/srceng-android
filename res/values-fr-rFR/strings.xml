@@ -3,29 +3,29 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">À propos</string>
-    <string name="srceng_launcher_about_text">\nMerci à Nillerusr et Jusic pour le portage\nValve pour Source (moteur de jeu)\n\nPas d'utilisation commerciale !\nContactez-nous : unknownandlost11@gmail.com\n\nFaire un don : https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin) : bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero) : 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
+    <string name="srceng_launcher_about_text">\nMerci à Nillerusr et Jusic pour le portage\nValve pour Source (moteur de jeu)\n\nPas d\'utilisation commerciale !\nContactez-nous : unknownandlost11@gmail.com\n\nFaire un don : https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin) : bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero) : 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
     <string name="srceng_launcher_launch">Lancer</string>
     <string name="srceng_launcher_set">DÉFINIR</string>
     <string name="srceng_launcher_ok">OK</string>
     <string name="srceng_launcher_error">Erreur</string>
-    <string name="srceng_launcher_error_missing_obb_a">Il n'y a pas de</string>
-    <string name="srceng_launcher_error_missing_obb_b">fichiers sur le chemin d'accès </string>
-    <string name="srceng_launcher_error_test_write">En cas d'échec de l'écriture du test, tous les fichiers seront stockés dans </string>
+    <string name="srceng_launcher_error_missing_obb_a">Il n\'y a pas de</string>
+    <string name="srceng_launcher_error_missing_obb_b">fichiers sur le chemin d\'accès </string>
+    <string name="srceng_launcher_error_test_write">En cas d\'échec de l\'écriture du test, tous les fichiers seront stockés dans </string>
     <string name="srceng_launcher_error_no_permission">Sans autorisations, le jeu ne fonctionne pas</string>
-    <string name="srceng_launcher_error_find_gameinfo">Impossible de trouver les ressources du jeu. Avez-vous défini le chemin d'accès correctement ?</string>
+    <string name="srceng_launcher_error_find_gameinfo">Impossible de trouver les ressources du jeu. Avez-vous défini le chemin d\'accès correctement ?</string>
 
     <string name="srceng_launcher_command_args">Arguments de la ligne de commande</string>
     <string name="srceng_launcher_env">Env</string>
-    <string name="srceng_launcher_game_path">Chemin d'accès aux ressources du jeu</string>
+    <string name="srceng_launcher_game_path">Chemin d\'accès aux ressources du jeu</string>
     <string name="srceng_launcher_set_game_path">Définir le répertoire du jeu</string>
     <string name="srceng_launcher_game_menu">Jeu</string>
     <string name="srceng_launcher_touch_controls">Afficher les contrôles tactiles</string>
     <string name="srceng_launcher_volume_buttons">Utiliser les boutons de volume</string>
-    <string name="srceng_launcher_volume_buttons_desc">Le bouton d'augmentation du volume peut être utilisé comme L_TRIGGER, et le bouton de diminution du volume comme R_TRIGGER !!!</string>
+    <string name="srceng_launcher_volume_buttons_desc">Le bouton d\'augmentation du volume peut être utilisé comme L_TRIGGER, et le bouton de diminution du volume comme R_TRIGGER !!!</string>
 
     <string name="srceng_launcher_check_updates">Vérifier les mises à jour</string>
     <string name="srceng_launcher_immersive_mode">Mode immersif</string>
-    <string name="srceng_launcher_screen_resolution">Résolution d'écran fixée</string>
+    <string name="srceng_launcher_screen_resolution">Résolution d\'écran fixée</string>
 
     <string name="srceng_game_hl2">Half-Life 2</string> <!--- Not available -->
     <string name="srceng_game_hl2ep1">Half-Life 2: Episode 1</string> <!--- Not available -->
