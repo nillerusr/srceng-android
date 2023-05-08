@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">About</string>
+    <string name="srceng_launcher_about_text">\nThanks to nillerusr and jusic for port\nvalve for source engine\n\nNot for commercial use!\nContact Us: unknownandlost11@gmail.com\n\nDonate: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
+    <string name="srceng_launcher_launch">Launch</string>
+    <string name="srceng_launcher_set">SET</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">Error</string>
+    <string name="srceng_launcher_error_missing_obb_a">There are no</string>
+    <string name="srceng_launcher_error_missing_obb_b">files on the path </string>
+    <string name="srceng_launcher_error_test_write">Test write failed, all files will be stored in </string>
+    <string name="srceng_launcher_error_no_permission">Without permissions game won\'t work</string>
+    <string name="srceng_launcher_error_find_gameinfo">Couldn\'t find game resources. Did you set the path correctly?</string>
+
+    <string name="srceng_launcher_command_args">Command-line arguments</string>
+    <string name="srceng_launcher_env">Env</string>
+    <string name="srceng_launcher_game_path">Path to game resources</string>
+    <string name="srceng_launcher_set_game_path">Set game directory</string>
+    <string name="srceng_launcher_game_menu">Game</string>
+    <string name="srceng_launcher_touch_controls">Show touch controls</string>
+    <string name="srceng_launcher_volume_buttons">Use volume buttons</string>
+    <string name="srceng_launcher_volume_buttons_desc">Volume up button can bound as L_TRIGGER, and volume down as R_TRIGGER!!!</string>
+
+    <string name="srceng_launcher_check_updates">Check updates</string>
+    <string name="srceng_launcher_immersive_mode">Immersive mode</string>
+    <string name="srceng_launcher_screen_resolution">Fixed screen resolution</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string> <!--- Not available -->
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string> <!--- Not available -->
+    <string name="srceng_game_portal">Portal</string> <!--- Not available -->
+
+    <string name="srceng_dir_choice_btn">Set current directory</string>
+    <string name="srceng_update">Update avalible!</string>
+</resources>
